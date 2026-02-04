@@ -1,0 +1,604 @@
+// ============================================
+// 星扣AR创作平台·教育版 - 全局样式
+// ============================================
+
+@use 'sass:map';
+@use 'sass:math';
+@use './variables' as *;
+
+// ============================================
+// CSS Reset / Normalize
+// ============================================
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  line-height: $line-height-base;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-base;
+  color: $color-text-primary;
+  background-color: $color-bg-white;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// ============================================
+// 基础元素样式
+// ============================================
+
+// 标题
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: $font-weight-semibold;
+  line-height: $line-height-tight;
+  color: $color-text-primary;
+}
+
+h1 {
+  font-size: $font-size-display;
+  
+  @include tablet {
+    font-size: $font-size-xxxl;
+  }
+  
+  @include mobile {
+    font-size: $font-size-xxl;
+  }
+}
+
+h2 {
+  font-size: $font-size-xxxl;
+  
+  @include tablet {
+    font-size: $font-size-xxl;
+  }
+  
+  @include mobile {
+    font-size: $font-size-xl;
+  }
+}
+
+h3 {
+  font-size: $font-size-xxl;
+  
+  @include mobile {
+    font-size: $font-size-lg;
+  }
+}
+
+h4 {
+  font-size: $font-size-xl;
+}
+
+h5 {
+  font-size: $font-size-lg;
+}
+
+h6 {
+  font-size: $font-size-base;
+}
+
+// 段落
+p {
+  margin: 0;
+  line-height: $line-height-relaxed;
+}
+
+// 链接
+a {
+  color: $color-primary;
+  text-decoration: none;
+  transition: $transition-fast;
+  
+  &:hover {
+    color: $color-primary-light-2;
+  }
+  
+  &:active {
+    color: $color-primary-dark-2;
+  }
+}
+
+// 列表
+ul, ol {
+  list-style: none;
+}
+
+// 图片
+img {
+  max-width: 100%;
+  height: auto;
+  vertical-align: middle;
+  border-style: none;
+}
+
+// 按钮
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-family: inherit;
+  
+  &:focus {
+    outline: none;
+  }
+}
+
+// 输入框
+input, textarea, select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+// ============================================
+// 布局容器
+// ============================================
+.container {
+  width: 100%;
+  max-width: $container-max-width;
+  margin: 0 auto;
+  padding: 0 $container-padding;
+  
+  @include mobile {
+    padding: 0 $spacing-md;
+  }
+}
+
+.container-fluid {
+  width: 100%;
+  padding: 0 $container-padding;
+  
+  @include mobile {
+    padding: 0 $spacing-md;
+  }
+}
+
+// ============================================
+// Section 通用样式
+// ============================================
+.section {
+  padding: $spacing-xxxl 0;
+  
+  @include tablet {
+    padding: $spacing-xxl 0;
+  }
+  
+  @include mobile {
+    padding: $spacing-xl 0;
+  }
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: $spacing-xxl;
+  
+  @include mobile {
+    margin-bottom: $spacing-xl;
+  }
+}
+
+.section-subtitle {
+  color: $color-text-secondary;
+  font-size: $font-size-lg;
+  margin-top: $spacing-sm;
+  
+  @include mobile {
+    font-size: $font-size-base;
+  }
+}
+
+// ============================================
+// 响应式网格系统 (Requirements 10.1, 10.2, 10.3)
+// ============================================
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 calc(-1 * math.div($grid-gutter, 2));
+}
+
+.col {
+  flex: 1;
+  padding: 0 math.div($grid-gutter, 2);
+}
+
+// 生成列类
+@for $i from 1 through $grid-columns {
+  .col-#{$i} {
+    flex: 0 0 math.percentage(math.div($i, $grid-columns));
+    max-width: math.percentage(math.div($i, $grid-columns));
+    padding: 0 math.div($grid-gutter, 2);
+  }
+}
+
+// 响应式列 - 移动端 (Requirement 10.3)
+@include mobile {
+  @for $i from 1 through $grid-columns {
+    .col-xs-#{$i} {
+      flex: 0 0 math.percentage(math.div($i, $grid-columns));
+      max-width: math.percentage(math.div($i, $grid-columns));
+    }
+  }
+}
+
+// 响应式列 - 平板端 (Requirement 10.2)
+@include respond-up('sm') {
+  @for $i from 1 through $grid-columns {
+    .col-sm-#{$i} {
+      flex: 0 0 math.percentage(math.div($i, $grid-columns));
+      max-width: math.percentage(math.div($i, $grid-columns));
+    }
+  }
+}
+
+// 响应式列 - 中等屏幕
+@include respond-up('md') {
+  @for $i from 1 through $grid-columns {
+    .col-md-#{$i} {
+      flex: 0 0 math.percentage(math.div($i, $grid-columns));
+      max-width: math.percentage(math.div($i, $grid-columns));
+    }
+  }
+}
+
+// 响应式列 - 桌面端 (Requirement 10.1)
+@include desktop {
+  @for $i from 1 through $grid-columns {
+    .col-lg-#{$i} {
+      flex: 0 0 math.percentage(math.div($i, $grid-columns));
+      max-width: math.percentage(math.div($i, $grid-columns));
+    }
+  }
+}
+
+// ============================================
+// 响应式工具类
+// ============================================
+
+// 显示/隐藏
+.hidden {
+  display: none !important;
+}
+
+.visible {
+  display: block !important;
+}
+
+// 移动端显示/隐藏
+@include mobile {
+  .hidden-mobile {
+    display: none !important;
+  }
+  
+  .visible-mobile {
+    display: block !important;
+  }
+}
+
+// 平板端显示/隐藏
+@include tablet {
+  .hidden-tablet {
+    display: none !important;
+  }
+  
+  .visible-tablet {
+    display: block !important;
+  }
+}
+
+// 桌面端显示/隐藏
+@include desktop {
+  .hidden-desktop {
+    display: none !important;
+  }
+  
+  .visible-desktop {
+    display: block !important;
+  }
+}
+
+// ============================================
+// 间距工具类
+// ============================================
+@each $name, $value in $spacings {
+  // Margin
+  .m-#{$name} { margin: $value !important; }
+  .mt-#{$name} { margin-top: $value !important; }
+  .mr-#{$name} { margin-right: $value !important; }
+  .mb-#{$name} { margin-bottom: $value !important; }
+  .ml-#{$name} { margin-left: $value !important; }
+  .mx-#{$name} { margin-left: $value !important; margin-right: $value !important; }
+  .my-#{$name} { margin-top: $value !important; margin-bottom: $value !important; }
+  
+  // Padding
+  .p-#{$name} { padding: $value !important; }
+  .pt-#{$name} { padding-top: $value !important; }
+  .pr-#{$name} { padding-right: $value !important; }
+  .pb-#{$name} { padding-bottom: $value !important; }
+  .pl-#{$name} { padding-left: $value !important; }
+  .px-#{$name} { padding-left: $value !important; padding-right: $value !important; }
+  .py-#{$name} { padding-top: $value !important; padding-bottom: $value !important; }
+}
+
+// ============================================
+// 文本工具类
+// ============================================
+.text-center { text-align: center !important; }
+.text-left { text-align: left !important; }
+.text-right { text-align: right !important; }
+
+.text-primary { color: $color-text-primary !important; }
+.text-regular { color: $color-text-regular !important; }
+.text-secondary { color: $color-text-secondary !important; }
+.text-placeholder { color: $color-text-placeholder !important; }
+
+.text-brand { color: $color-primary !important; }
+.text-success { color: $color-success !important; }
+.text-warning { color: $color-warning !important; }
+.text-danger { color: $color-danger !important; }
+
+.text-truncate {
+  @include text-truncate;
+}
+
+.text-clamp-2 {
+  @include text-clamp(2);
+}
+
+.text-clamp-3 {
+  @include text-clamp(3);
+}
+
+// ============================================
+// Flexbox 工具类
+// ============================================
+.flex { display: flex !important; }
+.inline-flex { display: inline-flex !important; }
+
+.flex-row { flex-direction: row !important; }
+.flex-column { flex-direction: column !important; }
+.flex-wrap { flex-wrap: wrap !important; }
+.flex-nowrap { flex-wrap: nowrap !important; }
+
+.justify-start { justify-content: flex-start !important; }
+.justify-end { justify-content: flex-end !important; }
+.justify-center { justify-content: center !important; }
+.justify-between { justify-content: space-between !important; }
+.justify-around { justify-content: space-around !important; }
+
+.align-start { align-items: flex-start !important; }
+.align-end { align-items: flex-end !important; }
+.align-center { align-items: center !important; }
+.align-stretch { align-items: stretch !important; }
+
+.flex-center {
+  @include flex-center;
+}
+
+.flex-1 { flex: 1 !important; }
+.flex-auto { flex: auto !important; }
+.flex-none { flex: none !important; }
+
+// ============================================
+// 卡片通用样式
+// ============================================
+.card {
+  background-color: $color-bg-white;
+  border-radius: $border-radius-base;
+  box-shadow: $shadow-card;
+  transition: $transition-base;
+  overflow: hidden;
+  
+  &:hover {
+    box-shadow: $shadow-card-hover;
+    transform: translateY(-4px);
+  }
+}
+
+.card-body {
+  padding: $spacing-lg;
+  
+  @include mobile {
+    padding: $spacing-md;
+  }
+}
+
+.card-title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  margin-bottom: $spacing-sm;
+}
+
+.card-description {
+  color: $color-text-secondary;
+  font-size: $font-size-sm;
+  line-height: $line-height-relaxed;
+}
+
+// ============================================
+// 按钮通用样式
+// ============================================
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-sm $spacing-lg;
+  font-size: $font-size-base;
+  font-weight: $font-weight-medium;
+  line-height: 1;
+  border-radius: $border-radius-base;
+  transition: $transition-fast;
+  cursor: pointer;
+  
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}
+
+.btn-primary {
+  background-color: $color-primary;
+  color: $color-bg-white;
+  
+  &:hover:not(:disabled) {
+    background-color: $color-primary-light-2;
+  }
+  
+  &:active:not(:disabled) {
+    background-color: $color-primary-dark-2;
+  }
+}
+
+.btn-outline {
+  background-color: transparent;
+  border: 1px solid $color-primary;
+  color: $color-primary;
+  
+  &:hover:not(:disabled) {
+    background-color: $color-primary;
+    color: $color-bg-white;
+  }
+}
+
+.btn-lg {
+  padding: $spacing-md $spacing-xl;
+  font-size: $font-size-lg;
+}
+
+.btn-sm {
+  padding: $spacing-xs $spacing-md;
+  font-size: $font-size-sm;
+}
+
+// ============================================
+// 触摸设备优化 (Requirement 10.4)
+// ============================================
+@media (hover: none) and (pointer: coarse) {
+  // 增大触摸目标
+  .btn,
+  button,
+  a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  // 禁用悬停效果
+  .card:hover {
+    transform: none;
+    box-shadow: $shadow-card;
+  }
+}
+
+// ============================================
+// Element Plus 样式覆盖
+// ============================================
+.el-button {
+  font-weight: $font-weight-medium;
+}
+
+.el-button--primary {
+  --el-button-bg-color: #{$color-primary};
+  --el-button-border-color: #{$color-primary};
+  --el-button-hover-bg-color: #{$color-primary-light-2};
+  --el-button-hover-border-color: #{$color-primary-light-2};
+  --el-button-active-bg-color: #{$color-primary-dark-2};
+  --el-button-active-border-color: #{$color-primary-dark-2};
+}
+
+.el-card {
+  --el-card-border-radius: #{$border-radius-base};
+  transition: $transition-base;
+  
+  &:hover {
+    box-shadow: $shadow-card-hover;
+  }
+}
+
+// ============================================
+// 动画
+// ============================================
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn $transition-duration-base $transition-timing-ease-out;
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp $transition-duration-base $transition-timing-ease-out;
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown $transition-duration-base $transition-timing-ease-out;
+}
+
+// ============================================
+// 滚动条样式
+// ============================================
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: $color-bg-base;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $color-border-dark;
+  border-radius: 4px;
+  
+  &:hover {
+    background: $color-text-secondary;
+  }
+}
+
+// ============================================
+// 选择文本样式
+// ============================================
+::selection {
+  background-color: $color-primary-light-8;
+  color: $color-text-primary;
+}
