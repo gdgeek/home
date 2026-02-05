@@ -105,7 +105,7 @@ import { Promotion, View, CircleCheck, Reading, Cpu, MagicStick } from '@element
 import type { HeroSectionProps } from '@/types'
 
 // Define props with TypeScript interface
-const props = defineProps<HeroSectionProps>()
+defineProps<HeroSectionProps>()
 
 // Define emits
 const emit = defineEmits<{

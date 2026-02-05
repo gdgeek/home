@@ -1,0 +1,83 @@
+// ============================================
+// 星扣品牌设计变量 - 严肃教育风格
+// 面向中国大陆教育市场，简体中文
+// 稳重、专业、教育感
+// ============================================
+
+// 主色调 - 教育蓝色系（国内教育平台常用）
+$xingkou-primary: #2563EB;        // 教育蓝主色
+$xingkou-primary-light: #3B82F6;  // 浅蓝
+$xingkou-primary-dark: #1D4ED8;   // 深蓝
+$xingkou-secondary: #0EA5E9;      // 天蓝辅助
+$xingkou-accent: #DC2626;         // 红色强调（中国红）
+
+// 背景色 - 稳重灰白
+$xingkou-bg-primary: #FFFFFF;
+$xingkou-bg-secondary: #F1F5F9;   // 浅灰背景
+$xingkou-bg-card: #FFFFFF;
+$xingkou-bg-dark: #1E3A5F;        // 深蓝背景
+
+// 文字颜色
+$xingkou-text-primary: #0F172A;   // 深色文字
+$xingkou-text-secondary: #334155;
+$xingkou-text-muted: #64748B;
+$xingkou-text-light: #FFFFFF;
+
+// 渐变
+$xingkou-gradient-hero: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
+$xingkou-gradient-cta: linear-gradient(135deg, $xingkou-primary 0%, $xingkou-primary-dark 100%);
+
+// 阴影
+$xingkou-shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
+$xingkou-shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
+$xingkou-shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.12);
+
+// 边框
+$xingkou-border-color: #E2E8F0;
+$xingkou-border-radius-sm: 6px;
+$xingkou-border-radius-md: 8px;
+$xingkou-border-radius-lg: 12px;
+$xingkou-border-radius-xl: 16px;
+$xingkou-border-radius-full: 9999px;
+
+// 间距
+$xingkou-spacing-xs: 4px;
+$xingkou-spacing-sm: 8px;
+$xingkou-spacing-md: 16px;
+$xingkou-spacing-lg: 24px;
+$xingkou-spacing-xl: 32px;
+$xingkou-spacing-xxl: 48px;
+$xingkou-spacing-xxxl: 72px;
+
+// 字体
+$xingkou-font-family: 'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', sans-serif;
+$xingkou-font-size-xs: 12px;
+$xingkou-font-size-sm: 14px;
+$xingkou-font-size-base: 16px;
+$xingkou-font-size-lg: 18px;
+$xingkou-font-size-xl: 20px;
+$xingkou-font-size-xxl: 28px;
+$xingkou-font-size-xxxl: 36px;
+$xingkou-font-size-hero: 48px;
+
+$xingkou-font-weight-normal: 400;
+$xingkou-font-weight-medium: 500;
+$xingkou-font-weight-semibold: 600;
+$xingkou-font-weight-bold: 700;
+
+// 响应式断点
+$xingkou-breakpoint-mobile: 640px;
+$xingkou-breakpoint-tablet: 768px;
+$xingkou-breakpoint-desktop: 1024px;
+
+// 容器
+$xingkou-container-max-width: 1280px;
+$xingkou-container-padding: 20px;
+
+// 动画
+$xingkou-transition-fast: 200ms;
+$xingkou-transition-base: 300ms;
+
+// Section 间距
+$xingkou-section-padding-y: 80px;
+$xingkou-section-padding-y-mobile: 48px;

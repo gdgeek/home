@@ -1,0 +1,96 @@
+// ============================================
+// 夏鼎品牌設計變量 - 專業藍色主題
+// 面向澳門教育市場，繁體中文
+// 嚴肅、專業的科技教育風格
+// ============================================
+
+// 主色調 - 深藍專業色系
+$xiading-primary: #1E40AF;        // 專業深藍主色
+$xiading-primary-light: #3B82F6;  // 標準藍
+$xiading-primary-dark: #1E3A8A;   // 深藍
+$xiading-secondary: #0F172A;      // 深色輔助
+$xiading-accent: #2563EB;         // 強調色
+
+// 背景色 - 淺灰白專業風格
+$xiading-bg-primary: #F8FAFC;     // 主背景（淺灰白）
+$xiading-bg-secondary: #F1F5F9;   // 次背景
+$xiading-bg-card: #FFFFFF;        // 卡片背景
+$xiading-bg-dark: #0F172A;        // 深色區塊
+
+// 文字顏色
+$xiading-text-primary: #0F172A;   // 主文字（深色）
+$xiading-text-secondary: #334155; // 次文字
+$xiading-text-muted: #64748B;     // 輔助文字
+$xiading-text-light: #FFFFFF;     // 淺色文字
+
+// 漸變
+$xiading-gradient-hero: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 50%, #CBD5E1 100%);
+$xiading-gradient-cta: linear-gradient(135deg, $xiading-primary 0%, $xiading-primary-dark 100%);
+$xiading-gradient-card: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+
+// 陰影
+$xiading-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+$xiading-shadow-md: 0 4px 6px rgba(15, 23, 42, 0.08);
+$xiading-shadow-lg: 0 10px 25px rgba(15, 23, 42, 0.12);
+$xiading-shadow-card: 0 4px 20px rgba(15, 23, 42, 0.08);
+
+// 邊框
+$xiading-border-color: #E2E8F0;
+$xiading-border-radius-sm: 4px;
+$xiading-border-radius-md: 8px;
+$xiading-border-radius-lg: 12px;
+$xiading-border-radius-xl: 16px;
+$xiading-border-radius-full: 9999px;
+
+// 間距
+$xiading-spacing-xs: 4px;
+$xiading-spacing-sm: 8px;
+$xiading-spacing-md: 16px;
+$xiading-spacing-lg: 24px;
+$xiading-spacing-xl: 32px;
+$xiading-spacing-xxl: 48px;
+$xiading-spacing-xxxl: 64px;
+
+// 字體
+$xiading-font-family: 'PingFang TC', 'Microsoft JhengHei', 'Noto Sans TC', sans-serif;
+$xiading-font-size-xs: 12px;
+$xiading-font-size-sm: 14px;
+$xiading-font-size-base: 16px;
+$xiading-font-size-lg: 18px;
+$xiading-font-size-xl: 20px;
+$xiading-font-size-xxl: 24px;
+$xiading-font-size-xxxl: 32px;
+$xiading-font-size-display: 40px;
+$xiading-font-size-hero: 48px;
+
+$xiading-font-weight-normal: 400;
+$xiading-font-weight-medium: 500;
+$xiading-font-weight-semibold: 600;
+$xiading-font-weight-bold: 700;
+
+$xiading-line-height-tight: 1.25;
+$xiading-line-height-normal: 1.5;
+$xiading-line-height-relaxed: 1.75;
+
+// 響應式斷點
+$xiading-breakpoint-mobile: 640px;
+$xiading-breakpoint-tablet: 768px;
+$xiading-breakpoint-desktop: 1024px;
+$xiading-breakpoint-wide: 1280px;
+
+// 容器
+$xiading-container-max-width: 1200px;
+$xiading-container-padding: 24px;
+
+// 動畫
+$xiading-transition-fast: 150ms;
+$xiading-transition-base: 300ms;
+$xiading-transition-slow: 500ms;
+$xiading-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+// Section 間距
+$xiading-section-padding-y: 80px;
+$xiading-section-padding-y-mobile: 48px;
+
+// 觸控目標
+$xiading-touch-target-min: 44px;

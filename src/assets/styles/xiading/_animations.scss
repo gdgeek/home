@@ -1,0 +1,72 @@
+// ============================================
+// 夏鼎品牌動畫效果
+// ============================================
+
+// 淡入上移動畫
+@keyframes xiading-fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// 浮動動畫
+@keyframes xiading-float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+// 脈動動畫
+@keyframes xiading-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+// 縮放動畫
+@keyframes xiading-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// 動畫類
+.xiading-animate-fade-in-up {
+  animation: xiading-fade-in-up 0.6s ease-out forwards;
+  opacity: 0;
+}
+
+.xiading-animate-float {
+  animation: xiading-float 3s ease-in-out infinite;
+}
+
+.xiading-animate-pulse {
+  animation: xiading-pulse 2s ease-in-out infinite;
+}
+
+.xiading-animate-scale-in {
+  animation: xiading-scale-in 0.4s ease-out forwards;
+}
+
+// 延遲類
+.xiading-delay-1 { animation-delay: 0.1s; }
+.xiading-delay-2 { animation-delay: 0.2s; }
+.xiading-delay-3 { animation-delay: 0.3s; }
+.xiading-delay-4 { animation-delay: 0.4s; }
+.xiading-delay-5 { animation-delay: 0.5s; }

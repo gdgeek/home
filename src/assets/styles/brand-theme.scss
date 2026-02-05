@@ -1,0 +1,68 @@
+/**
+ * 品牌主题CSS变量
+ * 多品牌/多域名架构系统
+ * 
+ * @description 定义品牌主题的CSS变量，支持动态切换
+ * @requirements 5.4
+ */
+
+// ============================================
+// 品牌主题CSS变量（通过JS动态设置）
+// ============================================
+
+:root {
+  // 品牌主色调 - 默认星扣蓝
+  --brand-primary-color: #1E40AF;
+  --brand-secondary-color: #2563EB;
+  --brand-cta-color: #22C55E;
+  --brand-background-color: #EFF6FF;
+  --brand-text-color: #1E3A8A;
+}
+
+// ============================================
+// 品牌主题工具类
+// ============================================
+
+.brand-primary {
+  color: var(--brand-primary-color);
+}
+
+.brand-secondary {
+  color: var(--brand-secondary-color);
+}
+
+.brand-cta {
+  color: var(--brand-cta-color);
+}
+
+.brand-bg-primary {
+  background-color: var(--brand-primary-color);
+}
+
+.brand-bg-secondary {
+  background-color: var(--brand-secondary-color);
+}
+
+.brand-bg-cta {
+  background-color: var(--brand-cta-color);
+}
+
+.brand-bg-page {
+  background-color: var(--brand-background-color);
+}
+
+.brand-text {
+  color: var(--brand-text-color);
+}
+
+// ============================================
+// 品牌主题渐变
+// ============================================
+
+.brand-gradient-primary {
+  background: linear-gradient(135deg, var(--brand-primary-color) 0%, var(--brand-secondary-color) 100%);
+}
+
+.brand-gradient-cta {
+  background: linear-gradient(135deg, var(--brand-cta-color) 0%, color-mix(in srgb, var(--brand-cta-color) 80%, black) 100%);
+}

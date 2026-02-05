@@ -4,6 +4,24 @@
  */
 
 // ============================================
+// 品牌配置类型（从 brand.ts 导出）
+// ============================================
+
+export type {
+  BrandId,
+  BrandThemeConfig,
+  BrandHeroConfig,
+  BrandContactInfo,
+  BrandFooterLink,
+  BrandFooterNavGroup,
+  BrandFooterConfig,
+  BrandConfig,
+  BrandRegistry,
+  BrandErrorCode,
+  BrandError
+} from './brand'
+
+// ============================================
 // 新闻相关类型
 // ============================================
 

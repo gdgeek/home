@@ -13,7 +13,7 @@
       :primary-button-text="heroConfig.primaryButton"
       :secondary-button-text="heroConfig.secondaryButton"
       :highlights="heroConfig.highlights"
-      :login-url="baseInfo?.loginUrl ?? ''"
+      :login-url="loginUrl"
       @scroll-to-case="scrollToCase"
       @open-login="showLoginModal = true"
     />
@@ -31,13 +31,13 @@
     <CaseSection />
 
     <!-- CTA Section - Requirements 6.1-6.4 -->
-    <CTASection :login-url="baseInfo?.loginUrl ?? ''" />
+    <CTASection :login-url="loginUrl" />
 
     <!-- Footer Section - Requirements 7.1-7.3 -->
     <FooterSection
       :navigation="footerNavigation"
-      :copyright="baseInfo?.copyright ?? ''"
-      :contact-info="baseInfo?.contactInfo ?? {}"
+      :copyright="copyright"
+      :contact-info="contactInfo"
       :news="news ?? []"
       :news-loading="newsLoading ?? false"
       :news-error="newsError ?? null"
@@ -51,10 +51,10 @@
  * HomePage视图组件
  * 组合所有Section组件，集成composables获取数据
  * 
- * @description 星扣AR创作平台·教育版首页主视图
- * @requirements 1.1-7.3
+ * @description 多品牌架构首页主视图，根据品牌配置渲染对应内容
+ * @requirements 1.1-7.3, 4.1, 4.4, 6.1, 6.2
  */
-import { reactive, ref } from 'vue'
+import { computed, ref } from 'vue'
 
 // Section Components
 import HeaderNav from '@/components/sections/HeaderNav.vue'
@@ -69,10 +69,17 @@ import LoginModal from '@/components/common/LoginModal.vue'
 
 // Composables
 import { useNews } from '@/composables/useNews'
-import { useBaseInfo } from '@/composables/useBaseInfo'
+import { useBrand } from '@/composables/useBrand'
 
-// Types
-import type { FooterNavGroup } from '@/types'
+// ============================================
+// Brand Configuration
+// ============================================
+
+/**
+ * 品牌配置
+ * @requirements 4.1, 4.4
+ */
+const { hero, footer, loginUrl } = useBrand()
 
 // ============================================
 // Login Modal State
@@ -97,57 +104,42 @@ const handleLogin = (data: { username: string; password: string }) => {
  */
 const { news, loading: newsLoading, error: newsError, retry: retryNews } = useNews()
 
-/**
- * 基础信息获取
- * _Requirements: 9.1, 9.2, 9.3_
- */
-const { baseInfo } = useBaseInfo()
-
 // ============================================
-// Page Configuration Data
+// Page Configuration Data (from Brand Config)
 // ============================================
 
 /**
- * Hero区配置
- * _Requirements: 1.1, 1.2, 1.3, 1.6_
+ * Hero区配置 - 从品牌配置获取
+ * _Requirements: 1.1, 1.2, 1.3, 1.6, 4.1_
  */
-const heroConfig = reactive({
-  title: '星扣AR创作平台 — 让知识"立"起来，让创意"活"起来',
-  subtitle: '专为教育场景打造的AR内容创作平台，让教师轻松制作沉浸式教学内容，让学生在互动中探索知识的无限可能。',
-  primaryButton: '立即开始创作',
-  secondaryButton: '查看教学案例',
-  highlights: [
-    '课本变立体',
-    '实验零风险',
-    '创意可落地',
-    '知识可互动'
-  ]
-})
+const heroConfig = computed(() => ({
+  title: hero.value.title,
+  subtitle: hero.value.subtitle,
+  primaryButton: hero.value.primaryButtonText,
+  secondaryButton: hero.value.secondaryButtonText,
+  highlights: [...hero.value.highlights]
+}))
 
 /**
- * 底部导航配置
- * _Requirements: 7.1_
+ * 底部导航配置 - 从品牌配置获取
+ * _Requirements: 7.1, 6.2_
  */
-const footerNavigation = reactive<FooterNavGroup[]>([
-  {
-    title: '平台服务',
-    links: [
-      { text: 'AR创作工具', url: '#' },
-      { text: '素材资源库', url: '#' },
-      { text: '作品管理', url: '#' },
-      { text: '帮助中心', url: '#' }
-    ]
-  },
-  {
-    title: '关于我们',
-    links: [
-      { text: '公司介绍', url: '#' },
-      { text: '联系我们', url: '#' },
-      { text: '加入我们', url: '#' },
-      { text: '合作伙伴', url: '#' }
-    ]
-  }
-])
+const footerNavigation = computed(() => 
+  footer.value.navigation.map(group => ({
+    title: group.title,
+    links: group.links.map(link => ({ text: link.text, url: link.url }))
+  }))
+)
+
+/**
+ * 版权信息 - 从品牌配置获取
+ */
+const copyright = computed(() => footer.value.copyright)
+
+/**
+ * 联系信息 - 从品牌配置获取
+ */
+const contactInfo = computed(() => footer.value.contactInfo)
 
 // ============================================
 // Event Handlers

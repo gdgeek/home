@@ -3,8 +3,15 @@
     <div class="container header-nav__container">
       <!-- Logo -->
       <div class="header-nav__logo">
-        <span class="header-nav__logo-icon">✦</span>
-        <span class="header-nav__logo-text">星扣AR教育版</span>
+        <img 
+          v-if="theme.logoPath" 
+          :src="theme.logoPath" 
+          :alt="theme.logoAlt" 
+          class="header-nav__logo-img"
+          @error="(e: Event) => (e.target as HTMLImageElement).style.display = 'none'"
+        />
+        <span v-else class="header-nav__logo-icon">✦</span>
+        <span class="header-nav__logo-text">{{ brandName }}</span>
       </div>
       
       <!-- Navigation Links -->
@@ -36,10 +43,14 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { ElButton, ElIcon } from 'element-plus'
 import { UserFilled } from '@element-plus/icons-vue'
+import { useBrand } from '@/composables/useBrand'
 
 const emit = defineEmits<{
   (e: 'openLogin'): void
 }>()
+
+// 品牌配置
+const { brandName, theme } = useBrand()
 
 const isScrolled = ref(false)
 
@@ -96,6 +107,16 @@ onUnmounted(() => {
   &__logo-icon {
     font-size: 24px;
     color: $color-primary;
+  }
+  
+  &__logo-img {
+    height: 28px;
+    width: auto;
+    object-fit: contain;
+    
+    @include mobile {
+      height: 24px;
+    }
   }
   
   &__logo-text {
