@@ -27,18 +27,18 @@ $breakpoints: (
 // 颜色系统 (基于 UI/UX Pro Max 设计系统)
 // ============================================
 
-// 主色调 - 专业教育蓝 (Design System: Professional blue)
-$color-primary: #1E40AF !default;
-$color-primary-light-1: #2563EB !default;
-$color-primary-light-2: #3B82F6 !default;
-$color-primary-light-3: #60A5FA !default;
-$color-primary-light-4: #93C5FD !default;
-$color-primary-light-5: #BFDBFE !default;
-$color-primary-light-6: #DBEAFE !default;
+// 主色调 - 专业教育蓝（优化后的明亮色彩）
+$color-primary: #2A4A75 !default;
+$color-primary-light-1: #3A5A85 !default;
+$color-primary-light-2: #5A80B0 !default;
+$color-primary-light-3: #7A9AD0 !default;
+$color-primary-light-4: #9AB5E0 !default;
+$color-primary-light-5: #BAD0F0 !default;
+$color-primary-light-6: #DAEBF8 !default;
 $color-primary-light-7: #EFF6FF !default;
 $color-primary-light-8: #F0F9FF !default;
 $color-primary-light-9: #F8FAFC !default;
-$color-primary-dark-2: #1E3A8A !default;
+$color-primary-dark-2: #1F3550 !default;
 
 // 功能色 (Design System: CTA Green)
 $color-success: #22C55E !default;
@@ -46,12 +46,12 @@ $color-warning: #F59E0B !default;
 $color-danger: #EF4444 !default;
 $color-info: #3B82F6 !default;
 
-// 中性色 (Design System: Text #1E3A8A)
-$color-text-primary: #1E3A8A !default;
-$color-text-regular: #334155 !default;
-$color-text-secondary: #64748B !default;
-$color-text-placeholder: #94A3B8 !default;
-$color-text-disabled: #CBD5E1 !default;
+// 中性色（优化后的明亮色彩）
+$color-text-primary: #2A4A75 !default;
+$color-text-regular: #5A7595 !default;
+$color-text-secondary: #7A90B5 !default;
+$color-text-placeholder: #9AB0D5 !default;
+$color-text-disabled: #BAD0F0 !default;
 
 // 边框色
 $color-border-darker: #cdd0d6 !default;
@@ -61,16 +61,16 @@ $color-border-light: #e4e7ed !default;
 $color-border-lighter: #ebeef5 !default;
 $color-border-extra-light: #f2f6fc !default;
 
-// 背景色 (Design System: Background #EFF6FF)
-$color-bg-page: #EFF6FF !default;
-$color-bg-base: #F1F5F9 !default;
-$color-bg-light: #F8FAFC !default;
+// 背景色（优化后的明亮色彩）
+$color-bg-page: #F8FAFC !default;
+$color-bg-base: #F0F4F8 !default;
+$color-bg-light: #FAFCFE !default;
 $color-bg-white: #ffffff !default;
 
-// 品牌渐变色 (Design System: Primary to Secondary)
+// 品牌渐变色（优化后的明亮色彩）
 $gradient-primary: linear-gradient(135deg, $color-primary 0%, $color-primary-light-2 100%) !default;
-$gradient-hero: linear-gradient(180deg, #EFF6FF 0%, #ffffff 100%) !default;
-$gradient-cta: linear-gradient(135deg, #22C55E 0%, #16A34A 100%) !default;
+$gradient-hero: linear-gradient(180deg, #F8FAFC 0%, #ffffff 100%) !default;
+$gradient-cta: linear-gradient(135deg, #4A7AB0 0%, #2A4A75 100%) !default;
 
 // ============================================
 // Element Plus 主题变量覆盖

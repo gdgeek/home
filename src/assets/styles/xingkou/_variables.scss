@@ -1,44 +1,55 @@
 // ============================================
-// 星扣品牌设计变量 - 严肃教育风格
-// 面向中国大陆教育市场，简体中文
-// 稳重、专业、教育感
+// 星扣品牌设计变量 - 科技感专业风格
+// 面向数字化服务企业，科技感与专业感
 // ============================================
 
-// 主色调 - 教育蓝色系（国内教育平台常用）
-$xingkou-primary: #2563EB;        // 教育蓝主色
-$xingkou-primary-light: #3B82F6;  // 浅蓝
-$xingkou-primary-dark: #1D4ED8;   // 深蓝
-$xingkou-secondary: #0EA5E9;      // 天蓝辅助
-$xingkou-accent: #DC2626;         // 红色强调（中国红）
+// 主色调 - 浅蓝色系
+$xingkou-primary: #3B82F6;        // 浅蓝色主色
+$xingkou-primary-light: #93C5FD;  // 浅蓝色 (更浅)
+$xingkou-primary-dark: #2563EB;   // 深蓝色 (更深)
+$xingkou-secondary: #60A5FA;      // 蓝色辅助
+$xingkou-accent: #BFDBFE;         // 浅蓝强调
 
-// 背景色 - 稳重灰白
-$xingkou-bg-primary: #FFFFFF;
-$xingkou-bg-secondary: #F1F5F9;   // 浅灰背景
-$xingkou-bg-card: #FFFFFF;
-$xingkou-bg-dark: #1E3A5F;        // 深蓝背景
+// 背景色 - 浅蓝色系层次
+$xingkou-bg-primary: #F0F9FF;
+$xingkou-bg-secondary: #E0F2FE;   // 浅蓝色背景
+$xingkou-bg-card: rgba(255, 255, 255, 0.95);  // 半透明白色卡片
+$xingkou-bg-dark: #DBEAFE;        // 浅蓝色背景
 
-// 文字颜色
-$xingkou-text-primary: #0F172A;   // 深色文字
-$xingkou-text-secondary: #334155;
-$xingkou-text-muted: #64748B;
+// 文字颜色 - 蓝色系（适配浅色背景）
+$xingkou-text-primary: #1E3A8A;   // 深蓝色文字（在浅色背景上可读）
+$xingkou-text-secondary: #3B82F6;   // 蓝色文字
+$xingkou-text-muted: #60A5FA;      // 浅蓝色文字
 $xingkou-text-light: #FFFFFF;
 
-// 渐变
-$xingkou-gradient-hero: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%);
-$xingkou-gradient-cta: linear-gradient(135deg, $xingkou-primary 0%, $xingkou-primary-dark 100%);
+// 渐变 - 浅蓝色系渐变
+$xingkou-gradient-hero: linear-gradient(135deg, #3B82F6 0%, #93C5FD 50%, #F0F9FF 100%);
+$xingkou-gradient-cta: linear-gradient(135deg, #60A5FA 0%, #3B82F6 100%);
+$xingkou-gradient-card: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 249, 255, 0.9) 100%);
+$xingkou-gradient-bg: linear-gradient(180deg, #DBEAFE 0%, #E0F2FE 20%, #F0F9FF 100%);
 
-// 阴影
-$xingkou-shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.06);
-$xingkou-shadow-md: 0 4px 12px rgba(15, 23, 42, 0.08);
-$xingkou-shadow-lg: 0 12px 32px rgba(15, 23, 42, 0.12);
+// 阴影 - 浅蓝色系
+$xingkou-shadow-sm: 0 1px 3px rgba(59, 130, 246, 0.08);
+$xingkou-shadow-md: 0 4px 12px rgba(59, 130, 246, 0.12);
+$xingkou-shadow-lg: 0 12px 32px rgba(59, 130, 246, 0.15);
+$xingkou-shadow-glow: 0 0 20px rgba(96, 165, 250, 0.25);  // 浅蓝色发光效果
+$xingkou-shadow-inset: inset 0 1px 3px rgba(59, 130, 246, 0.08);  // 内阴影
 
-// 边框
-$xingkou-border-color: #E2E8F0;
+// 边框 - 浅蓝色系
+$xingkou-border-color: rgba(59, 130, 246, 0.15);
 $xingkou-border-radius-sm: 6px;
 $xingkou-border-radius-md: 8px;
 $xingkou-border-radius-lg: 12px;
 $xingkou-border-radius-xl: 16px;
 $xingkou-border-radius-full: 9999px;
+
+// 科技感效果（优化透明度）
+$xingkou-blur-sm: 4px;
+$xingkou-blur-md: 8px;
+$xingkou-blur-lg: 16px;
+$xingkou-opacity-light: 0.8;  // 提高不透明度
+$xingkou-opacity-medium: 0.6;  // 提高不透明度
+$xingkou-opacity-heavy: 0.4;   // 提高不透明度
 
 // 间距
 $xingkou-spacing-xs: 4px;
