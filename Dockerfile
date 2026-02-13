@@ -1,18 +1,35 @@
-# 生产环境 Dockerfile
-# 使用 nginx 托管静态文件
+# 多阶段构建 Dockerfile
+# 支持通过 VITE_TARGET_DOMAIN 构建参数区分品牌
 
+# 阶段1: 构建
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm ci
+
+COPY . .
+
+# 构建参数 - 通过 --build-arg 传入目标域名
+ARG VITE_TARGET_DOMAIN
+ARG VITE_WORDPRESS_API_URL
+ARG VITE_BACKEND_API_URL
+
+ENV VITE_TARGET_DOMAIN=${VITE_TARGET_DOMAIN}
+ENV VITE_WORDPRESS_API_URL=${VITE_WORDPRESS_API_URL}
+ENV VITE_BACKEND_API_URL=${VITE_BACKEND_API_URL}
+
+RUN npm run build
+
+# 阶段2: 运行
 FROM nginx:alpine
 
-# 复制构建产物到 nginx 目录
-COPY dist/ /usr/share/nginx/html/
-
-# 复制 nginx 配置
+COPY --from=builder /app/dist/ /usr/share/nginx/html/
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# 暴露端口
 EXPOSE 80
 
-# 健康检查
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
   CMD wget --quiet --tries=1 --spider http://localhost/ || exit 1
 
