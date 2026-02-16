@@ -4,20 +4,20 @@
 # 请根据实际情况修改以下配置:
 # - VITE_WORDPRESS_API_URL: 你的 WordPress API 地址
 # - VITE_BACKEND_API_URL: 你的后端 API 地址
+# - TCR_REGISTRY: 镜像仓库地址
+# - TCR_NAMESPACE: 镜像命名空间
 
 version: '3.8'
 
 services:
   # 前端应用 - Nginx 生产服务器
   frontend:
-    image: ${TCR_REGISTRY:-ccr.ccs.tencentyun.com}/${TCR_NAMESPACE:-your-namespace}/xiading-home:latest
+    image: hkccr.ccs.tencentyun.com/gdgeek/xiading:latest
     ports:
       - "80:80"
     environment:
-      # 修改为你的 WordPress API 地址
-      - VITE_WORDPRESS_API_URL=https://your-wordpress-domain.com/wp-json
-      # 修改为你的后端 API 地址
-      - VITE_BACKEND_API_URL=https://api.yourdomain.com/api
+      VITE_WORDPRESS_API_URL: https://your-wordpress-domain.com/wp-json
+      VITE_BACKEND_API_URL: https://api.yourdomain.com/api
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "-q", "--spider", "http://localhost/"]
