@@ -6,7 +6,7 @@
  * @requirements 1.1, 1.2, 1.3, 1.4
  */
 
-import { getBrandConfig, isValidBrandId } from './brandRegistry'
+import { getBrandConfig } from './brandRegistry'
 import type { BrandConfig, BrandId } from '@/types/brand'
 
 // ============================================
