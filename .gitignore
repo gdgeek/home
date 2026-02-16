@@ -33,4 +33,5 @@ dist-ssr
 
 # Docker 数据目录
 mysql/data/
+wordpress/
 wordpress/wp-content/uploads/
