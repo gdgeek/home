@@ -91,8 +91,6 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
             VITE_TARGET_DOMAIN=${{ matrix.target_domain }}
-            VITE_WORDPRESS_API_URL=${{ secrets.VITE_WORDPRESS_API_URL }}
-            VITE_BACKEND_API_URL=${{ secrets.VITE_BACKEND_API_URL }}
           cache-from: type=gha,scope=${{ matrix.brand }}
           cache-to: type=gha,mode=max,scope=${{ matrix.brand }}
 

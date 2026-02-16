@@ -1,0 +1,46 @@
+# 生产环境 docker-compose 配置示例
+# 使用方法: docker-compose -f docker-compose.prod.yml up -d
+#
+# 请根据实际情况修改以下配置:
+# - VITE_WORDPRESS_API_URL: 你的 WordPress API 地址
+# - VITE_BACKEND_API_URL: 你的后端 API 地址
+
+version: '3.8'
+
+services:
+  # 前端应用 - Nginx 生产服务器
+  frontend:
+    image: ${TCR_REGISTRY:-ccr.ccs.tencentyun.com}/${TCR_NAMESPACE:-your-namespace}/xiading-home:latest
+    ports:
+      - "80:80"
+    environment:
+      # 修改为你的 WordPress API 地址
+      - VITE_WORDPRESS_API_URL=https://your-wordpress-domain.com/wp-json
+      # 修改为你的后端 API 地址
+      - VITE_BACKEND_API_URL=https://api.yourdomain.com/api
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+  # WordPress 服务 (可选，如果使用外部 WordPress 可删除)
+  # wordpress:
+  #   image: wordpress:latest
+  #   ports:
+  #     - "8080:80"
+  #   environment:
+  #     WORDPRESS_DB_HOST: mysql
+  #     WORDPRESS_DB_USER: wordpress
+  #     WORDPRESS_DB_PASSWORD: your_password
+  #     WORDPRESS_DB_NAME: wordpress
+
+  # MySQL 数据库 (可选，如果使用外部数据库可删除)
+  # mysql:
+  #   image: mysql:8.0
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: root_password
+  #     MYSQL_DATABASE: wordpress
+  #     MYSQL_USER: wordpress
+  #     MYSQL_PASSWORD: your_password
