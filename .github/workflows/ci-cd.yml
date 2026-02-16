@@ -55,7 +55,7 @@ jobs:
             target_domain: https://d.ar-creator.cn
           - brand: xiading
             image_name: xiading
-            target_domain: https://d.xiading.hxgxonline.com/
+            target_domain: https://xiading.hxgxonline.com
 
     steps:
       - name: Checkout code
