@@ -3,7 +3,7 @@
  * 夏鼎品牌首頁 - 教育AR創作平台（澳門版）
  * 專業藍色主題，繁體中文
  */
-import { ref, onMounted, onUnmounted, Transition } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useBrand } from '@/composables/useBrand'
 import { useNews } from '@/composables/useNews'
 import { School, User, OfficeBuilding, FolderOpened, EditPen, Share, Monitor, VideoCamera, View } from '@element-plus/icons-vue'
