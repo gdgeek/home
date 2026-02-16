@@ -7,8 +7,8 @@ on:
     branches: [main]
 
 env:
-  TCR_REGISTRY: ccr.ccs.tencentyun.com
-  TCR_NAMESPACE: ${{ secrets.TCR_NAMESPACE }}
+  TCR_REGISTRY: hkccr.ccs.tencentyun.com
+  TCR_NAMESPACE: gdgeek
 
 jobs:
   # ==========================================
