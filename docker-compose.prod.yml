@@ -1,0 +1,48 @@
+version: "3.7"
+
+services:
+  web:
+    image: hkccr.ccs.tencentyun.com/gdgeek/xiading:latest
+    environment:
+      - VITE_WORDPRESS_API_URL=https://your-wordpress.com/wp-json
+      - VITE_BACKEND_API_URL=https://api.yourdomain.com/api
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.e_xiading_hxgxonline_com-secure.entrypoints=websecure"
+      - "traefik.http.routers.e_xiading_hxgxonline_com-secure.rule=Host(`xiading.hxgxonline.com`)"
+      - "traefik.http.routers.e_xiading_hxgxonline_com-secure.middlewares=test-compress@file"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+    networks:
+      - proxy
+
+  wordpress:
+    image: wordpress:latest
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=proxy"
+      - "traefik.http.routers.blog_hxgxonline_com-secure.entrypoints=websecure"
+      - "traefik.http.routers.blog_hxgxonline_com-secure.rule=Host(`blog.hxgxonline.com`)"
+      - "traefik.http.routers.blog_hxgxonline_com-secure.middlewares=test-compress@file"
+    environment:
+      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: asd!@#$!@$sfsfaaf32rkSDFAfes
+      WORDPRESS_DB_NAME: wordpress
+
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: aR00t!@$sfsfaaf32rkSDFAfes
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: asd!@#$!@$sfsfaaf32rkSDFAfes
+
+networks:
+  proxy:
+    external: true
