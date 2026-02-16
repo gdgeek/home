@@ -103,7 +103,15 @@ const createHttpClient = (instance: AxiosInstance): HttpClient => ({
    * @returns Promise<T>
    */
   get<T>(url: string, params?: Record<string, unknown>): Promise<T> {
-    return instance.get(url, { params }) as Promise<T>
+    // 处理 index.php?rest_route= 格式的 baseURL
+    const baseURL = instance.defaults.baseURL || ''
+    let finalUrl = url
+    
+    if (baseURL.includes('index.php?rest_route=')) {
+      finalUrl = url
+    }
+    
+    return instance.get(finalUrl, { params }) as Promise<T>
   },
 
   /**

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API 测试页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        h1 { color: #333; }
+        .test-section { margin: 30px 0; padding: 20px; border: 1px solid #eee; border-radius: 8px; }
+        button { padding: 10px 20px; font-size: 16px; background: #409eff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #66b1ff; }
+        pre { background: #f5f5f5; padding: 15px; border-radius: 4px; overflow-x: auto; }
+        .success { color: #67c23a; }
+        .error { color: #f56c6c; }
+    </style>
+</head>
+<body>
+    <h1>WordPress API 测试页面</h1>
+    
+    <div class="test-section">
+        <h2>测试 1: 获取新闻列表</h2>
+        <button onclick="testGetNews()">获取新闻</button>
+        <div id="test1-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>测试 2: 获取分类</h2>
+        <button onclick="testGetCategories()">获取分类</button>
+        <div id="test2-result"></div>
+    </div>
+
+    <script>
+        async function testGetNews() {
+            const resultEl = document.getElementById('test1-result');
+            resultEl.innerHTML = '<p>正在请求...</p>';
+            
+            try {
+                console.log('测试 1: 开始请求新闻...');
+                const response = await fetch('/index.php?rest_route=/wp/v2/posts&_embed&per_page=4');
+                console.log('测试 1: 响应状态', response.status);
+                
+                if (!response.ok) {
+                    throw new Error('HTTP 错误: ' + response.status);
+                }
+                
+                const data = await response.json();
+                console.log('测试 1: 数据', data);
+                
+                resultEl.innerHTML = `
+                    <p class="success">✅ 成功获取 ${data.length} 条新闻</p>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+            } catch (err) {
+                console.error('测试 1: 错误', err);
+                resultEl.innerHTML = `<p class="error">❌ 失败: ${err.message}</p><pre>${err.stack || ''}</pre>`;
+            }
+        }
+
+        async function testGetCategories() {
+            const resultEl = document.getElementById('test2-result');
+            resultEl.innerHTML = '<p>正在请求...</p>';
+            
+            try {
+                console.log('测试 2: 开始请求分类...');
+                const response = await fetch('/index.php?rest_route=/wp/v2/categories&per_page=100&hide_empty=false');
+                console.log('测试 2: 响应状态', response.status);
+                
+                if (!response.ok) {
+                    throw new Error('HTTP 错误: ' + response.status);
+                }
+                
+                const data = await response.json();
+                console.log('测试 2: 数据', data);
+                
+                resultEl.innerHTML = `
+                    <p class="success">✅ 成功获取 ${data.length} 个分类</p>
+                    <pre>${JSON.stringify(data, null, 2)}</pre>
+                `;
+            } catch (err) {
+                console.error('测试 2: 错误', err);
+                resultEl.innerHTML = `<p class="error">❌ 失败: ${err.message}</p><pre>${err.stack || ''}</pre>`;
+            }
+        }
+
+        // 页面加载后自动运行两个测试
+        window.addEventListener('load', () => {
+            console.log('页面加载完成！开始自动测试...');
+            setTimeout(() => testGetNews(), 500);
+            setTimeout(() => testGetCategories(), 1000);
+        });
+    </script>
+</body>
+</html>
