@@ -51,10 +51,10 @@ jobs:
       matrix:
         include:
           - brand: xingkou
-            image_name: xingkou-home
+            image_name: xingkou
             target_domain: https://d.ar-creator.cn
           - brand: xiading
-            image_name: xiading-home
+            image_name: xiading
             target_domain: https://d.xiading.hxgxonline.com/
 
     steps:
