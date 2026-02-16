@@ -1,34 +1,44 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import path from 'path'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
-import path from 'path'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [
-    vue(),
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag.startsWith('swiper-')
+        }
+      }
+    }),
     AutoImport({
       resolvers: [ElementPlusResolver()],
-      dts: 'src/auto-imports.d.ts',
     }),
     Components({
       resolvers: [ElementPlusResolver()],
-      dts: 'src/components.d.ts',
     }),
   ],
-  css: {
-    preprocessorOptions: {
-      scss: {
-        // Make variables and mixins available in all Vue component styles
-        additionalData: `@use "@/assets/styles/variables" as *;`,
-      },
-    },
-  },
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
+    },
+  },
+  server: {
+    host: '0.0.0.0',
+    port: 5173,
+    strictPort: true,
+    watch: {
+      usePolling: true,
+      interval: 1000,
+    },
+    proxy: {
+      '/index.php': {
+        target: 'http://wordpress:80',
+        changeOrigin: true,
+      },
     },
   },
 })

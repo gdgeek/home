@@ -6,6 +6,7 @@
  */
 
 import { ref, onMounted } from 'vue'
+import axios from 'axios'
 import { wordpressApi } from '@/services/wordpressApi'
 import type { NewsItem, NewsQueryParams } from '@/types'
 
@@ -69,21 +70,37 @@ export function useNews(autoFetch: boolean = true): UseNewsReturn {
 
     try {
       // 调用WordPress API获取新闻 (_Requirements: 8.1_)
+      console.log('useNews: Starting to fetch news...')
       const result = await wordpressApi.getNews(params)
+      console.log('useNews: News fetched successfully, count:', result.length)
       
       // 成功：设置新闻数据，清除错误 (_Requirements: 8.2_)
       news.value = result
       error.value = null
     } catch (err) {
       // 失败：设置错误信息 (_Requirements: 8.3_)
-      console.error('Failed to fetch news:', err)
+      console.error('useNews: Failed to fetch news:', err)
+      console.error('useNews: Error details:', JSON.stringify(err, null, 2))
       
       // 提取错误信息
-      if (err && typeof err === 'object' && 'message' in err) {
-        error.value = (err as { message: string }).message
-      } else {
-        error.value = '新闻加载失败，请稍后重试'
+      let errorMsg = '新闻加载失败，请稍后重试'
+      
+      if (axios.isAxiosError(err)) {
+        if (err.response) {
+          // 服务器返回错误
+          errorMsg = `服务器错误 (${err.response.status}): ${JSON.stringify(err.response.data)}`
+        } else if (err.request) {
+          // 请求发出但没有收到响应
+          errorMsg = '网络连接失败，请检查网络后重试'
+        } else {
+          // 请求配置出错
+          errorMsg = `请求配置错误: ${err.message}`
+        }
+      } else if (err && typeof err === 'object' && 'message' in err) {
+        errorMsg = (err as { message: string }).message
       }
+      
+      error.value = errorMsg
       
       // 保留之前的数据（如果有）
       // news.value 保持不变

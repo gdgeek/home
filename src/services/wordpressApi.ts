@@ -5,7 +5,7 @@
  * _Requirements: 8.1, 8.2_
  */
 
-import { wordpressHttpClient } from './httpClient'
+import axios from 'axios'
 import type { NewsItem, NewsCategory, NewsQueryParams } from '@/types'
 
 // ============================================
@@ -182,11 +182,13 @@ export const wordpressApi: WordPressApiService = {
    * @returns Promise<NewsItem[]>
    */
   async getNews(params?: NewsQueryParams): Promise<NewsItem[]> {
+    console.log('wordpressApi.getNews - 开始获取新闻...')
+    
     // 构建查询参数
-    const queryParams: Record<string, unknown> = {
-      _embed: 'wp:featuredmedia,wp:term', // 嵌入特色图片和分类信息
-      per_page: params?.perPage ?? 10,
-      page: params?.page ?? 1
+    const queryParams: Record<string, string> = {
+      _embed: 'wp:featuredmedia,wp:term',
+      per_page: String(params?.perPage ?? 10),
+      page: String(params?.page ?? 1)
     }
 
     // 添加分类过滤
@@ -194,11 +196,19 @@ export const wordpressApi: WordPressApiService = {
       queryParams.categories = params.categories.join(',')
     }
 
+    // 请求相对路径 (Vite 代理)
+    const url = '/index.php?rest_route=/wp/v2/posts'
+    console.log('wordpressApi.getNews - 请求URL:', url)
+    console.log('wordpressApi.getNews - 查询参数:', queryParams)
+
     // 获取分类映射表
     const categoriesMap = await getCategoriesMap()
 
     // 请求WordPress REST API
-    const posts = await wordpressHttpClient.get<WPPost[]>('/wp/v2/posts', queryParams)
+    const response = await axios.get<WPPost[]>(url, { params: queryParams })
+    console.log('wordpressApi.getNews - 响应状态:', response.status)
+    console.log('wordpressApi.getNews - 响应数据:', response.data)
+    const posts = response.data
 
     // 转换数据格式
     return posts.map(post => transformPost(post, categoriesMap))
@@ -209,11 +219,22 @@ export const wordpressApi: WordPressApiService = {
    * @returns Promise<NewsCategory[]>
    */
   async getCategories(): Promise<NewsCategory[]> {
+    console.log('wordpressApi.getCategories - 开始获取分类...')
+    
+    // 请求相对路径 (Vite 代理)
+    const url = '/index.php?rest_route=/wp/v2/categories'
+    console.log('wordpressApi.getCategories - 请求URL:', url)
+
     // 请求WordPress REST API
-    const categories = await wordpressHttpClient.get<WPCategory[]>('/wp/v2/categories', {
-      per_page: 100, // 获取所有分类
-      hide_empty: false // 包含空分类
+    const response = await axios.get<WPCategory[]>(url, {
+      params: {
+        per_page: '100',
+        hide_empty: 'false'
+      }
     })
+    console.log('wordpressApi.getCategories - 响应状态:', response.status)
+    console.log('wordpressApi.getCategories - 响应数据:', response.data)
+    const categories = response.data
 
     // 转换数据格式
     return categories.map(transformCategory)
