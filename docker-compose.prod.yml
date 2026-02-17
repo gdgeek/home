@@ -2,28 +2,19 @@ version: "3"
 
 services:
     frontend:
-        image: hkccr.ccs.tencentyun.com/gdgeek/xiading:latest
-        restart: always
+        image: hkccr.ccs.tencentyun.com/gdgeek/home:latest
+        ports:
+            - "80:80"
         environment:
-            - VITE_WORDPRESS_API_URL=https://blog.hxgxonline.com/wp-json
-            - VITE_BACKEND_API_URL=https://api.yourdomain.com/api
-        networks:
-            - proxy
-            - default
-        labels:
-            - "traefik.enable=true"
-            - "traefik.docker.network=proxy"
-            - "traefik.http.routers.e_xiading_hxgxonline_com-secure.entrypoints=websecure"
-            - "traefik.http.routers.e_xiading_hxgxonline_com-secure.rule=Host(`xiading.hxgxonline.com`)"
-            - "traefik.http.routers.e_xiading_hxgxonline_com-secure.middlewares=test-compress@file"
-        depends_on:
-            - wordpress
+            - BRAND=xiading
+        restart: always
 
     wordpress:
         depends_on:
             - db
         image: wordpress:latest
-        restart: always
+        ports:
+            - "8080:80"
         environment:
             - WORDPRESS_DB_HOST=db:3306
             - WORDPRESS_DB_USER=wordpress
@@ -31,19 +22,10 @@ services:
             - WORDPRESS_DB_NAME=wordpress
         volumes:
             - blog-data:/var/www/html
-        networks:
-            - proxy
-            - default
-        labels:
-            - "traefik.enable=true"
-            - "traefik.docker.network=proxy"
-            - "traefik.http.routers.blog_hxgxonline_com-secure.entrypoints=websecure"
-            - "traefik.http.routers.blog_hxgxonline_com-secure.rule=Host(`blog.hxgxonline.com`)"
-            - "traefik.http.routers.blog_hxgxonline_com-secure.middlewares=test-compress@file"
+        restart: always
 
     db:
         image: mysql:8.0
-        restart: always
         volumes:
             - sql-data:/var/lib/mysql
         environment:
@@ -51,15 +33,8 @@ services:
             - MYSQL_DATABASE=wordpress
             - MYSQL_USER=wordpress
             - MYSQL_PASSWORD=w0rdp2ess
-        networks:
-            - default
+        restart: always
 
 volumes:
     sql-data:
     blog-data:
-
-networks:
-    proxy:
-        external: true
-    default:
-        driver: bridge

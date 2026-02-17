@@ -119,6 +119,16 @@ Element Plus 组件和 Vue API 已配置自动导入，无需手动 import：
 }
 ```
 
+## 开发环境说明
+
+- **Node 版本**: 推荐使用 Node.js 18 LTS（例如 18.18+），避免使用过旧版本。
+- **包管理器**: 默认使用 `npm`（项目基于 `package-lock.json` 锁定依赖，不建议混用 `pnpm` / `yarn` 安装）。
+- **常用命令**:
+  - 安装依赖：`npm install`
+  - 本地开发：`npm run dev`
+  - 生产构建：`npm run build`
+  - 本地预览构建产物：`npm run preview`
+
 ## License
 
 Private

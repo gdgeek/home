@@ -56,6 +56,19 @@ async function main() {
       return;
     }
 
+    // Lightweight debug log to确认 hook 是否被真正调用。
+    // 只记录时间戳和是否拿到 payload，不记录任何对话内容。
+    try {
+      const debugDir = path.join(process.cwd(), '.cursor');
+      ensureDirSync(debugDir);
+      const debugFile = path.join(debugDir, 'hook-debug.log');
+      const { date, time } = getTodayParts();
+      const line = `[${date} ${time}] stop hook invoked, rawLength=${raw ? raw.length : 0}\n`;
+      fs.appendFileSync(debugFile, line, 'utf8');
+    } catch {
+      // ignore debug logging failure
+    }
+
     let event;
     try {
       event = JSON.parse(raw);
@@ -81,13 +94,6 @@ async function main() {
       meta.assistantOutput ||
       '';
 
-    // If nothing meaningful, just skip logging.
-    if (!lastUserMessage && !lastAssistantMessage) {
-      process.stdout.write('{"followup_message":"nothing to log"}\n');
-      process.exit(0);
-      return;
-    }
-
     const { date, time } = getTodayParts();
     const workspaceRoot = process.cwd();
     const logsDir = path.join(workspaceRoot, '.cursor', 'logs');
@@ -107,8 +113,8 @@ async function main() {
     const block =
       `---\n` +
       `### [${time}]\n` +
-      `**问题：** ${questionSummary || '（无）'}\n` +
-      `**解决：** ${answerSummary || '（无）'}\n` +
+      `**问题：** ${questionSummary || '（本次交互未检测到用户问题内容）'}\n` +
+      `**解决：** ${answerSummary || '（本次交互未检测到助手回复内容）'}\n` +
       `**涉及文件：** 无\n` +
       `---\n\n`;
 

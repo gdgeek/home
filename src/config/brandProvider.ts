@@ -54,6 +54,18 @@ function getBrandIdFromDomain(targetDomain: string): BrandId {
   return DOMAIN_BRAND_MAP[hostname] || DEFAULT_BRAND_ID
 }
 
+/**
+ * 获取当前品牌ID - 优先使用 VITE_BRAND_ID 环境变量
+ */
+function getCurrentBrandIdInternal(): BrandId {
+  const brandId = import.meta.env.VITE_BRAND_ID
+  if (brandId === 'xingkou' || brandId === 'xiading') {
+    return brandId
+  }
+  const targetDomain = import.meta.env.VITE_TARGET_DOMAIN || ''
+  return getBrandIdFromDomain(targetDomain)
+}
+
 // ============================================
 // 品牌配置获取函数
 // ============================================
@@ -73,9 +85,7 @@ function getBrandIdFromDomain(targetDomain: string): BrandId {
  * @requirements 1.1, 1.2, 1.3, 1.4
  */
 export function getCurrentBrandConfig(): BrandConfig {
-  const targetDomain = import.meta.env.VITE_TARGET_DOMAIN || ''
-  const brandId = getBrandIdFromDomain(targetDomain)
-  
+  const brandId = getCurrentBrandIdInternal()
   return getBrandConfig(brandId)!
 }
 
@@ -93,8 +103,7 @@ export function getCurrentBrandConfig(): BrandConfig {
  * @requirements 1.1, 1.2, 1.3
  */
 export function getCurrentBrandId(): BrandId {
-  const targetDomain = import.meta.env.VITE_TARGET_DOMAIN || ''
-  return getBrandIdFromDomain(targetDomain)
+  return getCurrentBrandIdInternal()
 }
 
 /**

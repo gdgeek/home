@@ -1,0 +1,8 @@
+services:
+    frontend:
+        image: xiading-test:latest
+        ports:
+            - "9998:80"
+        environment:
+            - BRAND=xingkou
+        restart: always

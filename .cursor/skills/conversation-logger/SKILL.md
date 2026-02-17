@@ -1,6 +1,6 @@
 ---
 name: conversation-logger
-description: Logs each Cursor agent execution by appending a brief entry with timestamp, request, and response summary to a per-day markdown log file under .cursor/logs. Use whenever handling a user query in this repository and conversation logging is desired.
+description: Automatically logs each Cursor agent interaction by appending a brief entry with timestamp, request, and response summary to a per-day markdown log file under .cursor/logs. MUST be applied at the end of EVERY user interaction in this repository to maintain a complete work log.
 ---
 
 # Conversation Logger
@@ -11,9 +11,12 @@ description: Logs each Cursor agent execution by appending a brief entry with ti
 
 ### When to use this skill
 
+**CRITICAL: This skill MUST be applied automatically at the end of EVERY user interaction in this repository.**
+
 - The current workspace is this repository.
-- The user has asked to "record", "log", or "trace" conversations, or explicitly mentioned a "Cursor hook" for logging.
-- By default, assume conversation logging is desired in this project unless the user asks to disable it.
+- **After completing any user request** (whether it involved code changes, analysis, or just answering questions), you MUST automatically append a log entry to `.cursor/logs/YYYY-MM-DD.md` before finishing your response.
+- This is a mandatory step - do not skip it unless explicitly asked to disable logging.
+- Even if the interaction was just a question/answer without code changes, still log it (but mark "涉及文件" as "无").
 
 ### What to log
 
@@ -35,7 +38,7 @@ description: Logs each Cursor agent execution by appending a brief entry with ti
 
 - `HH:MM`：本地时间，24 小时制，到分钟即可（不必精确到秒）。
 - 日志块之间用 `---` 分隔，方便快速扫一眼看到每次工作。
-- 如果本次对话只是闲聊、确认一句话，或没有任何实质性动作，可以选择**不写入**日志，避免噪音。
+- **重要**：即使本次对话只是简单问答或确认，也要记录（标记"涉及文件"为"无"），保持日志的完整性。
 
 Avoid:
 - Copying large code blocks into the log.
