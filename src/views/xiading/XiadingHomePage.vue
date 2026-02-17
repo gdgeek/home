@@ -3,7 +3,7 @@
  * 夏鼎品牌首頁 - 教育AR創作平台（澳門版）
  * 專業藍色主題，繁體中文
  */
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useBrand } from '@/composables/useBrand'
 import { useNews } from '@/composables/useNews'
 import { School, User, OfficeBuilding, FolderOpened, EditPen, Share, Monitor, VideoCamera, View } from '@element-plus/icons-vue'
@@ -30,9 +30,10 @@ const handleOpenNewsDetail = (item: any) => {
   showNewsModal.value = true
 }
 
-const handleViewMoreNews = () => {
-  window.open('http://localhost:8080/', '_blank')
-}
+// WordPress 博客地址（从运行时配置中获取）
+const blogUrl = computed(() => {
+  return (window as any).__WORDPRESS_API_URL__ || 'https://blog.hxgxonline.com'
+})
 
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString)
@@ -162,19 +163,20 @@ const footerNavigation = [
       <div class="section-container">
         <h2 class="section-title">新聞動態</h2>
         <p class="section-subtitle">了解平台最新資訊與行業動態</p>
-        
+
         <!-- News List -->
         <div class="news__grid">
-          <div v-for="(item, index) in news" :key="item.id" class="news-card animate-delay" :style="{ animationDelay: `${index * 0.15}s` }" @click="handleOpenNewsDetail(item)">
+          <div v-for="(item, index) in news" :key="item.id" class="news-card animate-delay"
+            :style="{ animationDelay: `${index * 0.15}s` }" @click="handleOpenNewsDetail(item)">
             <span class="news-card__category">{{ item.category.name }}</span>
             <h3 class="news-card__title">{{ item.title }}</h3>
             <p v-if="item.excerpt" class="news-card__excerpt">{{ item.excerpt }}</p>
             <span class="news-card__date">{{ formatDate(item.date) }}</span>
           </div>
         </div>
-        
+
         <div class="news__more">
-          <a href="#" class="news__more-link" @click.prevent="handleViewMoreNews">查看更多新聞 →</a>
+          <a :href="blogUrl" class="news__more-link" target="_blank" rel="noopener">查看更多新聞 →</a>
         </div>
       </div>
     </section>
@@ -185,7 +187,8 @@ const footerNavigation = [
         <h2 class="section-title">以AR之力，重構教育表達</h2>
         <p class="section-subtitle">我們為教育場景，重新定義AR創作</p>
         <div class="value__grid">
-          <div v-for="(item, index) in valueItems" :key="index" class="value-card animate-delay" :style="{ animationDelay: `${index * 0.15}s` }">
+          <div v-for="(item, index) in valueItems" :key="index" class="value-card animate-delay"
+            :style="{ animationDelay: `${index * 0.15}s` }">
             <div class="value-card__icon">
               <component :is="item.icon" :size="32" />
             </div>
@@ -202,7 +205,8 @@ const footerNavigation = [
         <h2 class="section-title">簡單操作，解鎖教育AR無限可能</h2>
         <p class="section-subtitle">零門檻操作，讓每位師生都能輕鬆創作</p>
         <div class="feature__grid">
-          <div v-for="(item, index) in featureItems" :key="index" class="feature-card animate-delay" :style="{ animationDelay: `${index * 0.2}s` }">
+          <div v-for="(item, index) in featureItems" :key="index" class="feature-card animate-delay"
+            :style="{ animationDelay: `${index * 0.2}s` }">
             <div class="feature-card__image">
               <img :src="item.image" :alt="item.title" />
             </div>
@@ -224,7 +228,8 @@ const footerNavigation = [
         <h2 class="section-title">AR賦能全學科，適配多元教學場景</h2>
         <p class="section-subtitle">從醫療到工業，從教育到娛樂，AR讓每個場景都生動起來</p>
         <div class="scene__grid">
-          <div v-for="(item, index) in sceneItems" :key="index" class="scene-card animate-delay" :style="{ animationDelay: `${index * 0.12}s` }">
+          <div v-for="(item, index) in sceneItems" :key="index" class="scene-card animate-delay"
+            :style="{ animationDelay: `${index * 0.12}s` }">
             <div class="scene-card__image">
               <img :src="item.image" :alt="item.title" />
               <span class="scene-card__tag">{{ item.tag }}</span>
@@ -247,7 +252,8 @@ const footerNavigation = [
         <h2 class="section-title">已有眾多澳門校園，用夏鼎解鎖AR教學新體驗</h2>
         <p class="section-subtitle">聽聽他們怎麼說</p>
         <div class="case__grid">
-          <div v-for="(item, index) in caseItems" :key="index" class="case-card animate-delay" :style="{ animationDelay: `${index * 0.18}s` }">
+          <div v-for="(item, index) in caseItems" :key="index" class="case-card animate-delay"
+            :style="{ animationDelay: `${index * 0.18}s` }">
             <p class="case-card__quote">"{{ item.quote }}"</p>
             <div class="case-card__author">
               <span class="case-card__name">{{ item.author }}</span>
@@ -308,7 +314,7 @@ const footerNavigation = [
           <div class="news-modal-container">
             <button class="news-modal-close" @click="showNewsModal = false">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
               </svg>
             </button>
             <div v-if="selectedNews" class="news-modal-content">
@@ -342,24 +348,24 @@ const footerNavigation = [
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  
+
   ::selection {
     background: rgba($xiading-primary, 0.2);
     color: $xiading-text-primary;
   }
-  
+
   ::-webkit-scrollbar {
     width: 10px;
   }
-  
+
   ::-webkit-scrollbar-track {
     background: $xiading-bg-secondary;
   }
-  
+
   ::-webkit-scrollbar-thumb {
     background: linear-gradient(180deg, $xiading-primary, $xiading-primary-light);
     border-radius: 5px;
-    
+
     &:hover {
       background: linear-gradient(180deg, $xiading-primary-dark, $xiading-primary);
     }
@@ -381,7 +387,7 @@ const footerNavigation = [
   position: relative;
   display: inline-block;
   width: 100%;
-  
+
   &::after {
     content: '';
     position: absolute;
@@ -393,8 +399,10 @@ const footerNavigation = [
     background: $xiading-gradient-cta;
     border-radius: 2px;
   }
-  
-  @media (max-width: $xiading-breakpoint-mobile) { font-size: $xiading-font-size-xxl; }
+
+  @media (max-width: $xiading-breakpoint-mobile) {
+    font-size: $xiading-font-size-xxl;
+  }
 }
 
 .section-subtitle {
@@ -417,11 +425,11 @@ const footerNavigation = [
   border-bottom: 1px solid $xiading-border-color;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
   transition: all $xiading-transition-base;
-  
+
   &:hover {
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
   }
-  
+
   &__container {
     max-width: $xiading-container-max-width;
     margin: 0 auto;
@@ -430,17 +438,18 @@ const footerNavigation = [
     align-items: center;
     justify-content: space-between;
   }
-  
+
   &__logo {
     display: flex;
     align-items: baseline;
     gap: $xiading-spacing-xs;
     transition: transform $xiading-transition-fast;
+
     &:hover {
       transform: scale(1.02);
     }
   }
-  
+
   &__logo-text {
     font-size: $xiading-font-size-xl;
     font-weight: $xiading-font-weight-bold;
@@ -450,18 +459,21 @@ const footerNavigation = [
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  
+
   &__logo-sub {
     font-size: $xiading-font-size-sm;
     color: $xiading-text-secondary;
   }
-  
+
   &__nav {
     display: flex;
     gap: $xiading-spacing-xl;
-    @media (max-width: $xiading-breakpoint-tablet) { display: none; }
+
+    @media (max-width: $xiading-breakpoint-tablet) {
+      display: none;
+    }
   }
-  
+
   &__nav-link {
     font-size: $xiading-font-size-base;
     color: $xiading-text-secondary;
@@ -469,7 +481,7 @@ const footerNavigation = [
     transition: all $xiading-transition-fast;
     position: relative;
     padding: 4px 0;
-    
+
     &::after {
       content: '';
       position: absolute;
@@ -480,15 +492,16 @@ const footerNavigation = [
       background: $xiading-primary;
       transition: width $xiading-transition-base;
     }
-    
-    &:hover { 
+
+    &:hover {
       color: $xiading-primary;
+
       &::after {
         width: 100%;
       }
     }
   }
-  
+
   &__login-btn {
     padding: $xiading-spacing-sm $xiading-spacing-lg;
     background: $xiading-gradient-cta;
@@ -501,7 +514,7 @@ const footerNavigation = [
     box-shadow: 0 4px 15px rgba($xiading-primary, 0.3);
     position: relative;
     overflow: hidden;
-    
+
     &::before {
       content: '';
       position: absolute;
@@ -509,18 +522,19 @@ const footerNavigation = [
       left: -100%;
       width: 100%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
       transition: left 0.5s;
     }
-    
-    &:hover { 
-      transform: translateY(-2px); 
+
+    &:hover {
+      transform: translateY(-2px);
       box-shadow: 0 6px 25px rgba($xiading-primary, 0.4);
+
       &::before {
         left: 100%;
       }
     }
-    
+
     &:active {
       transform: translateY(0);
     }
@@ -542,7 +556,7 @@ const footerNavigation = [
   min-height: $xiading-touch-target-min;
   position: relative;
   overflow: hidden;
-  
+
   &::after {
     content: '';
     position: absolute;
@@ -555,34 +569,34 @@ const footerNavigation = [
     transform: translate(-50%, -50%);
     transition: width 0.6s, height 0.6s;
   }
-  
+
   &:active::after {
     width: 300px;
     height: 300px;
   }
-  
+
   &--primary {
     background: $xiading-gradient-cta;
     color: $xiading-text-light;
     box-shadow: 0 4px 20px rgba($xiading-primary, 0.3);
-    
-    &:hover { 
-      transform: translateY(-3px); 
+
+    &:hover {
+      transform: translateY(-3px);
       box-shadow: 0 8px 30px rgba($xiading-primary, 0.4);
     }
-    
+
     &:active {
       transform: translateY(-1px);
     }
   }
-  
+
   &--secondary {
     background: $xiading-bg-card;
     color: $xiading-primary;
     border: 2px solid $xiading-primary;
     position: relative;
     z-index: 1;
-    
+
     &::before {
       content: '';
       position: absolute;
@@ -594,17 +608,19 @@ const footerNavigation = [
       transition: width 0.3s ease;
       z-index: -1;
     }
-    
-    &:hover { 
+
+    &:hover {
       color: $xiading-text-light;
+
       &::before {
         width: 100%;
       }
+
       transform: translateY(-2px);
       box-shadow: 0 4px 15px rgba($xiading-primary, 0.2);
     }
   }
-  
+
   &--large {
     padding: $xiading-spacing-lg $xiading-spacing-xxl;
     font-size: $xiading-font-size-lg;
@@ -617,7 +633,7 @@ const footerNavigation = [
   background: $xiading-gradient-hero;
   position: relative;
   overflow: hidden;
-  
+
   &::before {
     content: '';
     position: absolute;
@@ -628,7 +644,7 @@ const footerNavigation = [
     background: radial-gradient(circle, rgba($xiading-primary, 0.05) 0%, transparent 70%);
     animation: float 20s ease-in-out infinite;
   }
-  
+
   &__container {
     max-width: $xiading-container-max-width;
     margin: 0 auto;
@@ -638,14 +654,18 @@ const footerNavigation = [
     gap: $xiading-spacing-xxxl;
     position: relative;
     z-index: 1;
-    @media (max-width: $xiading-breakpoint-tablet) { flex-direction: column; text-align: center; }
+
+    @media (max-width: $xiading-breakpoint-tablet) {
+      flex-direction: column;
+      text-align: center;
+    }
   }
-  
-  &__content { 
-    flex: 1; 
+
+  &__content {
+    flex: 1;
     animation: slideInLeft 0.8s ease-out;
   }
-  
+
   &__title {
     font-size: $xiading-font-size-hero;
     font-weight: $xiading-font-weight-bold;
@@ -655,31 +675,37 @@ const footerNavigation = [
     background-clip: text;
     margin-bottom: $xiading-spacing-sm;
     line-height: 1.2;
-    @media (max-width: $xiading-breakpoint-mobile) { font-size: $xiading-font-size-xxxl; }
+
+    @media (max-width: $xiading-breakpoint-mobile) {
+      font-size: $xiading-font-size-xxxl;
+    }
   }
-  
+
   &__subtitle {
     font-size: $xiading-font-size-xxl;
     color: $xiading-text-primary;
     margin-bottom: $xiading-spacing-lg;
     font-weight: $xiading-font-weight-semibold;
   }
-  
+
   &__desc {
     font-size: $xiading-font-size-lg;
     color: $xiading-text-secondary;
     line-height: $xiading-line-height-relaxed;
     margin-bottom: $xiading-spacing-xl;
   }
-  
+
   &__highlights {
     display: flex;
     flex-wrap: wrap;
     gap: $xiading-spacing-sm;
     margin-bottom: $xiading-spacing-xl;
-    @media (max-width: $xiading-breakpoint-tablet) { justify-content: center; }
+
+    @media (max-width: $xiading-breakpoint-tablet) {
+      justify-content: center;
+    }
   }
-  
+
   &__tag {
     padding: $xiading-spacing-xs $xiading-spacing-md;
     background: rgba($xiading-primary, 0.08);
@@ -688,28 +714,34 @@ const footerNavigation = [
     font-size: $xiading-font-size-sm;
     border: 1px solid rgba($xiading-primary, 0.2);
     transition: all $xiading-transition-fast;
-    
+
     &:hover {
       background: rgba($xiading-primary, 0.15);
       transform: translateY(-2px);
       box-shadow: 0 2px 8px rgba($xiading-primary, 0.15);
     }
   }
-  
+
   &__actions {
     display: flex;
     gap: $xiading-spacing-md;
-    @media (max-width: $xiading-breakpoint-tablet) { justify-content: center; }
-    @media (max-width: $xiading-breakpoint-mobile) { flex-direction: column; }
+
+    @media (max-width: $xiading-breakpoint-tablet) {
+      justify-content: center;
+    }
+
+    @media (max-width: $xiading-breakpoint-mobile) {
+      flex-direction: column;
+    }
   }
-  
+
   &__visual {
     flex: 1;
     max-width: 500px;
     animation: slideInRight 0.8s ease-out 0.2s both;
     position: relative;
   }
-  
+
   &__image {
     width: 100%;
     border-radius: $xiading-border-radius-xl;
@@ -717,13 +749,13 @@ const footerNavigation = [
     transition: all $xiading-transition-base;
     position: relative;
     z-index: 2;
-    
+
     &:hover {
       transform: scale(1.02) rotate(1deg);
       box-shadow: 0 20px 50px rgba($xiading-primary, 0.2);
     }
   }
-  
+
   &__visual::before {
     content: '';
     position: absolute;
@@ -744,12 +776,15 @@ const footerNavigation = [
   padding: $xiading-section-padding-y 0;
   background: $xiading-bg-card;
   position: relative;
-  
+
   &__grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: $xiading-spacing-xl;
-    @media (max-width: $xiading-breakpoint-tablet) { grid-template-columns: 1fr; }
+
+    @media (max-width: $xiading-breakpoint-tablet) {
+      grid-template-columns: 1fr;
+    }
   }
 }
 
@@ -762,7 +797,7 @@ const footerNavigation = [
   transition: all $xiading-transition-base $xiading-ease-out;
   position: relative;
   overflow: hidden;
-  
+
   &::before {
     content: '';
     position: absolute;
@@ -774,17 +809,17 @@ const footerNavigation = [
     transform: scaleX(0);
     transition: transform 0.4s ease;
   }
-  
-  &:hover { 
-    transform: translateY(-8px); 
+
+  &:hover {
+    transform: translateY(-8px);
     box-shadow: 0 20px 40px rgba($xiading-primary, 0.15);
     border-color: rgba($xiading-primary, 0.3);
-    
+
     &::before {
       transform: scaleX(1);
     }
   }
-  
+
   &__icon {
     width: 64px;
     height: 64px;
@@ -799,18 +834,18 @@ const footerNavigation = [
     transition: all $xiading-transition-base;
     position: relative;
     z-index: 1;
-    
+
     svg {
       width: 32px !important;
       height: 32px !important;
     }
-    
+
     .value-card:hover & {
       transform: scale(1.1) rotate(5deg);
       box-shadow: 0 12px 30px rgba($xiading-primary, 0.4);
     }
   }
-  
+
   &__title {
     font-size: $xiading-font-size-xl;
     font-weight: $xiading-font-weight-semibold;
@@ -819,7 +854,7 @@ const footerNavigation = [
     position: relative;
     z-index: 1;
   }
-  
+
   &__desc {
     font-size: $xiading-font-size-base;
     color: $xiading-text-secondary;
@@ -834,12 +869,15 @@ const footerNavigation = [
   padding: $xiading-section-padding-y 0;
   background: $xiading-bg-secondary;
   position: relative;
-  
+
   &__grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: $xiading-spacing-xl;
-    @media (max-width: $xiading-breakpoint-tablet) { grid-template-columns: 1fr; }
+
+    @media (max-width: $xiading-breakpoint-tablet) {
+      grid-template-columns: 1fr;
+    }
   }
 }
 
@@ -850,7 +888,7 @@ const footerNavigation = [
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
   transition: all $xiading-transition-base $xiading-ease-out;
   position: relative;
-  
+
   &::after {
     content: '';
     position: absolute;
@@ -863,39 +901,39 @@ const footerNavigation = [
     transition: all $xiading-transition-base;
     pointer-events: none;
   }
-  
-  &:hover { 
-    transform: translateY(-8px); 
+
+  &:hover {
+    transform: translateY(-8px);
     box-shadow: 0 20px 50px rgba($xiading-primary, 0.15);
-    
+
     &::after {
       border-color: rgba($xiading-primary, 0.3);
     }
   }
-  
+
   &__image {
     height: 220px;
     overflow: hidden;
     position: relative;
-    
-    img { 
-      width: 100%; 
-      height: 100%; 
+
+    img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       transition: transform 0.6s ease;
     }
-    
+
     .feature-card:hover & img {
       transform: scale(1.1);
     }
   }
-  
-  &__content { 
-    padding: $xiading-spacing-lg; 
+
+  &__content {
+    padding: $xiading-spacing-lg;
     position: relative;
     z-index: 1;
   }
-  
+
   &__icon {
     width: 40px;
     height: 40px;
@@ -908,24 +946,24 @@ const footerNavigation = [
     color: $xiading-text-light;
     box-shadow: 0 4px 12px rgba($xiading-primary, 0.25);
     transition: transform 0.3s ease;
-    
+
     svg {
       width: 20px !important;
       height: 20px !important;
     }
-    
+
     .feature-card:hover & {
       transform: scale(1.1);
     }
   }
-  
+
   &__title {
     font-size: $xiading-font-size-lg;
     font-weight: $xiading-font-weight-semibold;
     margin-bottom: $xiading-spacing-sm;
     color: $xiading-text-primary;
   }
-  
+
   &__desc {
     font-size: $xiading-font-size-base;
     color: $xiading-text-secondary;
@@ -937,13 +975,19 @@ const footerNavigation = [
 .scene {
   padding: $xiading-section-padding-y 0;
   background: $xiading-bg-card;
-  
+
   &__grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: $xiading-spacing-lg;
-    @media (max-width: $xiading-breakpoint-desktop) { grid-template-columns: repeat(2, 1fr); }
-    @media (max-width: $xiading-breakpoint-mobile) { grid-template-columns: 1fr; }
+
+    @media (max-width: $xiading-breakpoint-desktop) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: $xiading-breakpoint-mobile) {
+      grid-template-columns: 1fr;
+    }
   }
 }
 
@@ -955,7 +999,7 @@ const footerNavigation = [
   transition: all $xiading-transition-base $xiading-ease-out;
   cursor: pointer;
   position: relative;
-  
+
   &::before {
     content: '';
     position: absolute;
@@ -969,34 +1013,34 @@ const footerNavigation = [
     z-index: 1;
     pointer-events: none;
   }
-  
-  &:hover { 
-    transform: translateY(-8px); 
+
+  &:hover {
+    transform: translateY(-8px);
     box-shadow: 0 20px 40px rgba($xiading-primary, 0.15);
     border-color: rgba($xiading-primary, 0.4);
-    
+
     &::before {
       opacity: 0.05;
     }
   }
-  
+
   &__image {
     position: relative;
     height: 160px;
     overflow: hidden;
-    
-    img { 
-      width: 100%; 
-      height: 100%; 
+
+    img {
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       transition: transform 0.5s ease;
     }
-    
+
     .scene-card:hover & img {
       transform: scale(1.15);
     }
   }
-  
+
   &__tag {
     position: absolute;
     top: $xiading-spacing-sm;
@@ -1010,13 +1054,13 @@ const footerNavigation = [
     z-index: 2;
     font-weight: $xiading-font-weight-medium;
   }
-  
-  &__content { 
-    padding: $xiading-spacing-md; 
+
+  &__content {
+    padding: $xiading-spacing-md;
     position: relative;
     z-index: 2;
   }
-  
+
   &__icon {
     width: 48px;
     height: 48px;
@@ -1029,30 +1073,30 @@ const footerNavigation = [
     margin-bottom: $xiading-spacing-sm;
     box-shadow: 0 4px 12px rgba($xiading-primary, 0.25);
     transition: all 0.3s ease;
-    
+
     svg {
       width: 24px !important;
       height: 24px !important;
     }
-    
+
     .scene-card:hover & {
       transform: scale(1.1) rotate(5deg);
       box-shadow: 0 6px 16px rgba($xiading-primary, 0.35);
     }
   }
-  
+
   &__title {
     font-size: $xiading-font-size-base;
     font-weight: $xiading-font-weight-semibold;
     margin-bottom: $xiading-spacing-xs;
     color: $xiading-text-primary;
     transition: color 0.3s ease;
-    
+
     .scene-card:hover & {
       color: $xiading-primary;
     }
   }
-  
+
   &__desc {
     font-size: $xiading-font-size-sm;
     color: $xiading-text-secondary;
@@ -1063,12 +1107,15 @@ const footerNavigation = [
 .case {
   padding: $xiading-section-padding-y 0;
   background: $xiading-bg-secondary;
-  
+
   &__grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: $xiading-spacing-xl;
-    @media (max-width: $xiading-breakpoint-tablet) { grid-template-columns: 1fr; }
+
+    @media (max-width: $xiading-breakpoint-tablet) {
+      grid-template-columns: 1fr;
+    }
   }
 }
 
@@ -1080,7 +1127,7 @@ const footerNavigation = [
   transition: all $xiading-transition-base;
   position: relative;
   overflow: hidden;
-  
+
   &::before {
     content: '"';
     position: absolute;
@@ -1093,12 +1140,12 @@ const footerNavigation = [
     line-height: 1;
     pointer-events: none;
   }
-  
+
   &:hover {
     transform: translateY(-6px);
     box-shadow: 0 16px 40px rgba($xiading-primary, 0.12);
   }
-  
+
   &__quote {
     font-size: $xiading-font-size-base;
     color: $xiading-text-secondary;
@@ -1108,29 +1155,29 @@ const footerNavigation = [
     position: relative;
     z-index: 1;
   }
-  
-  &__author { 
-    display: flex; 
-    flex-direction: column; 
+
+  &__author {
+    display: flex;
+    flex-direction: column;
     gap: $xiading-spacing-xs;
     position: relative;
     z-index: 1;
   }
-  
-  &__name { 
-    font-weight: $xiading-font-weight-semibold; 
-    color: $xiading-text-primary; 
+
+  &__name {
+    font-weight: $xiading-font-weight-semibold;
+    color: $xiading-text-primary;
     font-size: $xiading-font-size-lg;
   }
-  
-  &__role { 
-    font-size: $xiading-font-size-sm; 
-    color: $xiading-text-muted; 
+
+  &__role {
+    font-size: $xiading-font-size-sm;
+    color: $xiading-text-muted;
   }
-  
-  &__company { 
-    font-size: $xiading-font-size-sm; 
-    color: $xiading-primary; 
+
+  &__company {
+    font-size: $xiading-font-size-sm;
+    color: $xiading-primary;
     font-weight: $xiading-font-weight-medium;
   }
 }
@@ -1139,49 +1186,52 @@ const footerNavigation = [
 .news {
   padding: $xiading-section-padding-y 0;
   background: $xiading-bg-card;
-  
+
   &__loading {
     text-align: center;
     padding: $xiading-spacing-xxl 0;
-    
+
     p {
       margin-top: $xiading-spacing-md;
       color: $xiading-text-muted;
     }
   }
-  
+
   &__error {
     text-align: center;
     padding: $xiading-spacing-xxl 0;
-    
+
     .error-message {
       color: #EF4444;
       margin-bottom: $xiading-spacing-lg;
     }
   }
-  
+
   &__empty {
     text-align: center;
     padding: $xiading-spacing-xxl 0;
-    
+
     p {
       color: $xiading-text-muted;
       font-size: $xiading-font-size-lg;
     }
   }
-  
+
   &__grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: $xiading-spacing-lg;
     margin-bottom: $xiading-spacing-xl;
-    @media (max-width: $xiading-breakpoint-tablet) { grid-template-columns: 1fr; }
+
+    @media (max-width: $xiading-breakpoint-tablet) {
+      grid-template-columns: 1fr;
+    }
   }
-  
+
   &__more {
     text-align: center;
   }
-  
+
   &__more-link {
     color: $xiading-primary;
     text-decoration: none;
@@ -1189,7 +1239,7 @@ const footerNavigation = [
     position: relative;
     padding-bottom: 2px;
     transition: all 0.3s ease;
-    
+
     &::after {
       content: '';
       position: absolute;
@@ -1200,8 +1250,8 @@ const footerNavigation = [
       background: $xiading-primary;
       transition: width 0.3s ease;
     }
-    
-    &:hover { 
+
+    &:hover {
       &::after {
         width: 100%;
       }
@@ -1234,7 +1284,7 @@ const footerNavigation = [
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  
+
   &::before {
     content: '';
     position: absolute;
@@ -1246,17 +1296,17 @@ const footerNavigation = [
     transform: scaleY(0);
     transition: transform 0.3s ease;
   }
-  
-  &:hover { 
-    border-color: $xiading-primary; 
+
+  &:hover {
+    border-color: $xiading-primary;
     box-shadow: 0 8px 25px rgba($xiading-primary, 0.1);
     transform: translateX(4px);
-    
+
     &::before {
       transform: scaleY(1);
     }
   }
-  
+
   &__category {
     display: inline-block;
     padding: $xiading-spacing-xs $xiading-spacing-sm;
@@ -1267,7 +1317,7 @@ const footerNavigation = [
     margin-bottom: $xiading-spacing-sm;
     font-weight: $xiading-font-weight-medium;
   }
-  
+
   &__title {
     font-size: $xiading-font-size-base;
     font-weight: $xiading-font-weight-semibold;
@@ -1275,12 +1325,12 @@ const footerNavigation = [
     margin-bottom: $xiading-spacing-sm;
     line-height: $xiading-line-height-normal;
     transition: color 0.3s ease;
-    
+
     .news-card:hover & {
       color: $xiading-primary;
     }
   }
-  
+
   &__excerpt {
     font-size: $xiading-font-size-sm;
     color: $xiading-text-secondary;
@@ -1291,7 +1341,7 @@ const footerNavigation = [
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-  
+
   &__date {
     font-size: $xiading-font-size-sm;
     color: $xiading-text-muted;
@@ -1305,7 +1355,7 @@ const footerNavigation = [
   text-align: center;
   position: relative;
   overflow: hidden;
-  
+
   &::before {
     content: '';
     position: absolute;
@@ -1313,10 +1363,10 @@ const footerNavigation = [
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 60%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
     animation: rotate 30s linear infinite;
   }
-  
+
   &__title {
     font-size: $xiading-font-size-xxxl;
     font-weight: $xiading-font-weight-bold;
@@ -1324,9 +1374,12 @@ const footerNavigation = [
     margin-bottom: $xiading-spacing-md;
     position: relative;
     z-index: 1;
-    @media (max-width: $xiading-breakpoint-mobile) { font-size: $xiading-font-size-xxl; }
+
+    @media (max-width: $xiading-breakpoint-mobile) {
+      font-size: $xiading-font-size-xxl;
+    }
   }
-  
+
   &__subtitle {
     font-size: $xiading-font-size-lg;
     color: rgba(255, 255, 255, 0.9);
@@ -1334,7 +1387,7 @@ const footerNavigation = [
     position: relative;
     z-index: 1;
   }
-  
+
   &__tags {
     display: flex;
     justify-content: center;
@@ -1344,7 +1397,7 @@ const footerNavigation = [
     position: relative;
     z-index: 1;
   }
-  
+
   &__tag {
     padding: $xiading-spacing-xs $xiading-spacing-md;
     background: rgba(255, 255, 255, 0.2);
@@ -1354,21 +1407,21 @@ const footerNavigation = [
     border: 1px solid rgba(255, 255, 255, 0.3);
     backdrop-filter: blur(10px);
     transition: all 0.3s ease;
-    
+
     &:hover {
       background: rgba(255, 255, 255, 0.3);
       transform: translateY(-2px);
     }
   }
-  
+
   .btn--primary {
     background: $xiading-bg-card;
     color: $xiading-primary-dark;
     position: relative;
     z-index: 1;
     box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
-    
-    &:hover { 
+
+    &:hover {
       background: $xiading-text-light;
       transform: translateY(-4px);
       box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
@@ -1382,7 +1435,7 @@ const footerNavigation = [
   background: $xiading-bg-dark;
   color: $xiading-text-light;
   position: relative;
-  
+
   &::before {
     content: '';
     position: absolute;
@@ -1392,15 +1445,19 @@ const footerNavigation = [
     height: 3px;
     background: $xiading-gradient-cta;
   }
-  
+
   &__grid {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
     gap: $xiading-spacing-xxl;
     margin-bottom: $xiading-spacing-xxl;
-    @media (max-width: $xiading-breakpoint-tablet) { grid-template-columns: 1fr; text-align: center; }
+
+    @media (max-width: $xiading-breakpoint-tablet) {
+      grid-template-columns: 1fr;
+      text-align: center;
+    }
   }
-  
+
   &__logo {
     font-size: $xiading-font-size-xl;
     font-weight: $xiading-font-weight-bold;
@@ -1411,29 +1468,36 @@ const footerNavigation = [
     background-clip: text;
     display: inline-block;
   }
-  
+
   &__desc {
     color: rgba(255, 255, 255, 0.7);
     margin-bottom: $xiading-spacing-lg;
   }
-  
+
   &__contact {
     color: rgba(255, 255, 255, 0.7);
     font-size: $xiading-font-size-sm;
-    p { margin-bottom: $xiading-spacing-xs; }
+
+    p {
+      margin-bottom: $xiading-spacing-xs;
+    }
   }
-  
+
   &__nav-title {
     font-size: $xiading-font-size-base;
     font-weight: $xiading-font-weight-semibold;
     margin-bottom: $xiading-spacing-md;
   }
-  
+
   &__nav-list {
     list-style: none;
     padding: 0;
     margin: 0;
-    li { margin-bottom: $xiading-spacing-sm; }
+
+    li {
+      margin-bottom: $xiading-spacing-sm;
+    }
+
     a {
       color: rgba(255, 255, 255, 0.7);
       text-decoration: none;
@@ -1441,12 +1505,12 @@ const footerNavigation = [
       transition: all $xiading-transition-fast;
       position: relative;
       padding-left: 0;
-      
-      &:hover { 
-        color: $xiading-text-light; 
+
+      &:hover {
+        color: $xiading-text-light;
         padding-left: 8px;
       }
-      
+
       &::before {
         content: '→';
         position: absolute;
@@ -1454,14 +1518,14 @@ const footerNavigation = [
         opacity: 0;
         transition: all 0.3s ease;
       }
-      
+
       &:hover::before {
         left: 0;
         opacity: 1;
       }
     }
   }
-  
+
   &__bottom {
     text-align: center;
     padding-top: $xiading-spacing-xl;
@@ -1473,10 +1537,23 @@ const footerNavigation = [
 
 // Animations
 @keyframes float {
-  0%, 100% { transform: translate(0, 0) rotate(0deg); }
-  25% { transform: translate(2%, 2%) rotate(1deg); }
-  50% { transform: translate(0, 4%) rotate(0deg); }
-  75% { transform: translate(-2%, 2%) rotate(-1deg); }
+
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  25% {
+    transform: translate(2%, 2%) rotate(1deg);
+  }
+
+  50% {
+    transform: translate(0, 4%) rotate(0deg);
+  }
+
+  75% {
+    transform: translate(-2%, 2%) rotate(-1deg);
+  }
 }
 
 // News Detail Modal
@@ -1521,7 +1598,7 @@ const footerNavigation = [
   color: $xiading-text-secondary;
   transition: all 0.3s ease;
   z-index: 1;
-  
+
   &:hover {
     background: $xiading-primary;
     color: $xiading-text-light;
@@ -1536,7 +1613,7 @@ const footerNavigation = [
   :deep(.el-dialog__header) {
     padding-bottom: 0;
   }
-  
+
   :deep(.el-dialog__body) {
     padding: $xiading-spacing-lg;
   }
@@ -1551,7 +1628,7 @@ const footerNavigation = [
     padding-bottom: $xiading-spacing-md;
     border-bottom: 1px solid $xiading-border-color;
   }
-  
+
   &__category {
     display: inline-block;
     padding: $xiading-spacing-xs $xiading-spacing-sm;
@@ -1561,12 +1638,12 @@ const footerNavigation = [
     font-size: $xiading-font-size-xs;
     font-weight: $xiading-font-weight-medium;
   }
-  
+
   &__date {
     font-size: $xiading-font-size-sm;
     color: $xiading-text-muted;
   }
-  
+
   &__title {
     font-size: $xiading-font-size-xxl;
     font-weight: $xiading-font-weight-bold;
@@ -1574,7 +1651,7 @@ const footerNavigation = [
     margin-bottom: $xiading-spacing-lg;
     line-height: $xiading-line-height-normal;
   }
-  
+
   &__excerpt {
     font-size: $xiading-font-size-base;
     color: $xiading-text-secondary;
@@ -1585,23 +1662,26 @@ const footerNavigation = [
     border-radius: $xiading-border-radius-md;
     border-left: 4px solid $xiading-primary;
   }
-  
+
   &__content {
     font-size: $xiading-font-size-base;
     color: $xiading-text-primary;
     line-height: $xiading-line-height-relaxed;
-    
+
     :deep(p) {
       margin-bottom: $xiading-spacing-md;
     }
-    
+
     :deep(img) {
       max-width: 100%;
       border-radius: $xiading-border-radius-md;
       margin: $xiading-spacing-md 0;
     }
-    
-    :deep(h1), :deep(h2), :deep(h3), :deep(h4) {
+
+    :deep(h1),
+    :deep(h2),
+    :deep(h3),
+    :deep(h4) {
       margin-top: $xiading-spacing-lg;
       margin-bottom: $xiading-spacing-md;
       font-weight: $xiading-font-weight-semibold;
@@ -1615,6 +1695,7 @@ const footerNavigation = [
     opacity: 0;
     transform: translateX(-50px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -1647,6 +1728,7 @@ const footerNavigation = [
     opacity: 0;
     transform: translateX(50px);
   }
+
   to {
     opacity: 1;
     transform: translateX(0);
@@ -1657,6 +1739,7 @@ const footerNavigation = [
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -1667,6 +1750,7 @@ const footerNavigation = [
     opacity: 0;
     transform: translateY(40px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -1677,6 +1761,7 @@ const footerNavigation = [
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -1687,7 +1772,7 @@ const footerNavigation = [
   opacity: 0;
   transform: translateY(40px);
   transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-  
+
   &.animated {
     opacity: 1;
     transform: translateY(0);
@@ -1698,7 +1783,7 @@ const footerNavigation = [
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-  
+
   .animated & {
     opacity: 1;
     transform: translateY(0);
