@@ -2,7 +2,7 @@ services:
     frontend:
         image: xiading-test:latest
         ports:
-            - "9998:80"
+            - "8899:80"
         environment:
-            - BRAND=xingkou
+            - BRAND=xiading
         restart: always
