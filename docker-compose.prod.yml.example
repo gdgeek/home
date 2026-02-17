@@ -1,46 +1,46 @@
 # 生产环境 docker-compose 配置示例
-# 使用方法: docker-compose -f docker-compose.prod.yml up -d
 #
-# 请根据实际情况修改以下配置:
-# - VITE_WORDPRESS_API_URL: 你的 WordPress API 地址
-# - VITE_BACKEND_API_URL: 你的后端 API 地址
-# - TCR_REGISTRY: 镜像仓库地址
-# - TCR_NAMESPACE: 镜像命名空间
+# 品牌切换：修改 BRAND_ID 环境变量
+#   BRAND_ID=xingkou  → 星扣（简体中文，大陆市场）
+#   BRAND_ID=xiading   → 夏鼎（繁体中文，澳门市场）
 
-version: '3.8'
+version: "3.8"
 
 services:
-  # 前端应用 - Nginx 生产服务器
   frontend:
-    image: hkccr.ccs.tencentyun.com/gdgeek/xiading:latest
+    image: ccr.ccs.tencentyun.com/your-namespace/ar-home:latest
     ports:
       - "80:80"
     environment:
-      VITE_WORDPRESS_API_URL: https://your-wordpress-domain.com/wp-json
-      VITE_BACKEND_API_URL: https://api.yourdomain.com/api
+      - BRAND_ID=xingkou
     restart: unless-stopped
-    healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost/"]
-      interval: 30s
-      timeout: 3s
-      retries: 3
 
-  # WordPress 服务 (可选，如果使用外部 WordPress 可删除)
-  # wordpress:
-  #   image: wordpress:latest
-  #   ports:
-  #     - "8080:80"
-  #   environment:
-  #     WORDPRESS_DB_HOST: mysql
-  #     WORDPRESS_DB_USER: wordpress
-  #     WORDPRESS_DB_PASSWORD: your_password
-  #     WORDPRESS_DB_NAME: wordpress
+  wordpress:
+    image: wordpress:latest
+    depends_on:
+      - db
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: your_password
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      - blog-data:/var/www/html
+    restart: unless-stopped
 
-  # MySQL 数据库 (可选，如果使用外部数据库可删除)
-  # mysql:
-  #   image: mysql:8.0
-  #   environment:
-  #     MYSQL_ROOT_PASSWORD: root_password
-  #     MYSQL_DATABASE: wordpress
-  #     MYSQL_USER: wordpress
-  #     MYSQL_PASSWORD: your_password
+  db:
+    image: mysql:8.0
+    volumes:
+      - sql-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: your_root_password
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: your_password
+    restart: unless-stopped
+
+volumes:
+  sql-data:
+  blog-data:

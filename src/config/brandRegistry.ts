@@ -26,6 +26,7 @@ const brandRegistry: BrandRegistry = {
   xingkou: {
     id: 'xingkou',
     name: '星扣AR创作平台·教育版',
+    locale: 'zh-CN',
     loginUrl: 'https://edu.xingkou.com/login',
     theme: {
       primaryColor: '#1E40AF',
@@ -77,6 +78,7 @@ const brandRegistry: BrandRegistry = {
   xiading: {
     id: 'xiading',
     name: '夏鼎',
+    locale: 'zh-TW',
     loginUrl: 'https://xiading.com/login',
     theme: {
       primaryColor: '#0EA5E9',

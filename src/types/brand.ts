@@ -143,6 +143,8 @@ export interface BrandConfig {
   id: BrandId
   /** 品牌显示名称 */
   name: string
+  /** 语言/地区 */
+  locale: BrandLocale
   /** 登录URL - 用于登录跳转 */
   loginUrl: string
   /** 主题配置 */

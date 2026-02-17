@@ -1,13 +1,21 @@
 version: "3.8"
 
+# 开发环境
+# 通过 BRAND_ID 环境变量指定品牌：xingkou | xiading
+
 services:
   frontend:
-    image: xiading-test:latest
+    build:
+      context: .
+      args:
+        VITE_WORDPRESS_API_URL: http://wordpress:80/wp-json/wp/v2
+        VITE_BACKEND_API_URL: http://localhost:3000/api
     ports:
       - "80:80"
     environment:
-      - BRAND=xiading
-      - VITE_WORDPRESS_API_URL=http://localhost:8080/wp-json
+      - BRAND_ID=xiading
+    depends_on:
+      - wordpress
     networks:
       - dev-network
 

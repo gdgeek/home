@@ -96,10 +96,10 @@ const emit = defineEmits<{
 }>()
 
 // 品牌配置
-const { brandName, loginUrl } = useBrand()
+const { brandName, loginUrl, locale } = useBrand()
 
-// 判断是否简体中文（星扣品牌）
-const isSimplified = computed(() => brandName.value?.includes('星扣'))
+// 判断是否简体中文
+const isSimplified = computed(() => locale.value === 'zh-CN')
 
 // 对话框标题
 const dialogTitle = computed(() => isSimplified.value ? `登录${brandName.value}` : `登錄${brandName.value}`)
