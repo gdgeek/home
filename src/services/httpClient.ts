@@ -79,10 +79,7 @@ const createAxiosInstance = (
  * WordPress API客户端实例
  */
 const wordpressApiInstance = createAxiosInstance({
-  baseURL:
-    (window as any).__WORDPRESS_API_URL__ ||
-    import.meta.env.VITE_WORDPRESS_API_URL ||
-    "",
+  baseURL: (window as any).__WORDPRESS_API_URL__ || "",
   timeout: 15000,
 });
 

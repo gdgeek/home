@@ -58,7 +58,6 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           build-args: |
-            VITE_WORDPRESS_API_URL=${{ secrets.VITE_WORDPRESS_API_URL }}
             VITE_BACKEND_API_URL=${{ secrets.VITE_BACKEND_API_URL }}
           cache-from: type=gha
           cache-to: type=gha,mode=max

@@ -8,12 +8,12 @@ services:
     build:
       context: .
       args:
-        VITE_WORDPRESS_API_URL: http://wordpress:80/wp-json/wp/v2
         VITE_BACKEND_API_URL: http://localhost:3000/api
     ports:
       - "80:80"
     environment:
       - BRAND_ID=xiading
+      - WORDPRESS_API_URL=http://wordpress:80/wp-json/wp/v2
     depends_on:
       - wordpress
     networks:
