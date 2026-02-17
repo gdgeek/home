@@ -10,6 +10,9 @@ import { School, User, OfficeBuilding, FolderOpened, EditPen, Share, Monitor, Vi
 import LoginModal from '@/components/common/LoginModal.vue'
 
 const { footer } = useBrand()
+const version = (window as any).__APP_VERSION__ || '1.0.0'
+const buildTime = (window as any).__BUILD_TIME__ || new Date().toISOString().split('T')[0]
+
 const showLoginModal = ref(false)
 const showNewsModal = ref(false)
 const selectedNews = ref<any>(null)
@@ -310,6 +313,7 @@ const footerNavigation = [
         </div>
         <div class="footer__bottom">
           <p>{{ footer.copyright || '© 2025 夏鼎科技（澳門）. 版權所有.' }}</p>
+          <p style="font-size: 12px; opacity: 0.6; margin-top: 8px;">v{{ version }} ({{ buildTime }})</p>
         </div>
       </div>
     </footer>
