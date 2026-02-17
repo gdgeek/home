@@ -9,7 +9,7 @@ import { onMounted } from 'vue'
 import { useBrand } from '@/composables/useBrand'
 
 // 获取品牌主题配置
-const { theme } = useBrand()
+const { theme, brandName } = useBrand()
 
 /**
  * 应用品牌主题CSS变量
@@ -26,6 +26,7 @@ const applyBrandTheme = () => {
 
 onMounted(() => {
   applyBrandTheme()
+  document.title = brandName.value
 })
 </script>
 
