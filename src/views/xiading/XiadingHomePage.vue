@@ -157,37 +157,20 @@ const footerNavigation = [
       </div>
     </section>
 
-    <!-- News Section -->
-    <section id="news" class="news animate-on-scroll">
+    <!-- News Section - 仅在有数据时显示，API错误时隐藏 -->
+    <section v-if="!error && !loading && news && news.length > 0" id="news" class="news animate-on-scroll">
       <div class="section-container">
         <h2 class="section-title">新聞動態</h2>
         <p class="section-subtitle">了解平台最新資訊與行業動態</p>
         
-        <!-- Loading State -->
-        <div v-if="loading" class="news__loading">
-          <div class="loading-spinner"></div>
-          <p>載入中...</p>
-        </div>
-        
-        <!-- Error State -->
-        <div v-else-if="error" class="news__error">
-          <p class="error-message">{{ error }}</p>
-          <button class="btn btn--primary" @click="retry">重新載入</button>
-        </div>
-        
         <!-- News List -->
-        <div v-else-if="news && news.length > 0" class="news__grid">
+        <div class="news__grid">
           <div v-for="(item, index) in news" :key="item.id" class="news-card animate-delay" :style="{ animationDelay: `${index * 0.15}s` }" @click="handleOpenNewsDetail(item)">
             <span class="news-card__category">{{ item.category.name }}</span>
             <h3 class="news-card__title">{{ item.title }}</h3>
             <p v-if="item.excerpt" class="news-card__excerpt">{{ item.excerpt }}</p>
             <span class="news-card__date">{{ formatDate(item.date) }}</span>
           </div>
-        </div>
-        
-        <!-- Empty State -->
-        <div v-else class="news__empty">
-          <p>暫無新聞</p>
         </div>
         
         <div class="news__more">
