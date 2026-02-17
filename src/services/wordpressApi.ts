@@ -207,9 +207,10 @@ export const wordpressApi: WordPressApiService = {
       queryParams.categories = params.categories.join(",");
     }
 
-    // 使用配置的 WordPress API URL
-    const url = `${baseURL}/wp/v2/posts`;
-    console.log("wordpressApi.getNews - 请求URL:", url);
+    // 使用 rest_route 查询参数格式（兼容未开启 pretty permalinks 的 WordPress）
+    const url = `${baseURL}/index.php`;
+    queryParams.rest_route = "/wp/v2/posts";
+    console.log("wordpressApi.getNews - 请求URL:", url, queryParams);
 
     try {
       // 获取分类映射表
@@ -241,13 +242,14 @@ export const wordpressApi: WordPressApiService = {
 
     console.log("wordpressApi.getCategories - 开始获取分类...");
 
-    const url = `${baseURL}/wp/v2/categories`;
+    const url = `${baseURL}/index.php`;
     console.log("wordpressApi.getCategories - 请求URL:", url);
 
     try {
       // 请求WordPress REST API
       const response = await axios.get<WPCategory[]>(url, {
         params: {
+          rest_route: "/wp/v2/categories",
           per_page: "100",
           hide_empty: "false",
         },
