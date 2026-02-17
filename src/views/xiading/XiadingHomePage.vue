@@ -19,7 +19,7 @@ const selectedNews = ref<any>(null)
 const animatedSections = ref<Set<HTMLElement>>(new Set())
 
 // 使用 WordPress API 获取新闻
-const { news, loading, error, retry } = useNews()
+const { news, loading, error } = useNews()
 
 const handleOpenLogin = () => {
   showLoginModal.value = true
