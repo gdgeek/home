@@ -16,6 +16,7 @@ services:
       - WORDPRESS_API_URL=http://wordpress:80/wp-json/wp/v2
       - API_URL=https://api.xrteeth.com
       - BACKUP_API_URL=https://api.tmrpp.com
+      - WORKBENCH_URL=https://d.xiading.hxgxonline.com/
     depends_on:
       - wordpress
     networks:

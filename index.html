@@ -7,8 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>星扣AR创作平台·教育版</title>
   <script>
-    window.__BRAND_ID__ = window.__BRAND_ID__ || 'xingkou';
+    // window.__BRAND_ID__ 由 Docker entrypoint 注入，本地开发由 VITE_BRAND_ID 控制
     window.__WORDPRESS_API_URL__ = window.__WORDPRESS_API_URL__ || '';
+    window.__WORKBENCH_URL__ = window.__WORKBENCH_URL__ || '';
   </script>
 </head>
 

@@ -10,6 +10,7 @@ services:
       - "80:80"
     environment:
       - BRAND_ID=xiading
+      - WORKBENCH_URL=https://d.xiading.hxgxonline.com/
     restart: unless-stopped
 
   wordpress:

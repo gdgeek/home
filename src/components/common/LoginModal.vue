@@ -108,6 +108,17 @@ const handleLogin = async () => {
             password: loginForm.password
           })
           emit('update:modelValue', false)
+
+          // 登录成功后跳转到工作台 SSO
+          const workbenchUrl = (window as any).__WORKBENCH_URL__ || import.meta.env.VITE_WORKBENCH_URL
+          if (workbenchUrl) {
+            // 移除末尾的斜杠（如果存在），避免生成 //sso
+            const baseUrl = workbenchUrl.replace(/\/$/, '')
+            const redirectUrl = `${baseUrl}/sso?refreshToken=${result.token.refreshToken}`
+            console.log('Redirecting to Workbench SSO:', redirectUrl)
+            // 使用 window.location.href 进行跳转
+            window.location.href = redirectUrl
+          }
         } else {
           ElMessage.error(result.message || t('login.failed'))
         }

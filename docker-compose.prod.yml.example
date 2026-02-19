@@ -13,6 +13,8 @@ services:
       - "80:80"
     environment:
       - BRAND_ID=xingkou
+      - BRAND_ID=xingkou
+      - WORKBENCH_URL=https://your-workbench-url.com/
     restart: unless-stopped
 
   wordpress:

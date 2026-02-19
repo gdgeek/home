@@ -10,6 +10,7 @@ interface ImportMetaEnv {
   /** 品牌标识 - 可选值: xingkou, xiading */
   readonly VITE_BRAND_ID?: string;
   readonly VITE_BACKEND_API_URL: string;
+  readonly VITE_WORKBENCH_URL: string;
 }
 
 interface ImportMeta {
