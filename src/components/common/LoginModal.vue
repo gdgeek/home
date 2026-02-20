@@ -4,14 +4,7 @@
     class="login-modal" @update:model-value="(val) => emit('update:modelValue', val)" @closed="handleClosed">
     <!-- Logo -->
     <div class="login-logo">
-      <svg class="login-logo-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-          stroke-linejoin="round" />
-        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-          stroke-linejoin="round" />
-        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-          stroke-linejoin="round" />
-      </svg>
+      <img :src="theme.faviconPath" :alt="brandName" class="login-logo-icon" />
       <span class="login-logo-text">{{ brandName }}</span>
     </div>
 
@@ -68,7 +61,7 @@ const emit = defineEmits<{
 }>()
 
 const { t } = useI18n()
-const { brandName } = useBrand()
+const { brandName, theme } = useBrand()
 
 const loading = ref(false)
 const formRef = ref<FormInstance>()
@@ -146,9 +139,9 @@ const handleLogin = async () => {
   margin-bottom: 24px;
 
   &-icon {
-    width: 48px;
-    height: 48px;
-    color: var(--el-color-primary);
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
     margin-bottom: 12px;
   }
 

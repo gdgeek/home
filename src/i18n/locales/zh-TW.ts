@@ -1,6 +1,6 @@
 export default {
   login: {
-    title: "登錄{brand}",
+    title: "平台登錄",
     username: "用戶名",
     usernamePlaceholder: "請輸入用戶名",
     password: "密碼",
