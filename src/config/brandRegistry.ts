@@ -35,7 +35,8 @@ const brandRegistry: BrandRegistry = {
       backgroundColor: '#EFF6FF',
       textColor: '#1E3A8A',
       logoPath: '/images/xingkou-logo.svg',
-      logoAlt: '星扣AR教育版'
+      logoAlt: '星扣AR教育版',
+      faviconPath: '/vite.svg'
     },
     hero: {
       title: '星扣AR创作平台 — 让知识"立"起来，让创意"活"起来',
@@ -87,7 +88,8 @@ const brandRegistry: BrandRegistry = {
       backgroundColor: '#F0F9FF',
       textColor: '#0C4A6E',
       logoPath: '/images/xiading-logo.svg',
-      logoAlt: '夏鼎'
+      logoAlt: '夏鼎',
+      faviconPath: '/logo/xiading/logo.webp'
     },
     hero: {
       title: '夏鼎 — 数字科技，赋能未来',

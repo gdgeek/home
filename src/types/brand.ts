@@ -50,6 +50,8 @@ export interface BrandThemeConfig {
   logoPath: string
   /** Logo替代文本 - 用于无障碍访问 */
   logoAlt: string
+  /** Favicon路径 - 浏览器标签图标 */
+  faviconPath: string
 }
 
 // ============================================

@@ -104,7 +104,7 @@ const sceneItems = [
 
 // 用戶案例
 const caseItems = [
-  { company: '澳門培正中學', quote: '夏鼎AR創作平台讓我們的生物課堂煥然一新，學生學習興趣大幅提升。', author: '陳老師', role: '生物科教學組長' },
+  { company: '澳門培正中學', quote: '夏鼎AI/AR教育平台讓我們的生物課堂煥然一新，學生學習興趣大幅提升。', author: '陳老師', role: '生物科教學組長' },
   { company: '澳門大學附屬應用學校', quote: '學生使用iPad和Rokid AR眼鏡進行創作，培養了創新思維和動手能力。', author: '李主任', role: 'STEAM教育負責人' },
   { company: '澳門聖若瑟教區中學', quote: '零門檻的操作讓每位老師都能輕鬆製作AR課件，大大提升了備課效率。', author: '黃校長', role: '教務主任' }
 ]
@@ -122,8 +122,7 @@ const footerNavigation = [
     <header class="header">
       <div class="header__container">
         <div class="header__logo">
-          <span class="header__logo-text">夏鼎</span>
-          <span class="header__logo-sub">AR創作平台</span>
+          <img src="/logo/xiading/bar.webp" alt="夏鼎AI/AR教育平台" class="header__logo-img" />
         </div>
         <nav class="header__nav">
           <a v-for="(item, index) in navItems" :key="index" :href="item.url" class="header__nav-link">
@@ -138,7 +137,7 @@ const footerNavigation = [
     <section class="hero">
       <div class="hero__container">
         <div class="hero__content">
-          <h1 class="hero__title">夏鼎AR創作平台</h1>
+          <h1 class="hero__title">夏鼎AI/AR教育平台</h1>
           <p class="hero__subtitle">讓知識「立」起來</p>
           <p class="hero__desc">專為澳門教育場景打造的輕量化、零門檻AR創作工具，助力師生開啟沉浸式教學新體驗</p>
           <div class="hero__highlights">
@@ -284,7 +283,7 @@ const footerNavigation = [
       <div class="section-container">
         <div class="footer__grid">
           <div class="footer__brand">
-            <h3 class="footer__logo">夏鼎AR創作平台</h3>
+            <h3 class="footer__logo">夏鼎AI/AR教育平台</h3>
             <p class="footer__desc">專為澳門教育場景打造的AR創作工具</p>
             <div class="footer__contact">
               <p>電話：+853 2888 8888</p>
@@ -441,8 +440,7 @@ const footerNavigation = [
 
   &__logo {
     display: flex;
-    align-items: baseline;
-    gap: $xiading-spacing-xs;
+    align-items: center;
     transition: transform $xiading-transition-fast;
 
     &:hover {
@@ -450,19 +448,10 @@ const footerNavigation = [
     }
   }
 
-  &__logo-text {
-    font-size: $xiading-font-size-xl;
-    font-weight: $xiading-font-weight-bold;
-    color: $xiading-primary;
-    background: $xiading-gradient-cta;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-
-  &__logo-sub {
-    font-size: $xiading-font-size-sm;
-    color: $xiading-text-secondary;
+  &__logo-img {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
   }
 
   &__nav {

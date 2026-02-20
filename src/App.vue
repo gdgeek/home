@@ -27,6 +27,13 @@ const applyBrandTheme = () => {
 onMounted(() => {
   applyBrandTheme()
   document.title = brandName.value
+
+  // 动态设置 favicon
+  const favicon = document.querySelector('link[rel="icon"]') as HTMLLinkElement
+  if (favicon && theme.value.faviconPath) {
+    favicon.href = theme.value.faviconPath
+    favicon.type = 'image/webp'
+  }
 })
 </script>
 
