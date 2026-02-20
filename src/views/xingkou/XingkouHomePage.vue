@@ -36,20 +36,20 @@ const valueItems = [
 
 // 核心功能 - 大图展示
 const featureItems = [
-  { icon: FolderOpened, title: '海量教育素材库', desc: '覆盖K12全学科3D模型，与课本同步更新', image: '/images/ar-platform/UGC场景编辑器界面.png' },
-  { icon: EditPen, title: '可视化编辑器', desc: '所见即所得，零代码创作AR内容', image: '/images/ar-platform/拖拽程序生成工具.png' },
-  { icon: VideoCamera, title: '多人协作', desc: '支持师生实时互动，课堂更精彩', image: '/images/ar-platform/多人AR游戏，三方视角.png' },
-  { icon: View, title: '第三方视角呈现', desc: '多角度观察AR内容，提升学习体验', image: '/images/ar-platform/third-person-view.png' },
-  { icon: Cpu, title: 'AI智能辅助', desc: 'AI一键生成3D模型，降低创作门槛', image: '/images/ar-platform/女士操作Rokid AR Studio.png' }
+  { icon: FolderOpened, title: '海量教育素材库', desc: '覆盖K12全学科3D模型，与课本同步更新', image: '/images/ar-platform/UGC场景编辑器界面.webp' },
+  { icon: EditPen, title: '可视化编辑器', desc: '所见即所得，零代码创作AR内容', image: '/images/ar-platform/拖拽程序生成工具.webp' },
+  { icon: VideoCamera, title: '多人协作', desc: '支持师生实时互动，课堂更精彩', image: '/images/ar-platform/多人AR游戏，三方视角.webp' },
+  { icon: View, title: '第三方视角呈现', desc: '多角度观察AR内容，提升学习体验', image: '/images/ar-platform/third-person-view.webp' },
+  { icon: Cpu, title: 'AI智能辅助', desc: 'AI一键生成3D模型，降低创作门槛', image: '/images/ar-platform/女士操作Rokid AR Studio.webp' }
 ]
 
 // 应用场景 - 横向滚动卡片
 const sceneItems = [
-  { title: '生物实验', desc: '细胞结构、人体器官立体呈现', image: '/images/ar-platform/用户操作AR医疗头骨内容.png', tag: '理科' },
-  { title: '历史重现', desc: '文物复原、历史场景穿越体验', image: '/images/ar-platform/AR沙盘，中南大学.png', tag: '文科' },
-  { title: '工业培训', desc: '设备拆解、操作流程模拟', image: '/images/ar-platform/AR掘进机展示.png', tag: '职教' },
-  { title: '医疗教学', desc: '手术模拟、护理培训', image: '/images/ar-platform/婴幼儿护理 外伤处理.png', tag: '医学' },
-  { title: '趣味游戏', desc: '寓教于乐的AR互动体验', image: '/images/ar-platform/两个小朋友在外面玩AR游戏.jpeg', tag: '娱乐' }
+  { title: '生物实验', desc: '细胞结构、人体器官立体呈现', image: '/images/ar-platform/用户操作AR医疗头骨内容.webp', tag: '理科' },
+  { title: '历史重现', desc: '文物复原、历史场景穿越体验', image: '/images/ar-platform/AR沙盘，中南大学.webp', tag: '文科' },
+  { title: '工业培训', desc: '设备拆解、操作流程模拟', image: '/images/ar-platform/AR掘进机展示.webp', tag: '职教' },
+  { title: '医疗教学', desc: '手术模拟、护理培训', image: '/images/ar-platform/婴幼儿护理 外伤处理.webp', tag: '医学' },
+  { title: '趣味游戏', desc: '寓教于乐的AR互动体验', image: '/images/ar-platform/两个小朋友在外面玩AR游戏.webp', tag: '娱乐' }
 ]
 
 // 成功案例 - 数据展示
@@ -173,7 +173,7 @@ const footerNavigation = [
           <div class="tech-smoke tech-smoke--2"></div>
           
           <div class="hero__image-wrapper">
-            <img src="/images/ar-platform/高中生操作AR内容，欢笑.png" alt="AR教育" class="hero__image" />
+            <img src="/images/ar-platform/高中生操作AR内容，欢笑.webp" alt="AR教育" class="hero__image" />
             <div class="hero__float hero__float--1">
               <span class="hero__float-icon">📚</span>
               <span>课本同步</span>

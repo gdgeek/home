@@ -278,53 +278,47 @@
 
 ## 十一、图片资源库
 
-从产品 PPT 中提取的图片资源，可用于网站各板块展示。
+从产品 PPT 中提取的图片资源，已全部转换为 WebP 格式（压缩率约95%）。
 
 ### 11.1 图片路径
 
-图片存放在 `public/images/ar-platform/` 目录下，网站中使用路径 `/images/ar-platform/xxx.png`
+图片存放在 `public/images/ar-platform/` 目录下，网站中使用路径 `/images/ar-platform/xxx.webp`
 
 ### 11.2 可用图片列表
 
-| 文件名 | 大小 | 建议用途 |
-|--------|------|----------|
-| image86.png | 2.3 MB | Hero区/大型展示图 |
-| image88.png | 1.9 MB | 产品截图/功能展示 |
-| image85.png | 1.8 MB | 产品截图/功能展示 |
-| image87.png | 1.8 MB | 产品截图/功能展示 |
-| image68.png | 1.8 MB | 场景展示/案例图 |
-| image84.png | 1.7 MB | 产品截图/功能展示 |
-| image60.png | 1.6 MB | 场景展示/案例图 |
-| image45.png | 1.5 MB | 产品截图/功能展示 |
-| image59.png | 1.1 MB | 场景展示/案例图 |
-| image73.jpeg | 820 KB | 设备展示/AR眼镜 |
-| image38.png | 722 KB | 功能图标/小型展示 |
-| image4.png | 476 KB | 功能图标/小型展示 |
-| image37.png | 436 KB | 功能图标/小型展示 |
-| image7.jpeg | 314 KB | 设备展示/辅助图 |
+| 文件名 | 建议用途 |
+|--------|----------|
+| 高中生操作AR内容，欢笑.webp | Hero区/大型展示图 |
+| UGC场景编辑器界面.webp | 功能展示/编辑器 |
+| 拖拽程序生成工具.webp | 功能展示/编辑器 |
+| 三方视角，用户操作AR医疗头骨内容.webp | 功能展示/三方视角 |
+| 女士操作Rokid AR Studio.webp | 功能展示/设备 |
+| third-person-view.webp | 功能展示/三方视角 |
+| 用户操作AR医疗头骨内容.webp | 场景展示/医疗 |
+| 婴幼儿护理 外伤处理.webp | 场景展示/医疗 |
+| AR医疗 窝沟封闭.webp | 场景展示/口腔 |
+| AR掘进机展示.webp | 场景展示/工业 |
+| AR沙盘，中南大学.webp | 场景展示/教育 |
+| 多人AR游戏，三方视角.webp | 场景展示/游戏 |
+| 两个小朋友在外面玩AR游戏.webp | 场景展示/游戏 |
+| 两个人玩AR游戏.webp | 场景展示/游戏 |
+| 本课程操作AR内容.webp | 场景展示/教育 |
 
 ### 11.3 使用示例
 
 ```vue
 <!-- 在 Vue 组件中使用 -->
-<img src="/images/ar-platform/image86.png" alt="AR创作平台展示" />
+<img src="/images/ar-platform/高中生操作AR内容，欢笑.webp" alt="AR创作平台展示" />
 
 <!-- 作为背景图 -->
-<div :style="{ backgroundImage: 'url(/images/ar-platform/image68.png)' }"></div>
+<div :style="{ backgroundImage: 'url(/images/ar-platform/AR掘进机展示.webp)' }"></div>
 ```
 
 ### 11.4 图片分配方案
 
 | 板块 | 图片 | 说明 |
 |------|------|------|
-| **Hero区（页头）** | image7.jpeg | AR设备展示，作为首屏视觉焦点 |
-| 功能展示 | image84-88、image45 | 产品截图类 |
-| 场景案例 | image59、image60、image68 | 应用场景类 |
-| 设备展示 | image73.jpeg | AR眼镜特写 |
-
-### 11.5 图片选择建议
-
-- **Hero区**：image7.jpeg（已确定）
-- **功能展示**：选择产品截图类图片（image84-88、image45）
-- **场景案例**：选择应用场景类图片（image59、image60、image68）
-- **设备展示**：选择包含 AR 眼镜的图片（image73）
+| **Hero区（页头）** | 高中生操作AR内容，欢笑.webp | 学生使用AR，作为首屏视觉焦点 |
+| 功能展示 | UGC场景编辑器界面、拖拽程序生成工具、三方视角等 | 产品截图类 |
+| 场景案例 | 婴幼儿护理、AR医疗、AR掘进机、多人AR游戏等 | 应用场景类 |
+| 设备展示 | 女士操作Rokid AR Studio.webp | AR眼镜特写 |

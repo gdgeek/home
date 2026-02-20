@@ -88,18 +88,18 @@ const valueItems = [
 
 // 核心功能
 const featureItems = [
-  { icon: FolderOpened, title: '教育專屬素材庫', description: '全學科課本同步模型，涵蓋生物、物理、化學、歷史、美術等學科', image: '/images/ar-platform/UGC场景编辑器界面.png' },
-  { icon: EditPen, title: '零門檻編輯器', description: '所見即所得的操作邏輯，支持多元素組合創作', image: '/images/ar-platform/拖拽程序生成工具.png' },
-  { icon: View, title: '三方視角投屏', description: '教師可通過平板查看學生AR視角，輔助課堂教學指導', image: '/images/ar-platform/三方视角，用户操作AR医疗头骨内容.png' },
-  { icon: Monitor, title: '多終端支持', description: 'iPad、Rokid AR眼鏡全面適配', image: '/images/ar-platform/女士操作Rokid AR Studio.png' }
+  { icon: FolderOpened, title: '教育專屬素材庫', description: '全學科課本同步模型，涵蓋生物、物理、化學、歷史、美術等學科', image: '/images/ar-platform/UGC场景编辑器界面.webp' },
+  { icon: EditPen, title: '零門檻編輯器', description: '所見即所得的操作邏輯，支持多元素組合創作', image: '/images/ar-platform/拖拽程序生成工具.webp' },
+  { icon: View, title: '三方視角投屏', description: '教師可通過平板查看學生AR視角，輔助課堂教學指導', image: '/images/ar-platform/三方视角，用户操作AR医疗头骨内容.webp' },
+  { icon: Monitor, title: '多終端支持', description: 'iPad、Rokid AR眼鏡全面適配', image: '/images/ar-platform/女士操作Rokid AR Studio.webp' }
 ]
 
 // 應用場景
 const sceneItems = [
-  { icon: Share, title: '醫療護理', description: '嬰幼兒護理、外傷處理等醫療科普', tag: '醫療', image: '/images/ar-platform/婴幼儿护理 外伤处理.png' },
-  { icon: VideoCamera, title: '口腔教學', description: '窩溝封閉等口腔醫療操作培訓', tag: '口腔', image: '/images/ar-platform/AR医疗 窝沟封闭.png' },
-  { icon: OfficeBuilding, title: '工業展示', description: '掘進機等大型設備1:1還原展示', tag: '工業', image: '/images/ar-platform/AR掘进机展示.png' },
-  { icon: School, title: '互動遊戲', description: '多人AR遊戲，寓教於樂', tag: '遊戲', image: '/images/ar-platform/多人AR游戏，三方视角.png' }
+  { icon: Share, title: '醫療護理', description: '嬰幼兒護理、外傷處理等醫療科普', tag: '醫療', image: '/images/ar-platform/婴幼儿护理 外伤处理.webp' },
+  { icon: VideoCamera, title: '口腔教學', description: '窩溝封閉等口腔醫療操作培訓', tag: '口腔', image: '/images/ar-platform/AR医疗 窝沟封闭.webp' },
+  { icon: OfficeBuilding, title: '工業展示', description: '掘進機等大型設備1:1還原展示', tag: '工業', image: '/images/ar-platform/AR掘进机展示.webp' },
+  { icon: School, title: '互動遊戲', description: '多人AR遊戲，寓教於樂', tag: '遊戲', image: '/images/ar-platform/多人AR游戏，三方视角.webp' }
 ]
 
 // 用戶案例
@@ -153,7 +153,7 @@ const footerNavigation = [
           </div>
         </div>
         <div class="hero__visual">
-          <img src="/images/ar-platform/高中生操作AR内容，欢笑.png" alt="AR教育設備" class="hero__image" />
+          <img src="/images/ar-platform/高中生操作AR内容，欢笑.webp" alt="AR教育設備" class="hero__image" />
         </div>
       </div>
     </section>
