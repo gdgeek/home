@@ -16,14 +16,14 @@
  * @description 使用联合类型限定有效的品牌标识，
  *              新增品牌时需要在此处添加对应的ID
  */
-export type BrandId = 'xingkou' | 'xiading'
+export type BrandId = 'xingkou' | 'xiading' | 'mrugc'
 
 /**
  * 语言类型
  * 
  * @description 支持的语言标识
  */
-export type BrandLocale = 'zh-CN' | 'zh-TW' | 'en'
+export type BrandLocale = 'zh-CN' | 'zh-TW' | 'en-US' | 'th-TH' | 'ja-JP'
 
 // ============================================
 // 主题配置类型

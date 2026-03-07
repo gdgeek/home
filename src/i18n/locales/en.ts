@@ -1,4 +1,67 @@
 export default {
+  mrugc: {
+    nav: {
+      features: 'Features',
+      useCases: 'Use Cases',
+      testimonials: 'Testimonials',
+      news: 'News',
+    },
+    hero: {
+      badge: 'Now in Public Beta',
+      subtitle: 'Extended Reality Creation',
+      title: 'Build Worlds{br}Without Code',
+      desc: 'The open platform for creating, sharing, and experiencing extended reality content. Designed for educators, creators, and enterprises worldwide.',
+      cta: 'Start Creating — Free',
+      demo: 'Watch Demo',
+      stats: {
+        schools: 'Schools Worldwide',
+        creators: 'Creators',
+        experiences: 'XR Experiences',
+      },
+    },
+    features: {
+      tag: 'Features',
+      title: 'Everything you need to create XR experiences',
+      subtitle: 'From idea to immersive experience in minutes, not months.',
+      editor: { title: 'Visual Scene Editor', desc: 'Drag-and-drop interface to build immersive XR scenes. No coding required — just your imagination.' },
+      logic: { title: 'Logic Puzzle System', desc: 'Wire up complex interactions with visual node-based logic. Triggers, delays, multi-action chains — all visual.' },
+      multiview: { title: 'Third-Person Spectator', desc: 'Teachers monitor student XR views in real-time via tablet. Perfect for classroom management.' },
+      collab: { title: 'Real-Time Collaboration', desc: 'Multiple XR devices in one shared scene. Teams create, explore, and interact together.' },
+    },
+    scenes: {
+      tag: 'Use Cases',
+      title: 'One platform, infinite possibilities',
+      education: { title: 'Education', desc: 'Transform abstract concepts into tangible 3D experiences students can touch and explore.' },
+      healthcare: { title: 'Healthcare', desc: 'Simulate clinical procedures in zero-risk environments for nursing and medical training.' },
+      industrial: { title: 'Industrial', desc: 'Visualize heavy machinery at 1:1 scale for maintenance training and safety protocols.' },
+      entertainment: { title: 'Entertainment', desc: 'Build multiplayer XR games that blend digital content with the physical world.' },
+    },
+    cases: {
+      tag: 'Testimonials',
+      title: 'Trusted by innovators worldwide',
+      c1: { org: 'International School of Geneva', quote: 'XR UGC transformed our science labs. Students engage with molecular structures they can actually manipulate.', person: 'Dr. Sarah Chen', role: 'Head of STEAM', statVal: '92%', statLabel: 'Engagement' },
+      c2: { org: 'Tokyo Institute of Technology', quote: 'The no-code editor means our faculty can create XR content without waiting for developers.', person: 'Prof. Tanaka', role: 'EdTech Director', statVal: '3x', statLabel: 'Faster Creation' },
+      c3: { org: 'Stanford d.school', quote: 'Real-time collaboration in XR spaces has completely changed how our design teams prototype.', person: 'Alex Rivera', role: 'Innovation Lead', statVal: '500+', statLabel: 'Projects' },
+    },
+    news: {
+      tag: 'News',
+      title: 'Latest Updates',
+      viewAll: 'View All Posts →',
+    },
+    cta: {
+      title: 'Ready to build the future?',
+      desc: 'Join thousands of creators, educators, and enterprises using XR UGC.',
+      primary: 'Get Started — It\'s Free',
+      secondary: 'Contact Sales',
+    },
+    footer: {
+      tagline: 'The open platform for extended reality creation.',
+    },
+    auth: {
+      login: 'Log In',
+      getStarted: 'Get Started',
+    },
+  },
   login: {
     title: "Login to {brand}",
     username: "Username",

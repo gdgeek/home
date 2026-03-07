@@ -70,17 +70,13 @@ export function useNews(autoFetch: boolean = true): UseNewsReturn {
 
     try {
       // 调用WordPress API获取新闻 (_Requirements: 8.1_)
-      console.log('useNews: Starting to fetch news...')
       const result = await wordpressApi.getNews(params)
-      console.log('useNews: News fetched successfully, count:', result.length)
       
       // 成功：设置新闻数据，清除错误 (_Requirements: 8.2_)
       news.value = result
       error.value = null
     } catch (err) {
       // 失败：设置错误信息 (_Requirements: 8.3_)
-      console.error('useNews: Failed to fetch news:', err)
-      console.error('useNews: Error details:', JSON.stringify(err, null, 2))
       
       // 提取错误信息
       let errorMsg = '新闻加载失败，请稍后重试'

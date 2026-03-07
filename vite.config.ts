@@ -39,6 +39,10 @@ export default defineConfig({
       interval: 1000,
     },
     proxy: {
+      '/wp-json': {
+        target: 'http://localhost:8080',
+        changeOrigin: true,
+      },
       '/index.php': {
         target: 'http://wordpress:80',
         changeOrigin: true,

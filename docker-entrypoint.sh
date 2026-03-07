@@ -6,6 +6,7 @@
 # BACKUP_API_URL: 备用登录API地址
 # WORKBENCH_URL: 工作台工具地址
 
+# Valid brands: xingkou, xiading, mrugc
 BRAND_ID="${BRAND_ID:-xingkou}"
 WORDPRESS_API_URL="${WORDPRESS_API_URL:-}"
 API_URL="${API_URL:-}"

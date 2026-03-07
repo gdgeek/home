@@ -1,4 +1,67 @@
 export default {
+  mrugc: {
+    nav: {
+      features: '功能特性',
+      useCases: '应用场景',
+      testimonials: '用户评价',
+      news: '新闻动态',
+    },
+    hero: {
+      badge: '公测进行中',
+      subtitle: '扩展现实创作',
+      title: '无需代码{br}构建世界',
+      desc: '开放的扩展现实内容创作、分享与体验平台。专为教育工作者、创作者和企业打造。',
+      cta: '免费开始创作',
+      demo: '观看演示',
+      stats: {
+        schools: '全球学校',
+        creators: '创作者',
+        experiences: 'XR 体验',
+      },
+    },
+    features: {
+      tag: '功能特性',
+      title: '创建 XR 体验所需的一切',
+      subtitle: '从创意到沉浸式体验，只需几分钟。',
+      editor: { title: '可视化场景编辑器', desc: '拖拽式界面构建沉浸式 XR 场景。无需编程——只需发挥想象力。' },
+      logic: { title: '逻辑拼图系统', desc: '通过可视化节点逻辑搭建复杂交互。触发器、延时、多动作链——全部可视化。' },
+      multiview: { title: '第三方视角', desc: '教师通过平板实时监控学生的 XR 视角。完美适配课堂管理。' },
+      collab: { title: '实时协作', desc: '多台 XR 设备共享同一场景。团队共同创作、探索和互动。' },
+    },
+    scenes: {
+      tag: '应用场景',
+      title: '一个平台，无限可能',
+      education: { title: '教育', desc: '将抽象概念转化为学生可以触摸和探索的 3D 体验。' },
+      healthcare: { title: '医疗', desc: '在零风险环境中模拟临床操作，用于护理和医学培训。' },
+      industrial: { title: '工业', desc: '以 1:1 比例可视化重型机械，用于维护培训和安全规程。' },
+      entertainment: { title: '娱乐', desc: '构建将数字内容与物理世界融合的多人 XR 游戏。' },
+    },
+    cases: {
+      tag: '用户评价',
+      title: '全球创新者的信赖之选',
+      c1: { org: '日内瓦国际学校', quote: 'XR UGC 改变了我们的科学实验室。学生可以操控分子结构进行学习。', person: 'Sarah Chen 博士', role: 'STEAM 负责人', statVal: '92%', statLabel: '参与度' },
+      c2: { org: '东京工业大学', quote: '无代码编辑器意味着我们的教师无需等待开发人员即可创建 XR 内容。', person: '田中教授', role: '教育技术总监', statVal: '3x', statLabel: '创作效率' },
+      c3: { org: '斯坦福 d.school', quote: 'XR 空间中的实时协作彻底改变了我们设计团队的原型制作方式。', person: 'Alex Rivera', role: '创新负责人', statVal: '500+', statLabel: '项目' },
+    },
+    news: {
+      tag: '新闻动态',
+      title: '最新资讯',
+      viewAll: '查看全部 →',
+    },
+    cta: {
+      title: '准备好构建未来了吗？',
+      desc: '加入数千名使用 XR UGC 的创作者、教育工作者和企业。',
+      primary: '免费开始使用',
+      secondary: '联系销售',
+    },
+    footer: {
+      tagline: '开放的扩展现实创作平台。',
+    },
+    auth: {
+      login: '登录',
+      getStarted: '开始使用',
+    },
+  },
   login: {
     title: "平台登录",
     username: "用户名",

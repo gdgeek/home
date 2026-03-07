@@ -126,6 +126,57 @@ const brandRegistry: BrandRegistry = {
         }
       ]
     }
+  },
+
+  // XR UGC 国际版配置 - 紫橙渐变科技主题
+  mrugc: {
+    id: 'mrugc',
+    name: 'XR UGC',
+    locale: 'en-US',
+    loginUrl: 'https://mrugc.com/login',
+    theme: {
+      primaryColor: '#7C3AED',
+      secondaryColor: '#F97316',
+      ctaColor: '#7C3AED',
+      backgroundColor: '#0F0B1A',
+      textColor: '#F8FAFC',
+      logoPath: '/logo/MRUGC/mrugc_logo.png',
+      logoAlt: 'XR UGC',
+      faviconPath: '/logo/MRUGC/mrugc_logo.png'
+    },
+    hero: {
+      title: 'XR UGC — Create. Immerse. Inspire.',
+      subtitle: 'The no-code mixed reality creation platform for education, enterprise, and beyond.',
+      primaryButtonText: 'Get Started Free',
+      secondaryButtonText: 'Watch Demo',
+      highlights: ['No-Code', 'Multi-Device', 'AI-Powered', 'Real-Time Collab']
+    },
+    footer: {
+      copyright: '© 2025 XR UGC. All rights reserved.',
+      contactInfo: {
+        email: 'hello@mrugc.com'
+      },
+      navigation: [
+        {
+          title: 'Product',
+          links: [
+            { text: 'Features', url: '#features' },
+            { text: 'Use Cases', url: '#scenes' },
+            { text: 'Pricing', url: '#' },
+            { text: 'Documentation', url: '#' }
+          ]
+        },
+        {
+          title: 'Company',
+          links: [
+            { text: 'About', url: '#' },
+            { text: 'Blog', url: '#news' },
+            { text: 'Careers', url: '#' },
+            { text: 'Contact', url: '#' }
+          ]
+        }
+      ]
+    }
   }
 }
 

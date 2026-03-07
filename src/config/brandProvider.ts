@@ -12,7 +12,7 @@ export { getBrandConfig } from './brandRegistry'
 import type { BrandConfig, BrandId } from '@/types/brand'
 
 const DEFAULT_BRAND_ID: BrandId = 'xingkou'
-const VALID_BRAND_IDS: readonly string[] = ['xingkou', 'xiading']
+const VALID_BRAND_IDS: readonly string[] = ['xingkou', 'xiading', 'mrugc']
 
 function resolveBrandId(): BrandId {
   // 1. Docker 注入（生产环境）

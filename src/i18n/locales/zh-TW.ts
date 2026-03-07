@@ -1,4 +1,67 @@
 export default {
+  mrugc: {
+    nav: {
+      features: '功能特色',
+      useCases: '應用場景',
+      testimonials: '用戶評價',
+      news: '新聞動態',
+    },
+    hero: {
+      badge: '公測進行中',
+      subtitle: '擴展實境創作',
+      title: '無需程式碼{br}建構世界',
+      desc: '開放的擴展實境內容創作、分享與體驗平台。專為教育工作者、創作者和企業打造。',
+      cta: '免費開始創作',
+      demo: '觀看示範',
+      stats: {
+        schools: '全球學校',
+        creators: '創作者',
+        experiences: 'XR 體驗',
+      },
+    },
+    features: {
+      tag: '功能特色',
+      title: '建立 XR 體驗所需的一切',
+      subtitle: '從創意到沉浸式體驗，只需幾分鐘。',
+      editor: { title: '視覺化場景編輯器', desc: '拖放式介面建構沉浸式 XR 場景。無需編程——只需發揮想像力。' },
+      logic: { title: '邏輯拼圖系統', desc: '透過視覺化節點邏輯搭建複雜互動。觸發器、延時、多動作鏈——全部視覺化。' },
+      multiview: { title: '第三方視角', desc: '教師透過平板即時監控學生的 XR 視角。完美適配課堂管理。' },
+      collab: { title: '即時協作', desc: '多台 XR 裝置共享同一場景。團隊共同創作、探索和互動。' },
+    },
+    scenes: {
+      tag: '應用場景',
+      title: '一個平台，無限可能',
+      education: { title: '教育', desc: '將抽象概念轉化為學生可以觸摸和探索的 3D 體驗。' },
+      healthcare: { title: '醫療', desc: '在零風險環境中模擬臨床操作，用於護理和醫學培訓。' },
+      industrial: { title: '工業', desc: '以 1:1 比例視覺化重型機械，用於維護培訓和安全規程。' },
+      entertainment: { title: '娛樂', desc: '建構將數位內容與物理世界融合的多人 XR 遊戲。' },
+    },
+    cases: {
+      tag: '用戶評價',
+      title: '全球創新者的信賴之選',
+      c1: { org: '日內瓦國際學校', quote: 'XR UGC 改變了我們的科學實驗室。學生可以操控分子結構進行學習。', person: 'Sarah Chen 博士', role: 'STEAM 負責人', statVal: '92%', statLabel: '參與度' },
+      c2: { org: '東京工業大學', quote: '無程式碼編輯器意味著我們的教師無需等待開發人員即可建立 XR 內容。', person: '田中教授', role: '教育科技總監', statVal: '3x', statLabel: '創作效率' },
+      c3: { org: '史丹佛 d.school', quote: 'XR 空間中的即時協作徹底改變了我們設計團隊的原型製作方式。', person: 'Alex Rivera', role: '創新負責人', statVal: '500+', statLabel: '專案' },
+    },
+    news: {
+      tag: '新聞動態',
+      title: '最新資訊',
+      viewAll: '查看全部 →',
+    },
+    cta: {
+      title: '準備好建構未來了嗎？',
+      desc: '加入數千名使用 XR UGC 的創作者、教育工作者和企業。',
+      primary: '免費開始使用',
+      secondary: '聯繫銷售',
+    },
+    footer: {
+      tagline: '開放的擴展實境創作平台。',
+    },
+    auth: {
+      login: '登入',
+      getStarted: '開始使用',
+    },
+  },
   login: {
     title: "平台登錄",
     username: "用戶名",

@@ -1,4 +1,67 @@
 export default {
+  mrugc: {
+    nav: {
+      features: '機能',
+      useCases: '活用事例',
+      testimonials: 'お客様の声',
+      news: 'ニュース',
+    },
+    hero: {
+      badge: 'パブリックベータ公開中',
+      subtitle: 'エクステンデッドリアリティ制作',
+      title: 'コード不要で{br}世界を構築',
+      desc: 'エクステンデッドリアリティコンテンツの制作・共有・体験のためのオープンプラットフォーム。教育者、クリエイター、企業向け。',
+      cta: '無料で制作開始',
+      demo: 'デモを見る',
+      stats: {
+        schools: '世界の学校',
+        creators: 'クリエイター',
+        experiences: 'XR 体験',
+      },
+    },
+    features: {
+      tag: '機能',
+      title: 'XR 体験の制作に必要なすべて',
+      subtitle: 'アイデアから没入体験まで、数か月ではなく数分で。',
+      editor: { title: 'ビジュアルシーンエディタ', desc: 'ドラッグ＆ドロップで没入型 XR シーンを構築。コーディング不要——想像力だけで。' },
+      logic: { title: 'ロジックパズルシステム', desc: 'ビジュアルノードベースのロジックで複雑なインタラクションを構築。トリガー、遅延、マルチアクションチェーン——すべてビジュアル。' },
+      multiview: { title: '第三者視点', desc: '教師がタブレットで学生の XR ビューをリアルタイム監視。教室管理に最適。' },
+      collab: { title: 'リアルタイムコラボレーション', desc: '複数の XR デバイスが一つの共有シーンに参加。チームで制作、探索、インタラクション。' },
+    },
+    scenes: {
+      tag: '活用事例',
+      title: '一つのプラットフォーム、無限の可能性',
+      education: { title: '教育', desc: '抽象的な概念を、学生が触れて探索できる 3D 体験に変換。' },
+      healthcare: { title: '医療', desc: 'ゼロリスク環境で臨床手順をシミュレート。看護・医学トレーニングに。' },
+      industrial: { title: '産業', desc: '重機を 1:1 スケールで可視化。メンテナンストレーニングと安全プロトコルに。' },
+      entertainment: { title: 'エンターテインメント', desc: 'デジタルコンテンツと物理世界を融合するマルチプレイヤー XR ゲームを構築。' },
+    },
+    cases: {
+      tag: 'お客様の声',
+      title: '世界のイノベーターに信頼されています',
+      c1: { org: 'ジュネーブ国際学校', quote: 'XR UGC は私たちの科学実験室を変えました。学生が分子構造を実際に操作して学べます。', person: 'Sarah Chen 博士', role: 'STEAM 責任者', statVal: '92%', statLabel: 'エンゲージメント' },
+      c2: { org: '東京工業大学', quote: 'ノーコードエディタにより、教員が開発者を待たずに XR コンテンツを作成できます。', person: '田中教授', role: 'EdTech ディレクター', statVal: '3x', statLabel: '制作速度' },
+      c3: { org: 'スタンフォード d.school', quote: 'XR 空間でのリアルタイムコラボレーションが、デザインチームのプロトタイピングを完全に変えました。', person: 'Alex Rivera', role: 'イノベーションリード', statVal: '500+', statLabel: 'プロジェクト' },
+    },
+    news: {
+      tag: 'ニュース',
+      title: '最新情報',
+      viewAll: 'すべての記事を見る →',
+    },
+    cta: {
+      title: '未来を構築する準備はできましたか？',
+      desc: 'XR UGC を使用する数千のクリエイター、教育者、企業に参加しましょう。',
+      primary: '無料で始める',
+      secondary: 'お問い合わせ',
+    },
+    footer: {
+      tagline: 'エクステンデッドリアリティ制作のオープンプラットフォーム。',
+    },
+    auth: {
+      login: 'ログイン',
+      getStarted: '始める',
+    },
+  },
   login: {
     title: "{brand} にログイン",
     username: "ユーザー名",

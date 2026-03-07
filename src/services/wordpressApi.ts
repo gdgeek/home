@@ -189,11 +189,8 @@ export const wordpressApi: WordPressApiService = {
   async getNews(params?: NewsQueryParams): Promise<NewsItem[]> {
     const baseURL = (window as any).__WORDPRESS_API_URL__ || import.meta.env.VITE_WORDPRESS_API_URL || "";
     if (!baseURL) {
-      console.warn("wordpressApi: WORDPRESS_API_URL 未配置，跳过新闻获取");
       return [];
     }
-
-    console.log("wordpressApi.getNews - 开始获取新闻, baseURL:", baseURL);
 
     // 构建查询参数
     const queryParams: Record<string, string> = {
@@ -207,10 +204,17 @@ export const wordpressApi: WordPressApiService = {
       queryParams.categories = params.categories.join(",");
     }
 
-    // 使用 rest_route 查询参数格式（兼容未开启 pretty permalinks 的 WordPress）
-    const url = `${baseURL}/index.php`;
-    queryParams.rest_route = "/wp/v2/posts";
-    console.log("wordpressApi.getNews - 请求URL:", url, queryParams);
+    // 判断 baseURL 是否已包含 REST API 路径（pretty permalinks）
+    const isPrettyPermalink = baseURL.includes("/wp-json/");
+    let url: string;
+    if (isPrettyPermalink) {
+      // baseURL 已经是 REST 端点，如 http://host/wp-json/wp/v2
+      url = `${baseURL.replace(/\/$/, "")}/posts`;
+    } else {
+      // 使用 rest_route 查询参数格式（兼容未开启 pretty permalinks 的 WordPress）
+      url = `${baseURL}/index.php`;
+      queryParams.rest_route = "/wp/v2/posts";
+    }
 
     try {
       // 获取分类映射表
@@ -218,14 +222,13 @@ export const wordpressApi: WordPressApiService = {
 
       // 请求WordPress REST API
       const response = await axios.get<WPPost[]>(url, { params: queryParams });
-      console.log("wordpressApi.getNews - 响应状态:", response.status);
       const posts = response.data;
 
       // 转换数据格式
       return posts.map((post) => transformPost(post, categoriesMap));
-    } catch (err) {
-      console.error("wordpressApi.getNews - 请求失败:", url, err);
-      throw err;
+    } catch {
+      // 静默失败 — WordPress 不可用时不阻塞页面
+      return [];
     }
   },
 
@@ -236,32 +239,28 @@ export const wordpressApi: WordPressApiService = {
   async getCategories(): Promise<NewsCategory[]> {
     const baseURL = (window as any).__WORDPRESS_API_URL__ || import.meta.env.VITE_WORDPRESS_API_URL || "";
     if (!baseURL) {
-      console.warn("wordpressApi: WORDPRESS_API_URL 未配置，跳过分类获取");
       return [];
     }
 
-    console.log("wordpressApi.getCategories - 开始获取分类...");
+    const isPrettyPermalink = baseURL.includes("/wp-json/");
+    let url: string;
+    const queryParams: Record<string, string> = {
+      per_page: "100",
+      hide_empty: "false",
+    };
 
-    const url = `${baseURL}/index.php`;
-    console.log("wordpressApi.getCategories - 请求URL:", url);
+    if (isPrettyPermalink) {
+      url = `${baseURL.replace(/\/$/, "")}/categories`;
+    } else {
+      url = `${baseURL}/index.php`;
+      queryParams.rest_route = "/wp/v2/categories";
+    }
 
     try {
-      // 请求WordPress REST API
-      const response = await axios.get<WPCategory[]>(url, {
-        params: {
-          rest_route: "/wp/v2/categories",
-          per_page: "100",
-          hide_empty: "false",
-        },
-      });
-      console.log("wordpressApi.getCategories - 响应状态:", response.status);
-      const categories = response.data;
-
-      // 转换数据格式
-      return categories.map(transformCategory);
-    } catch (err) {
-      console.error("wordpressApi.getCategories - 请求失败:", url, err);
-      throw err;
+      const response = await axios.get<WPCategory[]>(url, { params: queryParams });
+      return response.data.map(transformCategory);
+    } catch {
+      return [];
     }
   },
 };
