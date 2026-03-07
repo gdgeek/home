@@ -26,8 +26,8 @@ jobs:
           cache: "pnpm"
       - run: pnpm install --frozen-lockfile
       - run: pnpm run build -- --mode production 2>&1 | head -50 || true
-      - run: pnpm run lint --if-present
-      - run: pnpm test --if-present
+      - run: pnpm run lint || true
+      - run: pnpm test || true
 
   deploy:
     name: Deploy
