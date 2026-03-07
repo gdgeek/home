@@ -187,7 +187,7 @@ export const wordpressApi: WordPressApiService = {
    * @returns Promise<NewsItem[]>
    */
   async getNews(params?: NewsQueryParams): Promise<NewsItem[]> {
-    const baseURL = (window as any).__WORDPRESS_API_URL__ || "";
+    const baseURL = (window as any).__WORDPRESS_API_URL__ || import.meta.env.VITE_WORDPRESS_API_URL || "";
     if (!baseURL) {
       console.warn("wordpressApi: WORDPRESS_API_URL 未配置，跳过新闻获取");
       return [];
@@ -234,7 +234,7 @@ export const wordpressApi: WordPressApiService = {
    * @returns Promise<NewsCategory[]>
    */
   async getCategories(): Promise<NewsCategory[]> {
-    const baseURL = (window as any).__WORDPRESS_API_URL__ || "";
+    const baseURL = (window as any).__WORDPRESS_API_URL__ || import.meta.env.VITE_WORDPRESS_API_URL || "";
     if (!baseURL) {
       console.warn("wordpressApi: WORDPRESS_API_URL 未配置，跳过分类获取");
       return [];
