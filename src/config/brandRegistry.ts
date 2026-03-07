@@ -36,7 +36,7 @@ const brandRegistry: BrandRegistry = {
       textColor: '#1E3A8A',
       logoPath: '/images/xingkou-logo.svg',
       logoAlt: '星扣AR教育版',
-      faviconPath: '/vite.svg'
+      faviconPath: '/logo/xingkou/LOGO.webp'
     },
     hero: {
       title: '星扣AR创作平台 — 让知识"立"起来，让创意"活"起来',

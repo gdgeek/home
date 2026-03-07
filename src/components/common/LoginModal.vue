@@ -139,8 +139,8 @@ const handleLogin = async () => {
   margin-bottom: 24px;
 
   &-icon {
-    width: 64px;
-    height: 64px;
+    width: 160px;
+    height: auto;
     object-fit: contain;
     margin-bottom: 12px;
   }
