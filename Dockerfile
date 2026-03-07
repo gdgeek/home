@@ -4,10 +4,13 @@
 # 阶段1: 构建
 FROM node:18-alpine AS builder
 
+# 启用 corepack 以使用 pnpm
+RUN corepack enable && corepack prepare pnpm@latest --activate
+
 WORKDIR /app
 
-COPY package.json package-lock.json ./
-RUN npm ci
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
 
 COPY . .
 
@@ -15,7 +18,7 @@ ARG VITE_BACKEND_API_URL
 
 ENV VITE_BACKEND_API_URL=${VITE_BACKEND_API_URL}
 
-RUN npm run build
+RUN pnpm run build
 
 # 阶段2: 运行
 FROM nginx:alpine
