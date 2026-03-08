@@ -15,12 +15,12 @@ const VALID_BRANDS = ['xingkou', 'xiading', 'xrugc'] as const
 describe('brandProvider - brand resolution priority', () => {
   afterEach(() => {
     vi.resetModules()
-    delete (window as any).__BRAND_ID__
+    delete (window as unknown as Record<string, unknown>).__BRAND_ID__
     vi.unstubAllEnvs()
   })
 
   it('window.__BRAND_ID__ takes priority over VITE_BRAND_ID', async () => {
-    ;(window as any).__BRAND_ID__ = 'xiading'
+    ;(window as unknown as Record<string, unknown>).__BRAND_ID__ = 'xiading'
     vi.stubEnv('VITE_BRAND_ID', 'xrugc')
     vi.resetModules()
     const { getCurrentBrandId } = await import('../brandProvider')
@@ -28,7 +28,7 @@ describe('brandProvider - brand resolution priority', () => {
   })
 
   it('VITE_BRAND_ID is used when window.__BRAND_ID__ is absent', async () => {
-    delete (window as any).__BRAND_ID__
+    delete (window as unknown as Record<string, unknown>).__BRAND_ID__
     vi.stubEnv('VITE_BRAND_ID', 'xrugc')
     vi.resetModules()
     const { getCurrentBrandId } = await import('../brandProvider')
@@ -36,7 +36,7 @@ describe('brandProvider - brand resolution priority', () => {
   })
 
   it('defaults to xingkou when neither is set', async () => {
-    delete (window as any).__BRAND_ID__
+    delete (window as unknown as Record<string, unknown>).__BRAND_ID__
     vi.stubEnv('VITE_BRAND_ID', '')
     vi.resetModules()
     const { getCurrentBrandId } = await import('../brandProvider')
@@ -44,7 +44,7 @@ describe('brandProvider - brand resolution priority', () => {
   })
 
   it('invalid window.__BRAND_ID__ falls through to VITE_BRAND_ID', async () => {
-    ;(window as any).__BRAND_ID__ = 'invalid-brand'
+    ;(window as unknown as Record<string, unknown>).__BRAND_ID__ = 'invalid-brand'
     vi.stubEnv('VITE_BRAND_ID', 'xiading')
     vi.resetModules()
     const { getCurrentBrandId } = await import('../brandProvider')
@@ -52,7 +52,7 @@ describe('brandProvider - brand resolution priority', () => {
   })
 
   it('invalid window.__BRAND_ID__ and invalid VITE_BRAND_ID defaults to xingkou', async () => {
-    ;(window as any).__BRAND_ID__ = 'bad'
+    ;(window as unknown as Record<string, unknown>).__BRAND_ID__ = 'bad'
     vi.stubEnv('VITE_BRAND_ID', 'also-bad')
     vi.resetModules()
     const { getCurrentBrandId } = await import('../brandProvider')
@@ -63,11 +63,11 @@ describe('brandProvider - brand resolution priority', () => {
   it('property: any valid brand in window.__BRAND_ID__ is resolved correctly', async () => {
     await fc.assert(
       fc.asyncProperty(fc.constantFrom(...VALID_BRANDS), async (brandId) => {
-        ;(window as any).__BRAND_ID__ = brandId
+        ;(window as unknown as Record<string, unknown>).__BRAND_ID__ = brandId
         vi.resetModules()
         const { getCurrentBrandId } = await import('../brandProvider')
         expect(getCurrentBrandId()).toBe(brandId)
-        delete (window as any).__BRAND_ID__
+        delete (window as unknown as Record<string, unknown>).__BRAND_ID__
       })
     )
   })

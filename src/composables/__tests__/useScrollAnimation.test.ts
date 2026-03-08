@@ -63,6 +63,18 @@ function makeElement(): HTMLElement {
   return document.createElement('div')
 }
 
+function makeMockEntry(isIntersecting: boolean, target: HTMLElement): IntersectionObserverEntry {
+  return {
+    isIntersecting,
+    target,
+    boundingClientRect: target.getBoundingClientRect(),
+    intersectionRatio: isIntersecting ? 1 : 0,
+    intersectionRect: target.getBoundingClientRect(),
+    rootBounds: null,
+    time: Date.now(),
+  } as IntersectionObserverEntry
+}
+
 describe('useScrollAnimation', () => {
   // ============================================
   // Normal mode (prefers-reduced-motion = false)
@@ -90,7 +102,7 @@ describe('useScrollAnimation', () => {
       const [result, wrapper] = withSetup(() => useScrollAnimation())
       const el = makeElement()
       result.observe(el)
-      intersectionCallback([{ isIntersecting: true, target: el } as IntersectionObserverEntry])
+      intersectionCallback([makeMockEntry(true, el)])
       expect(el.classList.contains('animated')).toBe(true)
       wrapper.unmount()
     })
@@ -102,7 +114,7 @@ describe('useScrollAnimation', () => {
       const [result, wrapper] = withSetup(() => useScrollAnimation())
       const el = makeElement()
       result.observe(el)
-      intersectionCallback([{ isIntersecting: true, target: el } as IntersectionObserverEntry])
+      intersectionCallback([makeMockEntry(true, el)])
       expect(mockUnobserve).toHaveBeenCalledWith(el)
       wrapper.unmount()
     })
@@ -111,7 +123,7 @@ describe('useScrollAnimation', () => {
       const [result, wrapper] = withSetup(() => useScrollAnimation())
       const el = makeElement()
       result.observe(el)
-      intersectionCallback([{ isIntersecting: false, target: el } as IntersectionObserverEntry])
+      intersectionCallback([makeMockEntry(false, el)])
       expect(el.classList.contains('animated')).toBe(false)
       wrapper.unmount()
     })
@@ -218,7 +230,7 @@ describe('useScrollAnimation', () => {
 
           // Simulate all elements intersecting
           intersectionCallback(
-            elements.map((el) => ({ isIntersecting: true, target: el } as IntersectionObserverEntry)),
+            elements.map((el) => makeMockEntry(true, el)),
           )
 
           for (const el of elements) {

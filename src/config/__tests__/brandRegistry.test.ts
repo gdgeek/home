@@ -52,7 +52,7 @@ describe('brandRegistry', () => {
     it('property: arbitrary non-brand strings return false', () => {
       fc.assert(
         fc.property(
-          fc.string().filter((s) => !VALID_BRAND_IDS.includes(s as any)),
+          fc.string().filter((s) => !(VALID_BRAND_IDS as readonly string[]).includes(s)),
           (s) => {
             expect(isValidBrandId(s)).toBe(false)
           }

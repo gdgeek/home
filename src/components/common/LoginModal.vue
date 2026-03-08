@@ -115,7 +115,7 @@ const handleLogin = async () => {
           emit('update:modelValue', false)
 
           // 登录成功后跳转到工作台 SSO
-          const workbenchUrl = (window as any).__WORKBENCH_URL__ || import.meta.env.VITE_WORKBENCH_URL
+          const workbenchUrl = ((window as unknown as Record<string, unknown>).__WORKBENCH_URL__ as string | undefined) || import.meta.env.VITE_WORKBENCH_URL
           if (workbenchUrl) {
             // 移除末尾的斜杠（如果存在），避免生成 //sso
             const baseUrl = workbenchUrl.replace(/\/$/, '')
