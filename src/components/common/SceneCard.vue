@@ -6,6 +6,8 @@
         :alt="subject"
         class="scene-card__image"
         loading="lazy"
+        width="400"
+        height="267"
       />
       <div class="scene-card__overlay">
         <span class="scene-card__subject">{{ subject }}</span>

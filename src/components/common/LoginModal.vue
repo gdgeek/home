@@ -4,7 +4,7 @@
     class="login-modal" @update:model-value="(val) => emit('update:modelValue', val)" @closed="handleClosed">
     <!-- Logo -->
     <div class="login-logo">
-      <img :src="theme.faviconPath" :alt="brandName" class="login-logo-icon" />
+      <img :src="theme.faviconPath" :alt="brandName" class="login-logo-icon" width="160" loading="eager" />
       <span class="login-logo-text">{{ brandName }}</span>
     </div>
 
@@ -49,7 +49,19 @@ import { ElMessage } from 'element-plus'
 import { User, Lock } from '@element-plus/icons-vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { useBrand } from '@/composables/useBrand'
-import { login as authLogin } from '@/services/authApi'
+import { login as authLogin, AuthError } from '@/services/authApi'
+
+/** 将 AuthErrorCode 映射到 i18n key */
+const AUTH_ERROR_I18N: Record<string, string> = {
+  NO_USER: 'error.noUser',
+  WRONG_PASSWORD: 'error.wrongPassword',
+  INVALID_PASSWORD: 'error.invalidPassword',
+  ACCOUNT_DISABLED: 'error.accountDisabled',
+  TOO_MANY_ATTEMPTS: 'error.tooManyAttempts',
+  SERVER_UNAVAILABLE: 'error.serverUnavailable',
+  LOGIN_FAILED: 'error.loginFailed',
+  NETWORK_ERROR: 'error.serverUnavailable',
+}
 
 defineProps<{
   modelValue: boolean
@@ -115,8 +127,13 @@ const handleLogin = async () => {
         } else {
           ElMessage.error(result.message || t('login.failed'))
         }
-      } catch (err: any) {
-        ElMessage.error(err.message || t('error.serverUnavailable'))
+      } catch (err: unknown) {
+        if (err instanceof AuthError) {
+          const i18nKey = AUTH_ERROR_I18N[err.code] ?? 'error.loginFailed'
+          ElMessage.error(t(i18nKey))
+        } else {
+          ElMessage.error(t('error.serverUnavailable'))
+        }
       } finally {
         loading.value = false
       }
@@ -178,5 +195,22 @@ const handleLogin = async () => {
   margin-bottom: 0;
   font-size: 14px;
   color: #909399;
+}
+
+@media (max-width: 768px) {
+  :deep(.el-dialog) {
+    width: 100% !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+    display: flex;
+    flex-direction: column;
+  }
+
+  :deep(.el-dialog__body) {
+    flex: 1;
+    overflow-y: auto;
+  }
 }
 </style>

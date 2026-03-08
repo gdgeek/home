@@ -6,6 +6,8 @@
         :alt="schoolName"
         class="case-card__image"
         loading="lazy"
+        width="400"
+        height="225"
       />
     </div>
     <div class="case-card__content">

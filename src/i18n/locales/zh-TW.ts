@@ -1,5 +1,5 @@
 export default {
-  mrugc: {
+  xrugc: {
     nav: {
       features: '功能特色',
       useCases: '應用場景',
@@ -9,7 +9,7 @@ export default {
     hero: {
       badge: '公測進行中',
       subtitle: '擴展實境創作',
-      title: '無需程式碼{br}建構世界',
+      title: '讓每個人都可以{br}快樂的創造世界',
       desc: '開放的擴展實境內容創作、分享與體驗平台。專為教育工作者、創作者和企業打造。',
       cta: '免費開始創作',
       demo: '觀看示範',

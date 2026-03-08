@@ -1,0 +1,80 @@
+// ============================================
+// XR UGC Brand Design Variables
+// Dark premium theme with cyan-navy gradient accents
+// International market, English-first
+// ============================================
+
+// Primary — Cyan Blue
+$xrugc-primary: #0EA5E9;
+$xrugc-primary-light: #38BDF8;
+$xrugc-primary-pale: #7DD3FC;
+$xrugc-primary-wash: #E0F2FE;
+$xrugc-accent: #1B2E5A;
+$xrugc-accent-light: #2A4175;
+
+// Backgrounds — Dark mode (navy-tinted)
+$xrugc-bg-primary: #0A0F1A;
+$xrugc-bg-secondary: #111827;
+$xrugc-bg-card: rgba(255, 255, 255, 0.04);
+$xrugc-bg-card-solid: #152033;
+$xrugc-bg-elevated: #1A2744;
+
+// Text
+$xrugc-text-primary: #F8FAFC;
+$xrugc-text-secondary: #CBD5E1;
+$xrugc-text-muted: #94A3B8;
+$xrugc-text-faint: #64748B;
+
+// Gradients
+$xrugc-gradient-hero: linear-gradient(135deg, #0EA5E9 0%, #1B2E5A 100%);
+$xrugc-gradient-cta: linear-gradient(135deg, #0EA5E9 0%, #0284C7 50%, #1B2E5A 100%);
+$xrugc-gradient-card: linear-gradient(135deg, rgba(14, 165, 233, 0.08) 0%, rgba(27, 46, 90, 0.08) 100%);
+$xrugc-gradient-text: linear-gradient(135deg, #38BDF8 0%, #1B2E5A 100%);
+
+// Shadows
+$xrugc-shadow-sm: 0 2px 12px rgba(14, 165, 233, 0.08);
+$xrugc-shadow-md: 0 4px 24px rgba(14, 165, 233, 0.12);
+$xrugc-shadow-lg: 0 12px 40px rgba(14, 165, 233, 0.16);
+$xrugc-shadow-glow: 0 0 40px rgba(14, 165, 233, 0.2);
+
+// Borders
+$xrugc-border-color: rgba(14, 165, 233, 0.12);
+$xrugc-border-hover: rgba(14, 165, 233, 0.3);
+$xrugc-border-radius-sm: 8px;
+$xrugc-border-radius-md: 14px;
+$xrugc-border-radius-lg: 20px;
+
+// ============================================
+// Short aliases (used by XrugcHomePage.vue scoped styles)
+// ============================================
+
+// Colors
+$v: $xrugc-primary;
+$vl: $xrugc-primary-light;
+$o: $xrugc-accent;
+$ol: $xrugc-accent-light;
+
+// Backgrounds
+$bg: $xrugc-bg-primary;
+$bg2: $xrugc-bg-secondary;
+$bgc: $xrugc-bg-card;
+$bge: $xrugc-bg-elevated;
+
+// Text
+$t1: $xrugc-text-primary;
+$t2: $xrugc-text-secondary;
+$tm: $xrugc-text-muted;
+$tf: $xrugc-text-faint;
+
+// Borders
+$bd: $xrugc-border-color;
+$bdh: $xrugc-border-hover;
+$r: $xrugc-border-radius-md;
+$rs: $xrugc-border-radius-sm;
+
+// Shadows
+$sl: $xrugc-shadow-lg;
+
+// Layout & Motion
+$mw: 1200px;
+$e: cubic-bezier(.16, 1, .3, 1);

@@ -21,8 +21,8 @@ const COUNTRY_LOCALE_MAP: Record<string, string> = {
   TH: 'th-TH',
 }
 
-const STORAGE_KEY = 'mrugc_user_locale'
-const GEO_CACHE_KEY = 'mrugc_geo_country'
+const STORAGE_KEY = 'xrugc_user_locale'
+const GEO_CACHE_KEY = 'xrugc_geo_country'
 
 export function useGeoLocale() {
   const { locale } = useI18n({ useScope: 'global' })

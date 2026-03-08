@@ -23,6 +23,33 @@ interface HealthResponse {
   status: string;
 }
 
+/**
+ * 认证错误码，由调用方负责本地化处理
+ */
+export type AuthErrorCode =
+  | "NO_USER"
+  | "WRONG_PASSWORD"
+  | "INVALID_PASSWORD"
+  | "ACCOUNT_DISABLED"
+  | "TOO_MANY_ATTEMPTS"
+  | "SERVER_UNAVAILABLE"
+  | "LOGIN_FAILED"
+  | "NETWORK_ERROR";
+
+/**
+ * 认证错误，携带错误码供调用方本地化
+ */
+export class AuthError extends Error {
+  constructor(
+    public readonly code: AuthErrorCode,
+    /** 原始 API 返回的英文消息（用于调试） */
+    public readonly rawMessage?: string,
+  ) {
+    super(code);
+    this.name = "AuthError";
+  }
+}
+
 // ============================================
 // API URL 配置
 // ============================================
@@ -31,14 +58,14 @@ interface HealthResponse {
  * 获取主API地址（运行时注入）
  */
 const getApiUrl = (): string => {
-  return (window as any).__API_URL__ || "https://api.xrteeth.com";
+  return window.__API_URL__ || "https://api.xrteeth.com";
 };
 
 /**
  * 获取备用API地址（运行时注入）
  */
 const getBackupApiUrl = (): string => {
-  return (window as any).__BACKUP_API_URL__ || "https://api.tmrpp.com";
+  return window.__BACKUP_API_URL__ || "https://api.tmrpp.com";
 };
 
 // ============================================
@@ -103,33 +130,28 @@ const getAvailableApiUrl = async (): Promise<string | null> => {
 // 登录
 // ============================================
 
-import i18n from "@/i18n";
-
-/** API错误信息 -> i18n key 映射 */
-const ERROR_KEY_MAP: Record<string, string> = {
-  "no user": "error.noUser",
-  "user not found": "error.noUser",
-  "wrong password": "error.wrongPassword",
-  "password error": "error.wrongPassword",
-  "invalid password": "error.invalidPassword",
-  "account disabled": "error.accountDisabled",
-  "too many attempts": "error.tooManyAttempts",
+/** API错误信息 -> 错误码 映射（调用方负责本地化） */
+const ERROR_CODE_MAP: Record<string, AuthErrorCode> = {
+  "no user": "NO_USER",
+  "user not found": "NO_USER",
+  "wrong password": "WRONG_PASSWORD",
+  "password error": "WRONG_PASSWORD",
+  "invalid password": "INVALID_PASSWORD",
+  "account disabled": "ACCOUNT_DISABLED",
+  "too many attempts": "TOO_MANY_ATTEMPTS",
 };
 
 /**
- * 将API错误信息转为i18n翻译后的用户友好提示
+ * 将API错误信息映射为结构化错误码
  */
-const friendlyMessage = (msg: string): string => {
-  const key = ERROR_KEY_MAP[msg.toLowerCase()];
-  if (key) {
-    return (i18n.global as any).t(key);
-  }
-  return msg;
+const resolveErrorCode = (msg: string): AuthErrorCode => {
+  return ERROR_CODE_MAP[msg.toLowerCase()] ?? "LOGIN_FAILED";
 };
 
 /**
  * 登录
  * 如果缓存的API请求失败，会清除缓存重新检查并重试一次
+ * @throws {AuthError} 携带错误码，调用方应使用 t(`error.${err.code.toLowerCase()}`) 本地化
  */
 export const login = async (
   username: string,
@@ -137,7 +159,7 @@ export const login = async (
 ): Promise<LoginResponse> => {
   const apiUrl = await getAvailableApiUrl();
   if (!apiUrl) {
-    throw new Error((i18n.global as any).t("error.serverUnavailable"));
+    throw new AuthError("SERVER_UNAVAILABLE");
   }
 
   try {
@@ -151,14 +173,17 @@ export const login = async (
       if (newApiUrl && newApiUrl !== apiUrl) {
         return await doLogin(newApiUrl, username, password);
       }
+      throw new AuthError("NETWORK_ERROR", err.message);
     }
-    const rawMessage =
-      err.response?.data?.message ||
-      err.message ||
-      (i18n.global as any).t("error.loginFailed");
-    const message = friendlyMessage(rawMessage);
+
+    // 如果已经是 AuthError（来自 doLogin 重试），直接重新抛出
+    if (err instanceof AuthError) throw err;
+
+    const rawMessage: string =
+      err.response?.data?.message || err.message || "";
+    const code = resolveErrorCode(rawMessage);
     console.error("authApi: 登录失败:", rawMessage);
-    throw new Error(message);
+    throw new AuthError(code, rawMessage);
   }
 };
 

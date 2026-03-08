@@ -1,5 +1,5 @@
 export default {
-  mrugc: {
+  xrugc: {
     nav: {
       features: '機能',
       useCases: '活用事例',
@@ -9,7 +9,7 @@ export default {
     hero: {
       badge: 'パブリックベータ公開中',
       subtitle: 'エクステンデッドリアリティ制作',
-      title: 'コード不要で{br}世界を構築',
+      title: '誰もが楽しく{br}世界を創造できる',
       desc: 'エクステンデッドリアリティコンテンツの制作・共有・体験のためのオープンプラットフォーム。教育者、クリエイター、企業向け。',
       cta: '無料で制作開始',
       demo: 'デモを見る',

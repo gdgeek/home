@@ -11,7 +11,18 @@ const { footer } = useBrand()
 const { t } = useI18n({ useScope: 'global' })
 const { detectAndSetLocale } = useGeoLocale()
 const { activeLang, switchLocale } = useLocaleRoute('en-US')
-const version = (window as any).__APP_VERSION__ || '1.0.0'
+const buildTime = computed(() => {
+  const timestamp = (window as any).__BUILD_TIME__ || new Date().toISOString()
+  const date = new Date(timestamp)
+  return date.toLocaleString('en-US', { 
+    year: 'numeric', 
+    month: '2-digit', 
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  })
+})
 
 const showLoginModal = ref(false)
 const showNewsModal = ref(false)
@@ -27,7 +38,7 @@ const handleOpenNewsDetail = (item: any) => {
   showNewsModal.value = true
 }
 
-const blogUrl = computed(() => (window as any).__WORDPRESS_API_URL__ || 'https://blog.mrugc.com')
+const blogUrl = computed(() => (window as any).__WORDPRESS_API_URL__ || 'https://blog.hxgxonline.com')
 
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString)
@@ -72,43 +83,43 @@ const switchLang = (code: string) => {
 }
 
 const navItems = computed(() => [
-  { text: t('mrugc.nav.features'), url: '#features' },
-  { text: t('mrugc.nav.useCases'), url: '#scenes' },
-  { text: t('mrugc.nav.testimonials'), url: '#cases' },
-  { text: t('mrugc.nav.news'), url: '#news' },
+  { text: t('xrugc.nav.features'), url: '#features' },
+  { text: t('xrugc.nav.useCases'), url: '#scenes' },
+  { text: t('xrugc.nav.testimonials'), url: '#cases' },
+  { text: t('xrugc.nav.news'), url: '#news' },
 ])
 
 const stats = computed(() => [
-  { number: '200+', label: t('mrugc.hero.stats.schools') },
-  { number: '50K+', label: t('mrugc.hero.stats.creators') },
-  { number: '500K+', label: t('mrugc.hero.stats.experiences') },
+  { number: '200+', label: t('xrugc.hero.stats.schools') },
+  { number: '50K+', label: t('xrugc.hero.stats.creators') },
+  { number: '500K+', label: t('xrugc.hero.stats.experiences') },
 ])
 
 const features = computed(() => [
-  { id: 'editor', title: t('mrugc.features.editor.title'), desc: t('mrugc.features.editor.desc'),
+  { id: 'editor', title: t('xrugc.features.editor.title'), desc: t('xrugc.features.editor.desc'),
     image: '/images/ar-platform/UGC场景编辑器界面.webp', icon: '🎨' },
-  { id: 'logic', title: t('mrugc.features.logic.title'), desc: t('mrugc.features.logic.desc'),
+  { id: 'logic', title: t('xrugc.features.logic.title'), desc: t('xrugc.features.logic.desc'),
     image: '/images/ar-platform/拖拽程序生成工具.webp', icon: '🧩' },
-  { id: 'multiview', title: t('mrugc.features.multiview.title'), desc: t('mrugc.features.multiview.desc'),
+  { id: 'multiview', title: t('xrugc.features.multiview.title'), desc: t('xrugc.features.multiview.desc'),
     image: '/images/ar-platform/三方视角，用户操作AR医疗头骨内容.webp', icon: '👁️' },
-  { id: 'collab', title: t('mrugc.features.collab.title'), desc: t('mrugc.features.collab.desc'),
+  { id: 'collab', title: t('xrugc.features.collab.title'), desc: t('xrugc.features.collab.desc'),
     image: '/images/ar-platform/多人AR游戏，三方视角.webp', icon: '🤝' },
 ])
 
 const scenes = computed(() => [
-  { title: t('mrugc.scenes.education.title'), desc: t('mrugc.scenes.education.desc'), image: '/images/ar-platform/高中生操作AR内容，欢笑.webp', tag: 'EDU' },
-  { title: t('mrugc.scenes.healthcare.title'), desc: t('mrugc.scenes.healthcare.desc'), image: '/images/ar-platform/婴幼儿护理 外伤处理.webp', tag: 'MED' },
-  { title: t('mrugc.scenes.industrial.title'), desc: t('mrugc.scenes.industrial.desc'), image: '/images/ar-platform/AR掘进机展示.webp', tag: 'IND' },
-  { title: t('mrugc.scenes.entertainment.title'), desc: t('mrugc.scenes.entertainment.desc'), image: '/images/ar-platform/两个人玩AR游戏.webp', tag: 'PLAY' },
+  { title: t('xrugc.scenes.education.title'), desc: t('xrugc.scenes.education.desc'), image: '/images/ar-platform/高中生操作AR内容，欢笑.webp', tag: 'EDU' },
+  { title: t('xrugc.scenes.healthcare.title'), desc: t('xrugc.scenes.healthcare.desc'), image: '/images/ar-platform/婴幼儿护理 外伤处理.webp', tag: 'MED' },
+  { title: t('xrugc.scenes.industrial.title'), desc: t('xrugc.scenes.industrial.desc'), image: '/images/ar-platform/AR掘进机展示.webp', tag: 'IND' },
+  { title: t('xrugc.scenes.entertainment.title'), desc: t('xrugc.scenes.entertainment.desc'), image: '/images/ar-platform/两个人玩AR游戏.webp', tag: 'PLAY' },
 ])
 
 const cases = computed(() => [
-  { org: t('mrugc.cases.c1.org'), quote: t('mrugc.cases.c1.quote'), person: t('mrugc.cases.c1.person'), role: t('mrugc.cases.c1.role'),
-    stat: { value: t('mrugc.cases.c1.statVal'), label: t('mrugc.cases.c1.statLabel') } },
-  { org: t('mrugc.cases.c2.org'), quote: t('mrugc.cases.c2.quote'), person: t('mrugc.cases.c2.person'), role: t('mrugc.cases.c2.role'),
-    stat: { value: t('mrugc.cases.c2.statVal'), label: t('mrugc.cases.c2.statLabel') } },
-  { org: t('mrugc.cases.c3.org'), quote: t('mrugc.cases.c3.quote'), person: t('mrugc.cases.c3.person'), role: t('mrugc.cases.c3.role'),
-    stat: { value: t('mrugc.cases.c3.statVal'), label: t('mrugc.cases.c3.statLabel') } },
+  { org: t('xrugc.cases.c1.org'), quote: t('xrugc.cases.c1.quote'), person: t('xrugc.cases.c1.person'), role: t('xrugc.cases.c1.role'),
+    stat: { value: t('xrugc.cases.c1.statVal'), label: t('xrugc.cases.c1.statLabel') } },
+  { org: t('xrugc.cases.c2.org'), quote: t('xrugc.cases.c2.quote'), person: t('xrugc.cases.c2.person'), role: t('xrugc.cases.c2.role'),
+    stat: { value: t('xrugc.cases.c2.statVal'), label: t('xrugc.cases.c2.statLabel') } },
+  { org: t('xrugc.cases.c3.org'), quote: t('xrugc.cases.c3.quote'), person: t('xrugc.cases.c3.person'), role: t('xrugc.cases.c3.role'),
+    stat: { value: t('xrugc.cases.c3.statVal'), label: t('xrugc.cases.c3.statLabel') } },
 ])
 </script>
 
@@ -123,7 +134,7 @@ const cases = computed(() => [
     <header class="mu-nav" :class="{ 'mu-nav--scrolled': navScrolled }">
       <div class="mu-nav__inner">
         <a href="#" class="mu-nav__logo">
-          <img src="/logo/MRUGC/mrugc_logo.png" alt="XR UGC" />
+          <img src="/logo/XRUGC/xrugc_logo.png" alt="XR UGC" />
         </a>
         <nav class="mu-nav__links" aria-label="Main navigation">
           <a v-for="item in navItems" :key="item.url" :href="item.url">{{ item.text }}</a>
@@ -137,8 +148,8 @@ const cases = computed(() => [
               {{ lang.label }}
             </button>
           </div>
-          <button class="mu-btn mu-btn--ghost" @click="handleOpenLogin">{{ t('mrugc.auth.login') }}</button>
-          <button class="mu-btn mu-btn--primary" @click="handleOpenLogin">{{ t('mrugc.auth.getStarted') }}</button>
+          <button class="mu-btn mu-btn--ghost" @click="handleOpenLogin">{{ t('xrugc.auth.login') }}</button>
+          <button class="mu-btn mu-btn--primary" @click="handleOpenLogin">{{ t('xrugc.auth.getStarted') }}</button>
         </div>
       </div>
     </header>
@@ -147,16 +158,16 @@ const cases = computed(() => [
       <div class="mu-hero__content reveal">
         <div class="mu-hero__badge">
           <span class="mu-hero__badge-dot"></span>
-          {{ t('mrugc.hero.badge') }}
+          {{ t('xrugc.hero.badge') }}
         </div>
         <h1 class="mu-hero__title">
-          <span class="mu-hero__title-sub">{{ t('mrugc.hero.subtitle') }}</span>
-          <span class="mu-hero__title-main">{{ t('mrugc.hero.title').replace('{br}', '') }}</span>
+          <span class="mu-hero__title-sub">{{ t('xrugc.hero.subtitle') }}</span>
+          <span class="mu-hero__title-main">{{ t('xrugc.hero.title').replace('{br}', '') }}</span>
         </h1>
-        <p class="mu-hero__desc">{{ t('mrugc.hero.desc') }}</p>
+        <p class="mu-hero__desc">{{ t('xrugc.hero.desc') }}</p>
         <div class="mu-hero__cta">
-          <button class="mu-btn mu-btn--gradient mu-btn--lg" @click="handleOpenLogin">{{ t('mrugc.hero.cta') }}</button>
-          <button class="mu-btn mu-btn--outline mu-btn--lg">{{ t('mrugc.hero.demo') }}</button>
+          <button class="mu-btn mu-btn--gradient mu-btn--lg" @click="handleOpenLogin">{{ t('xrugc.hero.cta') }}</button>
+          <button class="mu-btn mu-btn--outline mu-btn--lg">{{ t('xrugc.hero.demo') }}</button>
         </div>
         <div class="mu-hero__stats">
           <div v-for="s in stats" :key="s.label" class="mu-hero__stat">
@@ -173,9 +184,9 @@ const cases = computed(() => [
 
     <section id="features" class="mu-section">
       <div class="mu-section__header reveal">
-        <span class="mu-tag">{{ t('mrugc.features.tag') }}</span>
-        <h2 class="mu-section__title">{{ t('mrugc.features.title') }}</h2>
-        <p class="mu-section__sub">{{ t('mrugc.features.subtitle') }}</p>
+        <span class="mu-tag">{{ t('xrugc.features.tag') }}</span>
+        <h2 class="mu-section__title">{{ t('xrugc.features.title') }}</h2>
+        <p class="mu-section__sub">{{ t('xrugc.features.subtitle') }}</p>
       </div>
       <div class="mu-features">
         <div v-for="(f, idx) in features" :key="f.id" class="mu-feature reveal" :class="{ 'mu-feature--reverse': idx % 2 === 1 }">
@@ -191,8 +202,8 @@ const cases = computed(() => [
 
     <section id="scenes" class="mu-section mu-section--alt">
       <div class="mu-section__header reveal">
-        <span class="mu-tag">{{ t('mrugc.scenes.tag') }}</span>
-        <h2 class="mu-section__title">{{ t('mrugc.scenes.title') }}</h2>
+        <span class="mu-tag">{{ t('xrugc.scenes.tag') }}</span>
+        <h2 class="mu-section__title">{{ t('xrugc.scenes.title') }}</h2>
       </div>
       <div class="mu-scenes reveal">
         <div v-for="(s, idx) in scenes" :key="idx" class="mu-scene">
@@ -210,8 +221,8 @@ const cases = computed(() => [
 
     <section id="cases" class="mu-section">
       <div class="mu-section__header reveal">
-        <span class="mu-tag">{{ t('mrugc.cases.tag') }}</span>
-        <h2 class="mu-section__title">{{ t('mrugc.cases.title') }}</h2>
+        <span class="mu-tag">{{ t('xrugc.cases.tag') }}</span>
+        <h2 class="mu-section__title">{{ t('xrugc.cases.title') }}</h2>
       </div>
       <div class="mu-testimonials">
         <div v-for="(c, idx) in cases" :key="idx" class="mu-testimonial reveal">
@@ -233,8 +244,8 @@ const cases = computed(() => [
 
     <section v-if="news?.length" id="news" class="mu-section mu-section--alt">
       <div class="mu-section__header reveal">
-        <span class="mu-tag">{{ t('mrugc.news.tag') }}</span>
-        <h2 class="mu-section__title">{{ t('mrugc.news.title') }}</h2>
+        <span class="mu-tag">{{ t('xrugc.news.tag') }}</span>
+        <h2 class="mu-section__title">{{ t('xrugc.news.title') }}</h2>
       </div>
       <div class="mu-news reveal">
         <article v-for="item in news.slice(0, 3)" :key="item.id" class="mu-news__card" @click="handleOpenNewsDetail(item)">
@@ -244,17 +255,17 @@ const cases = computed(() => [
         </article>
       </div>
       <div class="mu-news__more">
-        <a :href="blogUrl" target="_blank" rel="noopener" class="mu-btn mu-btn--outline">{{ t('mrugc.news.viewAll') }}</a>
+        <a :href="blogUrl" target="_blank" rel="noopener" class="mu-btn mu-btn--outline">{{ t('xrugc.news.viewAll') }}</a>
       </div>
     </section>
 
     <section class="mu-cta reveal">
       <div class="mu-cta__inner">
-        <h2>{{ t('mrugc.cta.title') }}</h2>
-        <p>{{ t('mrugc.cta.desc') }}</p>
+        <h2>{{ t('xrugc.cta.title') }}</h2>
+        <p>{{ t('xrugc.cta.desc') }}</p>
         <div class="mu-cta__actions">
-          <button class="mu-btn mu-btn--white mu-btn--lg" @click="handleOpenLogin">{{ t('mrugc.cta.primary') }}</button>
-          <button class="mu-btn mu-btn--ghost-light mu-btn--lg">{{ t('mrugc.cta.secondary') }}</button>
+          <button class="mu-btn mu-btn--white mu-btn--lg" @click="handleOpenLogin">{{ t('xrugc.cta.primary') }}</button>
+          <button class="mu-btn mu-btn--ghost-light mu-btn--lg">{{ t('xrugc.cta.secondary') }}</button>
         </div>
       </div>
     </section>
@@ -262,8 +273,8 @@ const cases = computed(() => [
     <footer class="mu-footer">
       <div class="mu-footer__inner">
         <div class="mu-footer__brand">
-          <img src="/logo/MRUGC/mrugc_logo.png" alt="XR UGC" class="mu-footer__logo" />
-          <p>{{ t('mrugc.footer.tagline') }}</p>
+          <img src="/logo/XRUGC/xrugc_logo.png" alt="XR UGC" class="mu-footer__logo" />
+          <p>{{ t('xrugc.footer.tagline') }}</p>
         </div>
         <div class="mu-footer__links">
           <div v-for="(nav, idx) in footer.navigation" :key="idx" class="mu-footer__col">
@@ -274,7 +285,7 @@ const cases = computed(() => [
       </div>
       <div class="mu-footer__bottom">
         <span>{{ footer.copyright || '© 2025 XR UGC. All rights reserved.' }}</span>
-        <span class="mu-footer__ver">v{{ version }}</span>
+        <span class="mu-footer__ver">{{ buildTime }}</span>
       </div>
     </footer>
 
@@ -297,13 +308,14 @@ const cases = computed(() => [
 </template>
 
 <style lang="scss" scoped>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-$v: #7C3AED; $vl: #A78BFA; $o: #F97316; $ol: #FB923C;
-$bg: #0F0B1A; $bg2: #1A1428; $bgc: #1E1832; $bge: #241D38;
-$t1: #F8FAFC; $t2: #CBD5E1; $tm: #94A3B8; $tf: #64748B;
-$bd: rgba(124,58,237,0.12); $bdh: rgba(124,58,237,0.3);
-$sl: 0 12px 40px rgba(124,58,237,0.15);
-$r: 16px; $rs: 8px; $mw: 1200px; $e: cubic-bezier(0.22,1,0.36,1);
+@use '@/assets/styles/xrugc/variables' as mu;
+
+$v: mu.$v; $vl: mu.$vl; $o: mu.$o; $ol: mu.$ol;
+$bg: mu.$bg; $bg2: mu.$bg2; $bgc: mu.$bgc; $bge: mu.$bge;
+$t1: mu.$t1; $t2: mu.$t2; $tm: mu.$tm; $tf: mu.$tf;
+$bd: mu.$bd; $bdh: mu.$bdh;
+$sl: mu.$sl;
+$r: mu.$r; $rs: mu.$rs; $mw: mu.$mw; $e: mu.$e;
 
 @keyframes orbFloat { 0%,100%{transform:translate(0,0) scale(1)} 33%{transform:translate(30px,-20px) scale(1.05)} 66%{transform:translate(-20px,15px) scale(0.95)} }
 @keyframes gridScroll { 0%{transform:translate(0,0)} 100%{transform:translate(40px,40px)} }
@@ -353,7 +365,7 @@ $r: 16px; $rs: 8px; $mw: 1200px; $e: cubic-bezier(0.22,1,0.36,1);
 .mu-btn {
   display:inline-flex;align-items:center;gap:8px;padding:10px 22px;font-family:inherit;font-size:14px;font-weight:600;
   border-radius:$rs;border:none;cursor:pointer;transition:all .25s $e;letter-spacing:.01em;
-  &--primary{background:$v;color:white;box-shadow:0 2px 16px rgba($v,.3);&:hover{background:#9061F0;transform:translateY(-1px);box-shadow:0 4px 24px rgba($v,.4)}}
+  &--primary{background:$v;color:white;box-shadow:0 2px 16px rgba($v,.3);&:hover{background:lighten($v,8%);transform:translateY(-1px);box-shadow:0 4px 24px rgba($v,.4)}}
   &--gradient{background:linear-gradient(135deg,$v 0%,$o 100%);color:white;box-shadow:0 4px 20px rgba($v,.3);&:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba($v,.4)}}
   &--ghost{background:transparent;color:$tm;&:hover{color:$t1;background:rgba($v,.08)}}
   &--outline{background:transparent;color:$t2;border:1.5px solid $bdh;&:hover{border-color:$vl;color:$vl}}
@@ -397,7 +409,7 @@ $r: 16px; $rs: 8px; $mw: 1200px; $e: cubic-bezier(0.22,1,0.36,1);
 .mu-features{display:flex;flex-direction:column;gap:32px}
 .mu-feature {
   display:grid;grid-template-columns:1.2fr 1fr;gap:40px;align-items:center;
-  padding:24px;background:$bgc;border:1px solid $bd;border-radius:$r;transition:all .3s $e;
+  padding:24px;background:mu.$bgc;border:1px solid $bd;border-radius:$r;transition:all .3s $e;
   &:hover{border-color:$bdh;box-shadow:$sl}
   &--reverse{grid-template-columns:1fr 1.2fr;.mu-feature__img{order:2}.mu-feature__text{order:1}}
   @media(max-width:768px){grid-template-columns:1fr;&--reverse{.mu-feature__img{order:0}.mu-feature__text{order:0}}}
@@ -417,7 +429,7 @@ $r: 16px; $rs: 8px; $mw: 1200px; $e: cubic-bezier(0.22,1,0.36,1);
   @media(max-width:600px){grid-template-columns:1fr}
 }
 .mu-scene {
-  background:$bgc;border:1px solid $bd;border-radius:$r;overflow:hidden;transition:all .3s $e;cursor:pointer;
+  background:mu.$bgc;border:1px solid $bd;border-radius:$r;overflow:hidden;transition:all .3s $e;cursor:pointer;
   &:hover{transform:translateY(-6px);border-color:$bdh;box-shadow:$sl;.mu-scene__img img{transform:scale(1.08)}}
   &__img{position:relative;height:180px;overflow:hidden;
     img{width:100%;height:100%;object-fit:cover;transition:transform .5s $e}
@@ -430,7 +442,7 @@ $r: 16px; $rs: 8px; $mw: 1200px; $e: cubic-bezier(0.22,1,0.36,1);
   @media(max-width:1024px){grid-template-columns:1fr;max-width:560px;margin:0 auto}
 }
 .mu-testimonial {
-  padding:28px;background:$bgc;border:1px solid $bd;border-radius:$r;transition:all .3s $e;display:flex;flex-direction:column;
+  padding:28px;background:mu.$bgc;border:1px solid $bd;border-radius:$r;transition:all .3s $e;display:flex;flex-direction:column;
   &:hover{border-color:$bdh;transform:translateY(-3px);box-shadow:$sl}
   &__top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
   &__mark{font-size:56px;font-weight:900;line-height:.7;color:rgba($v,.2)}
@@ -444,7 +456,7 @@ $r: 16px; $rs: 8px; $mw: 1200px; $e: cubic-bezier(0.22,1,0.36,1);
 }
 
 .mu-news{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;@media(max-width:768px){grid-template-columns:1fr}
-  &__card{padding:24px;background:$bgc;border:1px solid $bd;border-radius:$r;cursor:pointer;transition:all .3s $e;
+  &__card{padding:24px;background:mu.$bgc;border:1px solid $bd;border-radius:$r;cursor:pointer;transition:all .3s $e;
     &:hover{border-color:$bdh;transform:translateY(-3px);box-shadow:$sl}
     h3{font-size:16px;font-weight:700;color:$t1;margin-bottom:8px;line-height:1.4}
     p{font-size:13px;color:$tm;line-height:1.6;display:-webkit-box;-webkit-line-clamp:2;line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
@@ -456,7 +468,7 @@ $r: 16px; $rs: 8px; $mw: 1200px; $e: cubic-bezier(0.22,1,0.36,1);
 .mu-cta {
   position:relative;z-index:1;margin:0 24px;border-radius:24px;overflow:hidden;
   max-width:$mw;margin-left:auto;margin-right:auto;
-  &::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba($v,.92) 0%,rgba(#5B21B6,.88) 50%,rgba($o,.82) 100%);z-index:1}
+  &::before{content:"";position:absolute;inset:0;background:linear-gradient(135deg,rgba($v,.92) 0%,rgba($o,.88) 50%,rgba($v,.82) 100%);z-index:1}
   &__inner{position:relative;z-index:2;text-align:center;padding:64px 24px;
     h2{font-size:clamp(26px,4.5vw,40px);font-weight:800;color:white;margin-bottom:12px;letter-spacing:-.02em}
     p{font-size:16px;color:rgba(255,255,255,.75);margin-bottom:28px;font-weight:400;max-width:480px;margin-left:auto;margin-right:auto}
@@ -489,7 +501,7 @@ $r: 16px; $rs: 8px; $mw: 1200px; $e: cubic-bezier(0.22,1,0.36,1);
   position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;
   background:rgba($bg,.8);backdrop-filter:blur(12px);padding:24px;
   &__box{position:relative;max-width:640px;width:100%;max-height:80vh;overflow-y:auto;
-    background:$bgc;border:1px solid $bd;border-radius:$r;padding:40px;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+    background:mu.$bgc;border:1px solid $bd;border-radius:$r;padding:40px;box-shadow:0 24px 60px rgba(0,0,0,.5)}
   &__close{position:absolute;top:16px;right:16px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;
     background:rgba($v,.08);border:1px solid $bd;border-radius:8px;color:$tm;cursor:pointer;transition:all .2s;
     font-size:24px;&:hover{color:$t1;background:rgba($v,.15)}}

@@ -21,8 +21,8 @@ function getHomeComponent() {
   switch (brandId) {
     case 'xiading':
       return () => import('@/views/xiading/XiadingHomePage.vue')
-    case 'mrugc':
-      return () => import('@/views/mrugc/MrugcHomePage.vue')
+    case 'xrugc':
+      return () => import('@/views/xrugc/XrugcHomePage.vue')
     default:
       return () => import('@/views/xingkou/XingkouHomePage.vue')
   }

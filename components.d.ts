@@ -28,6 +28,7 @@ declare module 'vue' {
     HeroSection: typeof import('./src/components/sections/HeroSection.vue')['default']
     LoginModal: typeof import('./src/components/common/LoginModal.vue')['default']
     NavbarSection: typeof import('./src/components/sections/NavbarSection.vue')['default']
+    NewsModal: typeof import('./src/components/common/NewsModal.vue')['default']
     NewsModule: typeof import('./src/components/common/NewsModule.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

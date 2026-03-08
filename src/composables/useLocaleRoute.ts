@@ -13,24 +13,59 @@ import { useI18n } from 'vue-i18n'
 import { useRouter, useRoute } from 'vue-router'
 import { isSupportedLocale, type SupportedLocale } from '@/router'
 
-const STORAGE_KEY = 'mrugc_user_locale'
+const STORAGE_KEY = 'xrugc_user_locale'
 
-export function useLocaleRoute(defaultLocale: SupportedLocale = 'en-US') {
+/**
+ * 与 vue-i18n 兼容的语言代码类型
+ * 支持短格式（'en'、'zh-CN'、'zh-TW'、'ja'、'th'）和标准5字符格式（'en-US'、'zh-CN' 等）
+ */
+export type LocaleCode =
+  | SupportedLocale
+  | 'en'
+  | 'zh-CN'
+  | 'zh-TW'
+  | 'ja'
+  | 'th'
+  | string
+
+/** 将短格式语言代码映射到标准5字符格式 */
+const LOCALE_ALIAS_MAP: Record<string, SupportedLocale> = {
+  'en': 'en-US',
+  'zh-CN': 'zh-CN',
+  'zh-TW': 'zh-TW',
+  'ja': 'ja-JP',
+  'th': 'th-TH',
+}
+
+/** 将任意语言代码规范化为 SupportedLocale，不匹配时返回 null */
+function normalizeLocale(code: string): SupportedLocale | null {
+  if (isSupportedLocale(code)) return code
+  const mapped = LOCALE_ALIAS_MAP[code]
+  return mapped ?? null
+}
+
+export function useLocaleRoute(defaultLocale: LocaleCode = 'en-US') {
   const { locale } = useI18n({ useScope: 'global' })
   const router = useRouter()
   const route = useRoute()
 
+  // 将 defaultLocale 规范化为 SupportedLocale（处理短格式如 'en'）
+  const normalizedDefault: SupportedLocale =
+    normalizeLocale(defaultLocale) ?? 'en-US'
+
   // 优先级：URL ?lang= > localStorage > 默认
   function resolveInitialLocale(): SupportedLocale {
     const queryLang = (route.query.lang as string) || ''
-    if (queryLang && isSupportedLocale(queryLang)) {
-      return queryLang
+    const normalizedQuery = queryLang ? normalizeLocale(queryLang) : null
+    if (normalizedQuery) {
+      return normalizedQuery
     }
     const saved = localStorage.getItem(STORAGE_KEY)
-    if (saved && isSupportedLocale(saved)) {
-      return saved as SupportedLocale
+    const normalizedSaved = saved ? normalizeLocale(saved) : null
+    if (normalizedSaved) {
+      return normalizedSaved
     }
-    return defaultLocale
+    return normalizedDefault
   }
 
   const initial = resolveInitialLocale()
@@ -47,21 +82,23 @@ export function useLocaleRoute(defaultLocale: SupportedLocale = 'en-US') {
 
   /** 切换语言 — 更新 URL + i18n + localStorage */
   const switchLocale = (code: string) => {
-    if (!isSupportedLocale(code)) return
-    activeLang.value = code
-    locale.value = code
-    localStorage.setItem(STORAGE_KEY, code)
-    router.replace({ query: { ...route.query, lang: code } })
+    const normalized = normalizeLocale(code)
+    if (!normalized) return
+    activeLang.value = normalized
+    locale.value = normalized
+    localStorage.setItem(STORAGE_KEY, normalized)
+    router.replace({ query: { ...route.query, lang: normalized } })
   }
 
   // 监听路由 query 变化（浏览器前进/后退）
   watch(
     () => route.query.lang as string,
     (newLang) => {
-      if (newLang && isSupportedLocale(newLang) && newLang !== locale.value) {
-        activeLang.value = newLang
-        locale.value = newLang
-        localStorage.setItem(STORAGE_KEY, newLang)
+      const normalized = newLang ? normalizeLocale(newLang) : null
+      if (normalized && normalized !== locale.value) {
+        activeLang.value = normalized
+        locale.value = normalized
+        localStorage.setItem(STORAGE_KEY, normalized)
       }
     }
   )

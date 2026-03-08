@@ -7,6 +7,9 @@
         :src="icon"
         :alt="title"
         class="feature-card__icon-image"
+        loading="lazy"
+        width="32"
+        height="32"
       />
       <el-icon v-else :size="40" class="feature-card__icon-element">
         <component :is="iconComponent" />

@@ -16,7 +16,7 @@
  * @description 使用联合类型限定有效的品牌标识，
  *              新增品牌时需要在此处添加对应的ID
  */
-export type BrandId = 'xingkou' | 'xiading' | 'mrugc'
+export type BrandId = 'xingkou' | 'xiading' | 'xrugc'
 
 /**
  * 语言类型

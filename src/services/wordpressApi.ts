@@ -7,6 +7,7 @@
 
 import axios from "axios";
 import type { NewsItem, NewsCategory, NewsQueryParams } from "@/types";
+import apiCache from "./apiCache";
 
 // ============================================
 // WordPress API响应类型（原始数据结构）
@@ -149,26 +150,19 @@ export interface WordPressApiService {
 }
 
 // ============================================
-// 分类缓存
+// 分类映射缓存（通过 ApiCache 管理）
 // ============================================
 
-let categoriesCache: Map<number, NewsCategory> | null = null;
-
 /**
- * 获取分类映射表（带缓存）
- * @returns 分类映射表
+ * 获取分类映射表（带缓存，通过 ApiCache 去重）
  */
 const getCategoriesMap = async (): Promise<Map<number, NewsCategory>> => {
-  if (categoriesCache) {
-    return categoriesCache;
-  }
-
   try {
-    const categories = await wordpressApi.getCategories();
-    categoriesCache = new Map(categories.map((cat) => [cat.id, cat]));
-    return categoriesCache;
+    return await apiCache.get("categoriesMap", async () => {
+      const categories = await wordpressApi.getCategories();
+      return new Map(categories.map((cat) => [cat.id, cat]));
+    });
   } catch {
-    // 如果获取分类失败，返回空映射
     return new Map();
   }
 };
@@ -220,9 +214,13 @@ export const wordpressApi: WordPressApiService = {
       // 获取分类映射表
       const categoriesMap = await getCategoriesMap();
 
-      // 请求WordPress REST API
-      const response = await axios.get<WPPost[]>(url, { params: queryParams });
-      const posts = response.data;
+      // 构建缓存 key（包含所有查询参数）
+      const cacheKey = `news:${url}:${JSON.stringify(queryParams)}`;
+
+      // 请求WordPress REST API（带缓存与去重）
+      const posts = await apiCache.get<WPPost[]>(cacheKey, () =>
+        axios.get<WPPost[]>(url, { params: queryParams }).then((r) => r.data),
+      );
 
       // 转换数据格式
       return posts.map((post) => transformPost(post, categoriesMap));
@@ -257,8 +255,11 @@ export const wordpressApi: WordPressApiService = {
     }
 
     try {
-      const response = await axios.get<WPCategory[]>(url, { params: queryParams });
-      return response.data.map(transformCategory);
+      return await apiCache.get<NewsCategory[]>("categories", () =>
+        axios.get<WPCategory[]>(url, { params: queryParams }).then((r) =>
+          r.data.map(transformCategory),
+        ),
+      );
     } catch {
       return [];
     }
@@ -266,10 +267,11 @@ export const wordpressApi: WordPressApiService = {
 };
 
 /**
- * 清除分类缓存（用于测试或强制刷新）
+ * 清除分类缓存（兼容性 shim，内部委托给 ApiCache）
  */
 export const clearCategoriesCache = (): void => {
-  categoriesCache = null;
+  apiCache.clear("categories");
+  apiCache.clear("categoriesMap");
 };
 
 /**

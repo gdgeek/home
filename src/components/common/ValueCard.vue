@@ -7,6 +7,9 @@
         :src="icon"
         :alt="title"
         class="value-card__icon-image"
+        loading="lazy"
+        width="48"
+        height="48"
       />
       <el-icon v-else :size="48" class="value-card__icon-element">
         <component :is="iconComponent" />

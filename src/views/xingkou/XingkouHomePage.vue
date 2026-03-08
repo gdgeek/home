@@ -11,8 +11,18 @@ import { School, User, OfficeBuilding, FolderOpened, EditPen, VideoCamera, View,
 import LoginModal from '@/components/common/LoginModal.vue'
 
 const { footer } = useBrand()
-const version = (window as any).__APP_VERSION__ || '1.0.0'
-const buildTime = (window as any).__BUILD_TIME__ || new Date().toISOString().split('T')[0]
+const buildTime = computed(() => {
+  const timestamp = (window as any).__BUILD_TIME__ || new Date().toISOString()
+  const date = new Date(timestamp)
+  return date.toLocaleString('zh-CN', { 
+    year: 'numeric', 
+    month: '2-digit', 
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  }).replace(/\//g, '-')
+})
 
 const showLoginModal = ref(false)
 const showNewsModal = ref(false)
@@ -301,7 +311,7 @@ const footerNavigation = [
         </div>
         <div class="footer__bottom">
           <p>{{ footer.copyright || '© 2025 星扣科技. 保留所有权利.' }}</p>
-          <p style="font-size: 12px; opacity: 0.6; margin-top: 8px;">v{{ version }} ({{ buildTime }})</p>
+          <p style="font-size: 12px; opacity: 0.6; margin-top: 8px;">{{ buildTime }}</p>
         </div>
       </div>
     </footer>

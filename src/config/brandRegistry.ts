@@ -78,7 +78,7 @@ const brandRegistry: BrandRegistry = {
   // 夏鼎配置 - 蓝色科技感主题
   xiading: {
     id: 'xiading',
-    name: '夏鼎',
+    name: '夏鼎科技AI/AR創作平台',
     locale: 'zh-TW',
     loginUrl: 'https://xiading.com/login',
     theme: {
@@ -129,20 +129,20 @@ const brandRegistry: BrandRegistry = {
   },
 
   // XR UGC 国际版配置 - 紫橙渐变科技主题
-  mrugc: {
-    id: 'mrugc',
-    name: 'XR UGC',
+  xrugc: {
+    id: 'xrugc',
+    name: 'Extended Reality Creation',
     locale: 'en-US',
-    loginUrl: 'https://mrugc.com/login',
+    loginUrl: 'https://xrugc.com/login',
     theme: {
       primaryColor: '#7C3AED',
       secondaryColor: '#F97316',
       ctaColor: '#7C3AED',
       backgroundColor: '#0F0B1A',
       textColor: '#F8FAFC',
-      logoPath: '/logo/MRUGC/mrugc_logo.png',
+      logoPath: '/logo/XRUGC/xrugc_logo.png',
       logoAlt: 'XR UGC',
-      faviconPath: '/logo/MRUGC/mrugc_logo.png'
+      faviconPath: '/logo/XRUGC/xrugc_logo.png'
     },
     hero: {
       title: 'XR UGC — Create. Immerse. Inspire.',
@@ -154,7 +154,7 @@ const brandRegistry: BrandRegistry = {
     footer: {
       copyright: '© 2025 XR UGC. All rights reserved.',
       contactInfo: {
-        email: 'hello@mrugc.com'
+        email: 'hello@xrugc.com'
       },
       navigation: [
         {

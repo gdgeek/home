@@ -1,5 +1,5 @@
 export default {
-  mrugc: {
+  xrugc: {
     nav: {
       features: 'Features',
       useCases: 'Use Cases',
@@ -9,7 +9,7 @@ export default {
     hero: {
       badge: 'Now in Public Beta',
       subtitle: 'Extended Reality Creation',
-      title: 'Build Worlds{br}Without Code',
+      title: 'Empowering Everyone{br}to Create Worlds Joyfully',
       desc: 'The open platform for creating, sharing, and experiencing extended reality content. Designed for educators, creators, and enterprises worldwide.',
       cta: 'Start Creating — Free',
       demo: 'Watch Demo',

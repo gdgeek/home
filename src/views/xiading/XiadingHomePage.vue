@@ -12,7 +12,18 @@ import { useNews } from '@/composables/useNews'
 import LoginModal from '@/components/common/LoginModal.vue'
 
 const { footer } = useBrand()
-const version = (window as any).__APP_VERSION__ || '1.0.0'
+const buildTime = computed(() => {
+  const timestamp = (window as any).__BUILD_TIME__ || new Date().toISOString()
+  const date = new Date(timestamp)
+  return date.toLocaleString('zh-TW', { 
+    year: 'numeric', 
+    month: '2-digit', 
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+  }).replace(/\//g, '-')
+})
 
 const showLoginModal = ref(false)
 const showNewsModal = ref(false)
@@ -337,7 +348,7 @@ const cases = [
       </div>
       <div class="xd-footer__bottom">
         <span>{{ footer.copyright || '© 2025 夏鼎科技（澳門）' }}</span>
-        <span class="xd-footer__ver">v{{ version }}</span>
+        <span class="xd-footer__ver">{{ buildTime }}</span>
       </div>
     </footer>
 
