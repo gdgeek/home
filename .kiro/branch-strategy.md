@@ -1,17 +1,17 @@
 # 分支策略和部署流程
 
-## 分支说明
+## 📋 分支说明
 
 ### main 分支
 - **用途**: 开发分支，用于日常开发和测试
-- **Docker 标签**: `latest`
+- **Docker 标签**: `main` + `<短哈希>`
 - **自动部署**: 是
 - **部署配置**: `docker-compose.prod.yml`
 - **保护**: 建议设置为受保护分支
 
 ### release 分支
 - **用途**: 发布分支，用于生产环境部署
-- **Docker 标签**: `release`
+- **Docker 标签**: `latest` + `release` + `<短哈希>`
 - **自动部署**: 是
 - **部署配置**: `docker-compose.release.yml`
 - **保护**: 强烈建议设置为受保护分支
@@ -19,23 +19,29 @@
 ## CI/CD 流程
 
 ### 触发条件
-- **Push 到 main**: 构建并推送 `latest` 标签
-- **Push 到 release**: 构建并推送 `release` 标签
+- **Push 到 main**: 构建并推送 `main` 和 `<短哈希>` 标签
+- **Push 到 release**: 构建并推送 `latest`、`release` 和 `<短哈希>` 标签
 - **Pull Request**: 仅运行测试，不部署
 
 ### 构建产物
 每次构建会生成以下 Docker 镜像标签：
-- `<commit-sha>`: Git 提交的 SHA 值
-- `latest` 或 `release`: 分支标签
-- `YYYYMMDD-HHmmss`: 时间戳标签
+
+**main 分支**:
+- `<短哈希>`: Git 提交的短 SHA 值（7位）
+- `main`: 分支标签
+
+**release 分支**:
+- `<短哈希>`: Git 提交的短 SHA 值（7位）
+- `release`: 发布标签
+- `latest`: 最新稳定版标签
 
 ### 镜像仓库
 - **仓库**: `hkccr.ccs.tencentyun.com/gdgeek/home`
 - **标签示例**:
-  - `hkccr.ccs.tencentyun.com/gdgeek/home:latest` (main 分支)
+  - `hkccr.ccs.tencentyun.com/gdgeek/home:main` (main 分支)
+  - `hkccr.ccs.tencentyun.com/gdgeek/home:latest` (release 分支)
   - `hkccr.ccs.tencentyun.com/gdgeek/home:release` (release 分支)
-  - `hkccr.ccs.tencentyun.com/gdgeek/home:fe22602` (特定提交)
-  - `hkccr.ccs.tencentyun.com/gdgeek/home:20250308-143000` (时间戳)
+  - `hkccr.ccs.tencentyun.com/gdgeek/home:2bae4e2` (短哈希)
 
 ## 发布流程
 
@@ -96,8 +102,8 @@ docker-compose -f docker-compose.release.yml logs -f frontend
 #### 使用特定版本部署（推荐）
 ```bash
 # 修改 docker-compose.release.yml 中的镜像标签
-# 例如使用时间戳标签：
-# image: hkccr.ccs.tencentyun.com/gdgeek/home:20250308-143000
+# 例如使用短哈希标签：
+# image: hkccr.ccs.tencentyun.com/gdgeek/home:2bae4e2
 
 # 然后部署
 docker-compose -f docker-compose.release.yml up -d
@@ -111,7 +117,7 @@ docker-compose -f docker-compose.release.yml up -d
 # 在腾讯云容器镜像服务控制台查看
 
 # 修改 docker-compose.release.yml 使用旧版本
-# image: hkccr.ccs.tencentyun.com/gdgeek/home:20250307-120000
+# image: hkccr.ccs.tencentyun.com/gdgeek/home:354e41b
 
 # 重新部署
 docker-compose -f docker-compose.release.yml up -d

@@ -52,6 +52,7 @@ jobs:
           tags: |
             type=sha,prefix=,format=short
             type=raw,value=main,enable=${{ github.ref == 'refs/heads/main' }}
+            type=raw,value=release,enable=${{ github.ref == 'refs/heads/release' }}
             type=raw,value=latest,enable=${{ github.ref == 'refs/heads/release' }}
 
       - uses: docker/build-push-action@v5

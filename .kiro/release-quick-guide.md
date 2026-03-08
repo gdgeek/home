@@ -34,13 +34,13 @@ docker-compose -f docker-compose.release.yml logs -f frontend
 
 | 分支 | 用途 | Docker 标签 | 部署配置 |
 |------|------|-------------|----------|
-| `main` | 开发测试 | `latest` | `docker-compose.prod.yml` |
-| `release` | 生产环境 | `release` | `docker-compose.release.yml` |
+| `main` | 开发测试 | `main` + `<短哈希>` | `docker-compose.prod.yml` |
+| `release` | 生产环境 | `latest` + `release` + `<短哈希>` | `docker-compose.release.yml` |
 
 ## 🔄 CI/CD 自动化
 
-- **Push 到 main**: 自动构建 `latest` 标签
-- **Push 到 release**: 自动构建 `release` 标签
+- **Push 到 main**: 自动构建 `main` 和 `<短哈希>` 标签
+- **Push 到 release**: 自动构建 `latest`、`release` 和 `<短哈希>` 标签
 - **Pull Request**: 仅运行测试
 
 ## 🛠️ 常用命令
@@ -75,7 +75,7 @@ docker stats
 ```bash
 # 编辑 docker-compose.release.yml
 # 修改 image 为旧版本标签，例如：
-# image: hkccr.ccs.tencentyun.com/gdgeek/home:20250307-120000
+# image: hkccr.ccs.tencentyun.com/gdgeek/home:354e41b
 
 docker-compose -f docker-compose.release.yml up -d
 ```
@@ -111,16 +111,21 @@ git push origin main
 
 ## 📊 镜像标签说明
 
-每次构建生成 3 个标签：
-- `<commit-sha>`: 例如 `fe22602`
-- `latest` 或 `release`: 分支标签
-- `YYYYMMDD-HHmmss`: 例如 `20250308-143000`
+**main 分支**构建生成 2 个标签：
+- `<短哈希>`: 例如 `2bae4e2`（7位）
+- `main`: 分支标签
+
+**release 分支**构建生成 3 个标签：
+- `<短哈希>`: 例如 `2bae4e2`（7位）
+- `release`: 发布标签
+- `latest`: 最新稳定版标签
 
 完整镜像地址：
 ```
-hkccr.ccs.tencentyun.com/gdgeek/home:release
 hkccr.ccs.tencentyun.com/gdgeek/home:latest
-hkccr.ccs.tencentyun.com/gdgeek/home:20250308-143000
+hkccr.ccs.tencentyun.com/gdgeek/home:release
+hkccr.ccs.tencentyun.com/gdgeek/home:main
+hkccr.ccs.tencentyun.com/gdgeek/home:2bae4e2
 ```
 
 ## ✅ 部署检查清单
