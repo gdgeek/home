@@ -2,8 +2,15 @@
 
 ## 📋 分支说明
 
+### develop 分支
+- **用途**: 日常开发分支，用于功能开发和集成测试
+- **Docker 标签**: `develop` + `<短哈希>`
+- **自动部署**: 是
+- **部署配置**: `docker-compose.dev.yml`
+- **保护**: 建议设置为受保护分支
+
 ### main 分支
-- **用途**: 开发分支，用于日常开发和测试
+- **用途**: 主分支，用于稳定版本和预发布测试
 - **Docker 标签**: `main` + `<短哈希>`
 - **自动部署**: 是
 - **部署配置**: `docker-compose.prod.yml`
@@ -19,6 +26,7 @@
 ## CI/CD 流程
 
 ### 触发条件
+- **Push 到 develop**: 构建并推送 `develop` 和 `<短哈希>` 标签
 - **Push 到 main**: 构建并推送 `main` 和 `<短哈希>` 标签
 - **Push 到 release**: 构建并推送 `latest`、`release` 和 `<短哈希>` 标签
 - **Pull Request**: 仅运行测试，不部署
@@ -26,9 +34,13 @@
 ### 构建产物
 每次构建会生成以下 Docker 镜像标签：
 
+**develop 分支**:
+- `<短哈希>`: Git 提交的短 SHA 值（7位）
+- `develop`: 开发分支标签
+
 **main 分支**:
 - `<短哈希>`: Git 提交的短 SHA 值（7位）
-- `main`: 分支标签
+- `main`: 主分支标签
 
 **release 分支**:
 - `<短哈希>`: Git 提交的短 SHA 值（7位）
@@ -38,18 +50,19 @@
 ### 镜像仓库
 - **仓库**: `hkccr.ccs.tencentyun.com/gdgeek/home`
 - **标签示例**:
+  - `hkccr.ccs.tencentyun.com/gdgeek/home:develop` (develop 分支)
   - `hkccr.ccs.tencentyun.com/gdgeek/home:main` (main 分支)
   - `hkccr.ccs.tencentyun.com/gdgeek/home:latest` (release 分支)
   - `hkccr.ccs.tencentyun.com/gdgeek/home:release` (release 分支)
-  - `hkccr.ccs.tencentyun.com/gdgeek/home:2bae4e2` (短哈希)
+  - `hkccr.ccs.tencentyun.com/gdgeek/home:5f938a4` (短哈希)
 
 ## 发布流程
 
-### 1. 开发阶段 (main 分支)
+### 1. 日常开发阶段 (develop 分支)
 ```bash
-# 在 main 分支上开发
-git checkout main
-git pull origin main
+# 在 develop 分支上开发
+git checkout develop
+git pull origin develop
 
 # 进行开发和测试
 # ... 修改代码 ...
@@ -57,12 +70,31 @@ git pull origin main
 # 提交更改
 git add .
 git commit -m "feat: 新功能"
-git push origin main
+git push origin develop
 
-# CI/CD 自动构建并推送 latest 标签
+# CI/CD 自动构建并推送 develop 标签
 ```
 
-### 2. 发布到 release 分支
+### 2. 合并到 main 分支（稳定版本）
+```bash
+# 确保 develop 分支是最新的
+git checkout develop
+git pull origin develop
+
+# 切换到 main 分支
+git checkout main
+git pull origin main
+
+# 合并 develop 分支的更改
+git merge develop
+
+# 推送到远程
+git push origin main
+
+# CI/CD 自动构建并推送 main 标签
+```
+
+### 3. 发布到 release 分支（生产环境）
 ```bash
 # 确保 main 分支是最新的
 git checkout main
@@ -78,12 +110,12 @@ git merge main
 # 推送到远程
 git push origin release
 
-# CI/CD 自动构建并推送 release 标签
+# CI/CD 自动构建并推送 release 和 latest 标签
 ```
 
 ### 3. 部署到生产环境
 
-#### 使用 release 标签部署
+#### 使用 latest 标签部署（推荐）
 ```bash
 # 在生产服务器上
 cd /path/to/project
@@ -97,6 +129,22 @@ docker-compose -f docker-compose.release.yml up -d
 
 # 查看日志
 docker-compose -f docker-compose.release.yml logs -f frontend
+```
+
+#### 部署开发环境（develop）
+```bash
+# 在开发服务器上
+docker-compose -f docker-compose.dev.yml pull
+docker-compose -f docker-compose.dev.yml down
+docker-compose -f docker-compose.dev.yml up -d
+```
+
+#### 部署测试环境（main）
+```bash
+# 在测试服务器上
+docker-compose -f docker-compose.prod.yml pull
+docker-compose -f docker-compose.prod.yml down
+docker-compose -f docker-compose.prod.yml up -d
 ```
 
 #### 使用特定版本部署（推荐）
@@ -158,12 +206,16 @@ git push origin hotfix/critical-bug
 # 在 GitHub 上创建 Pull Request: hotfix/critical-bug -> release
 
 # 5. 审核并合并 PR
-# 合并后 CI/CD 自动构建 release 标签
+# 合并后 CI/CD 自动构建 release 和 latest 标签
 
-# 6. 将热修复合并回 main
+# 6. 将热修复合并回 main 和 develop
 git checkout main
 git merge hotfix/critical-bug
 git push origin main
+
+git checkout develop
+git merge hotfix/critical-bug
+git push origin develop
 
 # 7. 删除热修复分支
 git branch -d hotfix/critical-bug
@@ -171,6 +223,11 @@ git push origin --delete hotfix/critical-bug
 ```
 
 ## 分支保护规则建议
+
+### develop 分支
+- ✅ 要求 Pull Request 审核
+- ✅ 要求状态检查通过（CI 测试）
+- ❌ 不允许强制推送
 
 ### main 分支
 - ✅ 要求 Pull Request 审核
@@ -186,6 +243,13 @@ git push origin --delete hotfix/critical-bug
 - ✅ 限制谁可以推送（仅管理员）
 
 ## 环境变量配置
+
+### develop 环境 (docker-compose.dev.yml)
+```yaml
+environment:
+  - BRAND_ID=xiading
+  - WORKBENCH_URL=https://d.xiading.hxgxonline.com/
+```
 
 ### main 环境 (docker-compose.prod.yml)
 ```yaml
@@ -249,17 +313,29 @@ docker stats
 
 ## 最佳实践
 
-1. **频繁提交到 main**: 保持小而频繁的提交
-2. **定期发布到 release**: 每周或每两周发布一次
-3. **使用 Pull Request**: 所有更改通过 PR 审核
-4. **编写测试**: 确保 CI 测试覆盖关键功能
-5. **记录变更**: 在 PR 中详细描述更改内容
-6. **监控生产环境**: 部署后密切关注日志和错误
-7. **保留旧版本**: 不要删除旧的镜像标签，便于回滚
+1. **频繁提交到 develop**: 保持小而频繁的提交
+2. **定期合并到 main**: 每周或功能完成后合并到 main
+3. **谨慎发布到 release**: 充分测试后再发布到生产环境
+4. **使用 Pull Request**: 所有更改通过 PR 审核
+5. **编写测试**: 确保 CI 测试覆盖关键功能
+6. **记录变更**: 在 PR 中详细描述更改内容
+7. **监控生产环境**: 部署后密切关注日志和错误
+8. **保留旧版本**: 不要删除旧的镜像标签，便于回滚
+
+## 工作流程图
+
+```
+develop (日常开发)
+   ↓
+   PR → main (稳定版本)
+   ↓
+   PR → release (生产环境)
+```
 
 ## 相关文件
 
 - `.github/workflows/ci-cd.yml`: CI/CD 配置
+- `docker-compose.dev.yml`: develop 分支部署配置
 - `docker-compose.prod.yml`: main 分支部署配置
 - `docker-compose.release.yml`: release 分支部署配置
 - `Dockerfile`: Docker 镜像构建配置

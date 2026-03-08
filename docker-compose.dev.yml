@@ -1,63 +1,47 @@
 version: "3.8"
 
-# 开发环境
-# 通过 BRAND_ID 环境变量指定品牌：xingkou | xiading
+# 开发环境 - develop 分支
+# 使用 develop 标签的镜像
 
 services:
   frontend:
-    build:
-      context: .
-      args:
-        VITE_BACKEND_API_URL: http://localhost:3000/api
+    image: hkccr.ccs.tencentyun.com/${TCR_NAMESPACE:-gdgeek}/home:develop
     ports:
       - "80:80"
     environment:
       - BRAND_ID=xiading
-      - WORDPRESS_API_URL=http://wordpress:80/wp-json/wp/v2
-      - API_URL=https://api.xrteeth.com
-      - BACKUP_API_URL=https://api.tmrpp.com
       - WORKBENCH_URL=https://d.xiading.hxgxonline.com/
-    depends_on:
-      - wordpress
-    networks:
-      - dev-network
+      - WORDPRESS_API_URL=
+      - API_URL=
+      - BACKUP_API_URL=
+    restart: unless-stopped
 
   wordpress:
     image: wordpress:latest
+    depends_on:
+      - db
     ports:
       - "8080:80"
-    volumes:
-      - ./wordpress/wp-content:/var/www/html/wp-content:rw
     environment:
-      WORDPRESS_DB_HOST: mysql
+      WORDPRESS_DB_HOST: db:3306
       WORDPRESS_DB_USER: wordpress
-      WORDPRESS_DB_PASSWORD: wordpress_password
+      WORDPRESS_DB_PASSWORD: w0rdp2ess
       WORDPRESS_DB_NAME: wordpress
-    depends_on:
-      mysql:
-        condition: service_healthy
-    networks:
-      - dev-network
-
-  mysql:
-    image: mysql:8.0
-    ports:
-      - "3306:3306"
     volumes:
-      - ./mysql/data:/var/lib/mysql:rw
+      - blog-data:/var/www/html
+    restart: unless-stopped
+
+  db:
+    image: mysql:8.0
+    volumes:
+      - sql-data:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_ROOT_PASSWORD: Setup2021
       MYSQL_DATABASE: wordpress
       MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress_password
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    networks:
-      - dev-network
+      MYSQL_PASSWORD: w0rdp2ess
+    restart: unless-stopped
 
-networks:
-  dev-network:
-    driver: bridge
+volumes:
+  sql-data:
+  blog-data:

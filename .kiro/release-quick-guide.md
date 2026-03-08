@@ -2,26 +2,52 @@
 
 ## 🚀 快速发布流程
 
-### 1. 从 main 发布到 release
+### 1. 日常开发（develop 分支）
 ```bash
-# 确保 main 是最新的
-git checkout main
-git pull origin main
+# 在 develop 分支上开发
+git checkout develop
+git pull origin develop
 
-# 切换到 release 分支
-git checkout release
-git pull origin release
-
-# 合并 main 的更改
-git merge main
-
-# 推送触发 CI/CD
-git push origin release
+# 开发和测试
+git add .
+git commit -m "feat: 新功能"
+git push origin develop
+# CI/CD 自动构建 develop 标签
 ```
 
-### 2. 部署到生产环境
+### 2. 合并到 main（稳定版本）
 ```bash
-# 在生产服务器上
+# 合并 develop 到 main
+git checkout main
+git pull origin main
+git merge develop
+git push origin main
+# CI/CD 自动构建 main 标签
+```
+
+### 3. 发布到 release（生产环境）
+```bash
+# 合并 main 到 release
+git checkout release
+git pull origin release
+git merge main
+git push origin release
+# CI/CD 自动构建 release 和 latest 标签
+```
+
+### 2. 部署到各环境
+```bash
+# 开发环境（develop）
+docker-compose -f docker-compose.dev.yml pull
+docker-compose -f docker-compose.dev.yml down
+docker-compose -f docker-compose.dev.yml up -d
+
+# 测试环境（main）
+docker-compose -f docker-compose.prod.yml pull
+docker-compose -f docker-compose.prod.yml down
+docker-compose -f docker-compose.prod.yml up -d
+
+# 生产环境（release）
 docker-compose -f docker-compose.release.yml pull
 docker-compose -f docker-compose.release.yml down
 docker-compose -f docker-compose.release.yml up -d
@@ -34,11 +60,13 @@ docker-compose -f docker-compose.release.yml logs -f frontend
 
 | 分支 | 用途 | Docker 标签 | 部署配置 |
 |------|------|-------------|----------|
-| `main` | 开发测试 | `main` + `<短哈希>` | `docker-compose.prod.yml` |
+| `develop` | 日常开发 | `develop` + `<短哈希>` | `docker-compose.dev.yml` |
+| `main` | 稳定版本 | `main` + `<短哈希>` | `docker-compose.prod.yml` |
 | `release` | 生产环境 | `latest` + `release` + `<短哈希>` | `docker-compose.release.yml` |
 
 ## 🔄 CI/CD 自动化
 
+- **Push 到 develop**: 自动构建 `develop` 和 `<短哈希>` 标签
 - **Push 到 main**: 自动构建 `main` 和 `<短哈希>` 标签
 - **Push 到 release**: 自动构建 `latest`、`release` 和 `<短哈希>` 标签
 - **Pull Request**: 仅运行测试
@@ -103,29 +131,38 @@ git push origin hotfix/bug-name
 
 # 4. 合并后自动构建
 
-# 5. 同步到 main
+# 5. 同步到 main 和 develop
 git checkout main
 git merge hotfix/bug-name
 git push origin main
+
+git checkout develop
+git merge hotfix/bug-name
+git push origin develop
 ```
 
 ## 📊 镜像标签说明
 
+**develop 分支**构建生成 2 个标签：
+- `<短哈希>`: 例如 `5f938a4`（7位）
+- `develop`: 开发分支标签
+
 **main 分支**构建生成 2 个标签：
-- `<短哈希>`: 例如 `2bae4e2`（7位）
-- `main`: 分支标签
+- `<短哈希>`: 例如 `5f938a4`（7位）
+- `main`: 主分支标签
 
 **release 分支**构建生成 3 个标签：
-- `<短哈希>`: 例如 `2bae4e2`（7位）
+- `<短哈希>`: 例如 `5f938a4`（7位）
 - `release`: 发布标签
 - `latest`: 最新稳定版标签
 
 完整镜像地址：
 ```
+hkccr.ccs.tencentyun.com/gdgeek/home:develop
+hkccr.ccs.tencentyun.com/gdgeek/home:main
 hkccr.ccs.tencentyun.com/gdgeek/home:latest
 hkccr.ccs.tencentyun.com/gdgeek/home:release
-hkccr.ccs.tencentyun.com/gdgeek/home:main
-hkccr.ccs.tencentyun.com/gdgeek/home:2bae4e2
+hkccr.ccs.tencentyun.com/gdgeek/home:5f938a4
 ```
 
 ## ✅ 部署检查清单
