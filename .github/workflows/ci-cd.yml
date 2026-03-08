@@ -50,10 +50,9 @@ jobs:
         with:
           images: ${{ env.TCR_REGISTRY }}/${{ env.TCR_NAMESPACE }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=sha,prefix=
-            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
-            type=raw,value=release,enable=${{ github.ref == 'refs/heads/release' }}
-            type=raw,value={{date 'YYYYMMDD-HHmmss'}}
+            type=sha,prefix=,format=short
+            type=raw,value=main,enable=${{ github.ref == 'refs/heads/main' }}
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/release' }}
 
       - uses: docker/build-push-action@v5
         with:
