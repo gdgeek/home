@@ -106,11 +106,9 @@ const stats = [
   { number: '10萬+', label: 'AR作品' }
 ]
 
-// Unsplash 高質量圖片（免費商用）
+// Hero 背景图片
 const heroImages = [
-  'https://images.unsplash.com/photo-1535223289827-42f1e9919769?w=1920&q=80', // 科技藍光抽象
-  'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80', // 地球數據可視化
-  'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=1920&q=80', // 團隊科技協作
+  '/images/ar-platform/两个小朋友在外面玩AR游戏.webp', // 小朋友户外玩 AR
 ]
 
 const features = [
@@ -173,7 +171,7 @@ const cases = [
     <!-- Hero：雙層圖片 + 居中文字 -->
     <section class="xd-hero">
       <div class="xd-hero__bg">
-        <img :src="heroImages[0]" alt="科技教育背景" />
+        <img :src="heroImages[0]" alt="小朋友戶外玩 AR 遊戲" />
         <div class="xd-hero__overlay"></div>
       </div>
       <div class="xd-hero__content reveal">
