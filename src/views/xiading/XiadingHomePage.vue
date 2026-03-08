@@ -108,7 +108,7 @@ const stats = [
 
 // Hero 背景图片
 const heroImages = [
-  '/images/ar-platform/两个小朋友在外面玩AR游戏.webp', // 小朋友户外玩 AR
+  '/images/ar-platform/澳门AR.webp', // 澳門 AR 教育場景
 ]
 
 const features = [
@@ -171,7 +171,7 @@ const cases = [
     <!-- Hero：雙層圖片 + 居中文字 -->
     <section class="xd-hero">
       <div class="xd-hero__bg">
-        <img :src="heroImages[0]" alt="小朋友戶外玩 AR 遊戲" />
+        <img :src="heroImages[0]" alt="澳門 AR 教育場景" />
         <div class="xd-hero__overlay"></div>
       </div>
       <div class="xd-hero__content reveal">
