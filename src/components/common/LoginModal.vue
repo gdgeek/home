@@ -116,6 +116,10 @@ const handleLogin = async () => {
 
           // 登录成功后跳转到工作台 SSO
           const workbenchUrl = ((window as unknown as Record<string, unknown>).__WORKBENCH_URL__ as string | undefined) || import.meta.env.VITE_WORKBENCH_URL
+          console.log('Workbench URL from window:', (window as unknown as Record<string, unknown>).__WORKBENCH_URL__)
+          console.log('Workbench URL from env:', import.meta.env.VITE_WORKBENCH_URL)
+          console.log('Final workbenchUrl:', workbenchUrl)
+          
           if (workbenchUrl) {
             // 移除末尾的斜杠（如果存在），避免生成 //sso
             const baseUrl = workbenchUrl.replace(/\/$/, '')
@@ -123,6 +127,8 @@ const handleLogin = async () => {
             console.log('Redirecting to Workbench SSO:', redirectUrl)
             // 使用 window.location.href 进行跳转
             window.location.href = redirectUrl
+          } else {
+            console.warn('Workbench URL not configured, skipping SSO redirect')
           }
         } else {
           ElMessage.error(result.message || t('login.failed'))
