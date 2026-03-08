@@ -7,8 +7,13 @@ BACKUP_API_URL="${BACKUP_API_URL:-}"
 WORKBENCH_URL="${WORKBENCH_URL:-}"
 
 # 使用 python3 对每个值进行 JSON 序列化，防止特殊字符注入
+# 如果输入为空，返回 null 而不是空字符串
 json_encode() {
-  printf '%s' "$1" | python3 -c "import json,sys; print(json.dumps(sys.stdin.read()), end='')"
+  if [ -z "$1" ]; then
+    echo "null"
+  else
+    printf '%s' "$1" | python3 -c "import json,sys; print(json.dumps(sys.stdin.read()), end='')"
+  fi
 }
 
 BRAND_ID_JSON=$(json_encode "$BRAND_ID")
