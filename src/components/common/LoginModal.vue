@@ -115,8 +115,8 @@ const handleLogin = async () => {
           emit('update:modelValue', false)
 
           // 登录成功后跳转到工作台 SSO
-          const workbenchUrl = ((window as unknown as Record<string, unknown>).__WORKBENCH_URL__ as string | undefined) || import.meta.env.VITE_WORKBENCH_URL
-          console.log('Workbench URL from window:', (window as unknown as Record<string, unknown>).__WORKBENCH_URL__)
+          const workbenchUrl = window.__WORKBENCH_URL__ || import.meta.env.VITE_WORKBENCH_URL
+          console.log('Workbench URL from window:', window.__WORKBENCH_URL__)
           console.log('Workbench URL from env:', import.meta.env.VITE_WORKBENCH_URL)
           console.log('Final workbenchUrl:', workbenchUrl)
           

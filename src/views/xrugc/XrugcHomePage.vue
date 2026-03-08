@@ -12,7 +12,7 @@ const { t } = useI18n({ useScope: 'global' })
 const { detectAndSetLocale } = useGeoLocale()
 const { activeLang, switchLocale } = useLocaleRoute('en-US')
 const buildTime = computed(() => {
-  const timestamp = (window as any).__BUILD_TIME__ || new Date().toISOString()
+  const timestamp = window.__BUILD_TIME__ || __BUILD_TIME__ || new Date().toISOString()
   const date = new Date(timestamp)
   return date.toLocaleString('en-US', { 
     year: 'numeric', 
@@ -38,7 +38,7 @@ const handleOpenNewsDetail = (item: any) => {
   showNewsModal.value = true
 }
 
-const blogUrl = computed(() => (window as any).__WORDPRESS_API_URL__ || 'https://blog.hxgxonline.com')
+const blogUrl = computed(() => window.__WORDPRESS_API_URL__ || 'https://blog.hxgxonline.com')
 
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString)

@@ -12,7 +12,7 @@ import LoginModal from '@/components/common/LoginModal.vue'
 
 const { footer } = useBrand()
 const buildTime = computed(() => {
-  const timestamp = (window as any).__BUILD_TIME__ || new Date().toISOString()
+  const timestamp = window.__BUILD_TIME__ || __BUILD_TIME__ || new Date().toISOString()
   const date = new Date(timestamp)
   return date.toLocaleString('zh-CN', { 
     year: 'numeric', 
@@ -43,7 +43,7 @@ const handleOpenNewsDetail = (item: any) => {
 
 // WordPress 博客地址
 const blogUrl = computed(() => {
-  return (window as any).__WORDPRESS_API_URL__ || 'https://blog.hxgxonline.com'
+  return window.__WORDPRESS_API_URL__ || 'https://blog.hxgxonline.com'
 })
 
 const formatDate = (dateString: string): string => {
