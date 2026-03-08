@@ -164,23 +164,26 @@ export const login = async (
 
   try {
     return await doLogin(apiUrl, username, password);
-  } catch (err: any) {
+  } catch (err: unknown) {
     // 如果是网络错误（非业务错误），清除缓存重试
-    if (!err.response) {
+    if (err && typeof err === 'object' && !('response' in err)) {
       console.warn("authApi: 请求失败，重新检查API可用性...");
       cachedApiUrl = null;
       const newApiUrl = await discoverApiUrl();
       if (newApiUrl && newApiUrl !== apiUrl) {
         return await doLogin(newApiUrl, username, password);
       }
-      throw new AuthError("NETWORK_ERROR", err.message);
+      const message = 'message' in err && typeof err.message === 'string' ? err.message : 'Network error';
+      throw new AuthError("NETWORK_ERROR", message);
     }
 
     // 如果已经是 AuthError（来自 doLogin 重试），直接重新抛出
     if (err instanceof AuthError) throw err;
 
+    // 处理 axios 错误
+    const axiosError = err as { response?: { data?: { message?: string } }; message?: string };
     const rawMessage: string =
-      err.response?.data?.message || err.message || "";
+      axiosError.response?.data?.message || axiosError.message || "Unknown error";
     const code = resolveErrorCode(rawMessage);
     console.error("authApi: 登录失败:", rawMessage);
     throw new AuthError(code, rawMessage);

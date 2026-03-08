@@ -24,15 +24,15 @@ const mockLoginSuccess = {
 }
 
 beforeEach(() => {
-  ;(window as any).__API_URL__ = PRIMARY_URL
-  ;(window as any).__BACKUP_API_URL__ = BACKUP_URL
+  ;(window as unknown as Record<string, unknown>).__API_URL__ = PRIMARY_URL
+  ;(window as unknown as Record<string, unknown>).__BACKUP_API_URL__ = BACKUP_URL
   vi.clearAllMocks()
   localStorage.clear()
 })
 
 afterEach(() => {
-  delete (window as any).__API_URL__
-  delete (window as any).__BACKUP_API_URL__
+  delete (window as unknown as Record<string, unknown>).__API_URL__
+  delete (window as unknown as Record<string, unknown>).__BACKUP_API_URL__
   vi.resetModules()
 })
 

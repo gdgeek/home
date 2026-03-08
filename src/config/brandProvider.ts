@@ -28,8 +28,8 @@ function getBrandFromUrl(): BrandId | null {
 function resolveBrandId(): BrandId {
   // 1. Docker 注入（生产环境）—— 锁定品牌
   if (typeof window !== 'undefined') {
-    const injected = (window as any).__BRAND_ID__
-    if (injected && VALID_BRAND_IDS.includes(injected)) {
+    const injected = (window as unknown as Record<string, unknown>).__BRAND_ID__
+    if (injected && VALID_BRAND_IDS.includes(injected as string)) {
       return injected as BrandId
     }
   }

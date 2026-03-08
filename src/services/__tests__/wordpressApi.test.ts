@@ -14,12 +14,12 @@ import * as fc from 'fast-check'
 vi.mock('axios')
 
 beforeEach(() => {
-  ;(window as any).__WORDPRESS_API_URL__ = 'http://test.example.com/wp-json/wp/v2'
+  ;(window as unknown as Record<string, unknown>).__WORDPRESS_API_URL__ = 'http://test.example.com/wp-json/wp/v2'
   vi.clearAllMocks()
 })
 
 afterEach(() => {
-  delete (window as any).__WORDPRESS_API_URL__
+  delete (window as unknown as Record<string, unknown>).__WORDPRESS_API_URL__
   vi.resetModules()
 })
 
@@ -69,7 +69,7 @@ async function getMockedAxios() {
 describe('wordpressApi', () => {
   describe('getCategories', () => {
     it('returns empty array when baseURL is not set', async () => {
-      delete (window as any).__WORDPRESS_API_URL__
+      delete (window as unknown as Record<string, unknown>).__WORDPRESS_API_URL__
       const api = await getFreshApi()
       const result = await api.getCategories()
       expect(result).toEqual([])
@@ -100,7 +100,7 @@ describe('wordpressApi', () => {
 
   describe('getNews', () => {
     it('returns empty array when baseURL is not set', async () => {
-      delete (window as any).__WORDPRESS_API_URL__
+      delete (window as unknown as Record<string, unknown>).__WORDPRESS_API_URL__
       const api = await getFreshApi()
       const result = await api.getNews()
       expect(result).toEqual([])
