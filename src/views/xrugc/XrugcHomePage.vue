@@ -178,7 +178,6 @@ const cases = computed(() => [
               </div>
             </Transition>
           </div>
-          <button class="mu-btn mu-btn--ghost" @click="handleOpenLogin">{{ t('xrugc.auth.login') }}</button>
           <button class="mu-btn mu-btn--primary" @click="handleOpenLogin">{{ t('xrugc.auth.getStarted') }}</button>
           <button class="mu-nav__hamburger" @click="toggleMobileMenu" aria-label="Toggle menu">
             <span></span>
@@ -202,7 +201,6 @@ const cases = computed(() => [
             </button>
           </div>
           <div class="mu-nav__mobile-actions">
-            <button class="mu-btn mu-btn--ghost mu-btn--block" @click="handleOpenLogin; mobileMenuOpen = false">{{ t('xrugc.auth.login') }}</button>
             <button class="mu-btn mu-btn--primary mu-btn--block" @click="handleOpenLogin; mobileMenuOpen = false">{{ t('xrugc.auth.getStarted') }}</button>
           </div>
         </div>
