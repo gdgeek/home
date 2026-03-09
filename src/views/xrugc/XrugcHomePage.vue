@@ -30,11 +30,16 @@ const selectedNews = ref<any>(null)
 const animatedSections = ref<Set<HTMLElement>>(new Set())
 const navScrolled = ref(false)
 const mobileMenuOpen = ref(false)
+const langDropdownOpen = ref(false)
 
 const { news } = useNews()
 
 const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value
+}
+
+const toggleLangDropdown = () => {
+  langDropdownOpen.value = !langDropdownOpen.value
 }
 
 const handleOpenLogin = () => { showLoginModal.value = true }
@@ -85,6 +90,8 @@ const languages = [
 
 const switchLang = (code: string) => {
   switchLocale(code)
+  mobileMenuOpen.value = false
+  langDropdownOpen.value = false
 }
 
 const navItems = computed(() => [
@@ -152,6 +159,24 @@ const cases = computed(() => [
                     @click="switchLang(lang.code)">
               {{ lang.label }}
             </button>
+          </div>
+          <div class="mu-lang-dropdown">
+            <button class="mu-lang-dropdown__trigger" @click="toggleLangDropdown">
+              {{ languages.find(l => l.code === activeLang)?.label || 'EN' }}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M6 9l6 6 6-6"/>
+              </svg>
+            </button>
+            <Transition name="dropdown">
+              <div v-if="langDropdownOpen" class="mu-lang-dropdown__menu">
+                <button v-for="lang in languages" :key="lang.code"
+                        class="mu-lang-dropdown__item"
+                        :class="{ 'mu-lang-dropdown__item--active': activeLang === lang.code }"
+                        @click="switchLang(lang.code)">
+                  {{ lang.label }}
+                </button>
+              </div>
+            </Transition>
           </div>
           <button class="mu-btn mu-btn--ghost" @click="handleOpenLogin">{{ t('xrugc.auth.login') }}</button>
           <button class="mu-btn mu-btn--primary" @click="handleOpenLogin">{{ t('xrugc.auth.getStarted') }}</button>
@@ -388,8 +413,49 @@ $r: mu.$r; $rs: mu.$rs; $mw: mu.$mw; $e: mu.$e;
   &__right{display:flex;align-items:center;gap:8px}
 }
 
-.mu-lang{display:flex;gap:2px;margin-right:12px;@media(max-width:768px){display:none}
+.mu-lang{display:flex;gap:2px;margin-right:12px;
+  @media(max-width:1024px){display:none}
   &__btn{padding:4px 8px;font-size:11px;font-weight:600;color:$tf;background:transparent;border:none;border-radius:4px;cursor:pointer;transition:all .2s;font-family:inherit;&:hover{color:$tm}&--active{color:$vl;background:rgba($v,.12)}}
+}
+
+.mu-lang-dropdown{
+  display:none;position:relative;margin-right:12px;
+  @media(max-width:1024px) and (min-width:769px){display:block}
+  
+  &__trigger{
+    display:flex;align-items:center;gap:4px;padding:6px 12px;
+    font-size:12px;font-weight:600;color:$t1;
+    background:rgba($v,.08);border:1px solid rgba($v,.12);border-radius:6px;
+    cursor:pointer;transition:all .2s;font-family:inherit;
+    &:hover{background:rgba($v,.12);border-color:rgba($v,.2)}
+    svg{width:14px;height:14px;transition:transform .2s}
+  }
+  
+  &__menu{
+    position:absolute;top:calc(100% + 4px);right:0;min-width:120px;
+    background:rgba($bg,.98);backdrop-filter:blur(24px);
+    border:1px solid rgba($v,.12);border-radius:8px;
+    box-shadow:0 8px 24px rgba($v,.15);
+    padding:4px;z-index:1000;
+  }
+  
+  &__item{
+    display:block;width:100%;padding:8px 12px;
+    font-size:13px;font-weight:500;color:$t1;
+    background:transparent;border:none;border-radius:4px;
+    cursor:pointer;transition:all .2s;font-family:inherit;
+    text-align:left;
+    &:hover{background:rgba($v,.08)}
+    &--active{color:$v;background:rgba($v,.12);font-weight:600}
+  }
+}
+
+.dropdown-enter-active, .dropdown-leave-active {
+  transition: all .2s $e;
+}
+.dropdown-enter-from, .dropdown-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
 }
 
 .mu-nav__hamburger{
