@@ -29,8 +29,13 @@ const showNewsModal = ref(false)
 const selectedNews = ref<any>(null)
 const animatedSections = ref<Set<HTMLElement>>(new Set())
 const navScrolled = ref(false)
+const mobileMenuOpen = ref(false)
 
 const { news } = useNews()
+
+const toggleMobileMenu = () => {
+  mobileMenuOpen.value = !mobileMenuOpen.value
+}
 
 const handleOpenLogin = () => { showLoginModal.value = true }
 const handleOpenNewsDetail = (item: any) => {
@@ -150,8 +155,33 @@ const cases = computed(() => [
           </div>
           <button class="mu-btn mu-btn--ghost" @click="handleOpenLogin">{{ t('xrugc.auth.login') }}</button>
           <button class="mu-btn mu-btn--primary" @click="handleOpenLogin">{{ t('xrugc.auth.getStarted') }}</button>
+          <button class="mu-nav__hamburger" @click="toggleMobileMenu" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
       </div>
+      <!-- Mobile Menu -->
+      <Transition name="mobile-menu">
+        <div v-if="mobileMenuOpen" class="mu-nav__mobile">
+          <nav class="mu-nav__mobile-links">
+            <a v-for="item in navItems" :key="item.url" :href="item.url" @click="mobileMenuOpen = false">{{ item.text }}</a>
+          </nav>
+          <div class="mu-nav__mobile-lang">
+            <button v-for="lang in languages" :key="lang.code"
+                    class="mu-lang__btn"
+                    :class="{ 'mu-lang__btn--active': activeLang === lang.code }"
+                    @click="switchLang(lang.code)">
+              {{ lang.label }}
+            </button>
+          </div>
+          <div class="mu-nav__mobile-actions">
+            <button class="mu-btn mu-btn--ghost mu-btn--block" @click="handleOpenLogin; mobileMenuOpen = false">{{ t('xrugc.auth.login') }}</button>
+            <button class="mu-btn mu-btn--primary mu-btn--block" @click="handleOpenLogin; mobileMenuOpen = false">{{ t('xrugc.auth.getStarted') }}</button>
+          </div>
+        </div>
+      </Transition>
     </header>
 
     <section class="mu-hero">
@@ -362,6 +392,43 @@ $r: mu.$r; $rs: mu.$rs; $mw: mu.$mw; $e: mu.$e;
   &__btn{padding:4px 8px;font-size:11px;font-weight:600;color:$tf;background:transparent;border:none;border-radius:4px;cursor:pointer;transition:all .2s;font-family:inherit;&:hover{color:$tm}&--active{color:$vl;background:rgba($v,.12)}}
 }
 
+.mu-nav__hamburger{
+  display:none;flex-direction:column;gap:4px;padding:8px;background:transparent;border:none;cursor:pointer;
+  @media(max-width:768px){display:flex}
+  span{width:20px;height:2px;background:$t1;border-radius:2px;transition:all .3s $e}
+}
+
+.mu-nav__mobile{
+  position:absolute;top:100%;left:0;right:0;margin-top:8px;
+  background:rgba($bg,.95);backdrop-filter:blur(24px);
+  border:1px solid rgba($v,.08);border-radius:14px;
+  padding:16px;box-shadow:0 8px 32px rgba($v,.12);
+  
+  &-links{
+    display:flex;flex-direction:column;gap:4px;margin-bottom:16px;
+    a{display:block;padding:12px 16px;color:$t1;text-decoration:none;font-size:15px;font-weight:500;
+      border-radius:8px;transition:all .2s;
+      &:hover{background:rgba($v,.08);color:$v}}
+  }
+  
+  &-lang{
+    display:flex;gap:4px;padding:12px 0;border-top:1px solid rgba($v,.08);border-bottom:1px solid rgba($v,.08);
+    margin-bottom:16px;flex-wrap:wrap;justify-content:center;
+  }
+  
+  &-actions{
+    display:flex;flex-direction:column;gap:8px;
+  }
+}
+
+.mobile-menu-enter-active, .mobile-menu-leave-active {
+  transition: all .3s $e;
+}
+.mobile-menu-enter-from, .mobile-menu-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
 .mu-btn {
   display:inline-flex;align-items:center;gap:8px;padding:10px 22px;font-family:inherit;font-size:14px;font-weight:600;
   border-radius:$rs;border:none;cursor:pointer;transition:all .25s $e;letter-spacing:.01em;
@@ -372,6 +439,7 @@ $r: mu.$r; $rs: mu.$rs; $mw: mu.$mw; $e: mu.$e;
   &--white{background:white;color:$v;font-weight:700;box-shadow:0 4px 16px rgba(0,0,0,.15);&:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.2)}}
   &--ghost-light{background:rgba(255,255,255,.1);color:rgba(255,255,255,.85);border:1px solid rgba(255,255,255,.2);&:hover{background:rgba(255,255,255,.2);color:white}}
   &--lg{padding:14px 30px;font-size:15px;border-radius:12px}
+  &--block{width:100%;justify-content:center}
 }
 
 .mu-tag{display:inline-block;padding:6px 16px;background:rgba($v,.1);border:1px solid rgba($v,.2);border-radius:100px;font-size:13px;font-weight:600;color:$vl;letter-spacing:.06em;text-transform:uppercase}
