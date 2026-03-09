@@ -31,8 +31,25 @@ const selectedNews = ref<any>(null)
 const animatedSections = ref<Set<HTMLElement>>(new Set())
 const navScrolled = ref(false)
 const activeScene = ref(0)
+const mobileMenuOpen = ref(false)
 
 const { news } = useNews()
+
+const toggleMobileMenu = () => {
+  mobileMenuOpen.value = !mobileMenuOpen.value
+}
+
+const handleClickOutside = (event: MouseEvent) => {
+  const target = event.target as HTMLElement
+  const mobileMenu = document.querySelector('.xd-nav__mobile')
+  const hamburger = document.querySelector('.xd-nav__hamburger')
+  
+  if (mobileMenuOpen.value && mobileMenu && hamburger) {
+    if (!mobileMenu.contains(target) && !hamburger.contains(target)) {
+      mobileMenuOpen.value = false
+    }
+  }
+}
 
 // 場景標籤自動切換
 let sceneTimer: ReturnType<typeof setInterval> | null = null
@@ -85,11 +102,13 @@ const handleScroll = () => {
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+  window.addEventListener('click', handleClickOutside)
   handleScroll()
   startSceneTimer()
 })
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('click', handleClickOutside)
   stopSceneTimer()
 })
 
@@ -162,10 +181,25 @@ const cases = [
           <a v-for="item in navItems" :key="item.text" :href="item.url">{{ item.text }}</a>
         </nav>
         <div class="xd-nav__actions">
-          <button class="xd-btn xd-btn--ghost" @click="handleOpenLogin">登錄</button>
           <button class="xd-btn xd-btn--primary" @click="handleOpenLogin">開始創作</button>
+          <button class="xd-nav__hamburger" @click="toggleMobileMenu" aria-label="切換選單">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
         </div>
       </div>
+      <!-- 移動端選單 -->
+      <Transition name="mobile-menu">
+        <div v-if="mobileMenuOpen" class="xd-nav__mobile">
+          <nav class="xd-nav__mobile-links">
+            <a v-for="item in navItems" :key="item.url" :href="item.url" @click="mobileMenuOpen = false">{{ item.text }}</a>
+          </nav>
+          <div class="xd-nav__mobile-actions">
+            <button class="xd-btn xd-btn--primary xd-btn--block" @click="handleOpenLogin; mobileMenuOpen = false">開始創作</button>
+          </div>
+        </div>
+      </Transition>
     </header>
 
     <!-- Hero：雙層圖片 + 居中文字 -->
@@ -492,7 +526,41 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
     }
     @media (max-width: 768px) { display: none; }
   }
-  &__actions { display: flex; gap: 8px; }
+  &__actions { display: flex; gap: 8px; align-items: center; }
+
+  &__hamburger {
+    display: none; flex-direction: column; gap: 4px; padding: 8px; background: transparent; border: none; cursor: pointer;
+    @media (max-width: 768px) { display: flex; }
+    span { width: 20px; height: 2px; background: $text-dark; border-radius: 2px; transition: all 0.3s $ease; }
+  }
+
+  &__mobile {
+    position: absolute; top: 100%; left: 0; right: 0; margin-top: 8px;
+    background: rgba(255,255,255,0.95); backdrop-filter: blur(24px);
+    border: 1px solid rgba($steel, 0.08); border-radius: 14px;
+    padding: 16px; box-shadow: 0 8px 32px rgba($steel, 0.12);
+
+    &-links {
+      display: flex; flex-direction: column; gap: 4px; margin-bottom: 16px;
+      a {
+        display: block; padding: 12px 16px; color: $text-dark; text-decoration: none; font-size: 15px; font-weight: 500;
+        border-radius: 8px; transition: all 0.2s;
+        &:hover { background: rgba($steel, 0.08); color: $steel; }
+      }
+    }
+
+    &-actions {
+      display: flex; flex-direction: column; gap: 8px;
+    }
+  }
+}
+
+.mobile-menu-enter-active, .mobile-menu-leave-active {
+  transition: all 0.3s $ease;
+}
+.mobile-menu-enter-from, .mobile-menu-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
 }
 
 // ═══════════════════════════════════════
@@ -516,6 +584,7 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
   &--ghost-light { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.9); border: 1px solid rgba(255,255,255,0.3);
     &:hover { background: rgba(255,255,255,0.3); color: white; } }
   &--lg { padding: 14px 30px; font-size: 15px; border-radius: 12px; }
+  &--block { width: 100%; justify-content: center; }
 }
 
 .xd-tag {

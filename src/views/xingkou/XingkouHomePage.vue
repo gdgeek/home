@@ -28,9 +28,25 @@ const showLoginModal = ref(false)
 const showNewsModal = ref(false)
 const selectedNews = ref<any>(null)
 const animatedSections = ref<Set<HTMLElement>>(new Set())
+const mobileMenuOpen = ref(false)
 
-// 使用 WordPress API 获取新闻
 const { news, loading, error } = useNews()
+
+const toggleMobileMenu = () => {
+  mobileMenuOpen.value = !mobileMenuOpen.value
+}
+
+const handleClickOutside = (event: MouseEvent) => {
+  const target = event.target as HTMLElement
+  const mobileMenu = document.querySelector('.header__mobile')
+  const hamburger = document.querySelector('.header__hamburger')
+  
+  if (mobileMenuOpen.value && mobileMenu && hamburger) {
+    if (!mobileMenu.contains(target) && !hamburger.contains(target)) {
+      mobileMenuOpen.value = false
+    }
+  }
+}
 
 const handleOpenLogin = () => {
   showLoginModal.value = true
@@ -74,11 +90,13 @@ const handleScroll = () => {
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+  window.addEventListener('click', handleClickOutside)
   handleScroll()
 })
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('click', handleClickOutside)
 })
 
 // 导航菜单
@@ -140,8 +158,28 @@ const footerNavigation = [
             {{ item.text }}
           </a>
         </nav>
-        <button class="header__login-btn" @click="handleOpenLogin">登录</button>
+        <div class="header__actions">
+          <button class="header__login-btn" @click="handleOpenLogin">登录</button>
+          <button class="header__hamburger" @click="toggleMobileMenu" aria-label="切换菜单">
+            <span></span>
+            <span></span>
+            <span></span>
+          </button>
+        </div>
       </div>
+      <!-- 移动端菜单 -->
+      <Transition name="mobile-menu">
+        <div v-if="mobileMenuOpen" class="header__mobile">
+          <nav class="header__mobile-links">
+            <a v-for="(item, index) in navItems" :key="index" :href="item.url" @click="mobileMenuOpen = false" class="header__mobile-link">
+              {{ item.text }}
+            </a>
+          </nav>
+          <div class="header__mobile-actions">
+            <button class="btn btn--primary btn--block" @click="handleOpenLogin; mobileMenuOpen = false">登录</button>
+          </div>
+        </div>
+      </Transition>
     </header>
 
     <!-- Hero Section -->
@@ -579,6 +617,12 @@ $touch-target-min: 44px;
     }
   }
 
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: $spacing-sm;
+  }
+
   &__login-btn {
     padding: $spacing-sm $spacing-lg;
     background: $gradient-cta;
@@ -591,6 +635,10 @@ $touch-target-min: 44px;
     box-shadow: 0 4px 15px rgba($primary, 0.3);
     position: relative;
     overflow: hidden;
+
+    @media (max-width: $breakpoint-tablet) {
+      display: none;
+    }
 
     &::before {
       content: '';
@@ -616,6 +664,82 @@ $touch-target-min: 44px;
       transform: translateY(0);
     }
   }
+
+  &__hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+
+    @media (max-width: $breakpoint-tablet) {
+      display: flex;
+    }
+
+    span {
+      width: 20px;
+      height: 2px;
+      background: $text-primary;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+  }
+
+  &__mobile {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    margin-top: 8px;
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(24px);
+    border: 1px solid $border-color;
+    border-radius: $border-radius-lg;
+    padding: $spacing-md;
+    box-shadow: 0 8px 32px rgba($primary, 0.12);
+
+    &-links {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-bottom: $spacing-md;
+    }
+
+    &-link {
+      display: block;
+      padding: 12px 16px;
+      color: $text-primary;
+      text-decoration: none;
+      font-size: $font-size-base;
+      font-weight: $font-weight-medium;
+      border-radius: $border-radius-md;
+      transition: all $transition-fast;
+
+      &:hover {
+        background: rgba($primary, 0.08);
+        color: $primary;
+      }
+    }
+
+    &-actions {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-sm;
+    }
+  }
+}
+
+.mobile-menu-enter-active,
+.mobile-menu-leave-active {
+  transition: all 0.3s ease;
+}
+
+.mobile-menu-enter-from,
+.mobile-menu-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
 }
 
 // Buttons
@@ -701,6 +825,11 @@ $touch-target-min: 44px;
   &--large {
     padding: $spacing-lg $spacing-xxl;
     font-size: $font-size-lg;
+  }
+
+  &--block {
+    width: 100%;
+    justify-content: center;
   }
 }
 

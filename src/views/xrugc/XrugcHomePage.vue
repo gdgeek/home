@@ -42,6 +42,26 @@ const toggleLangDropdown = () => {
   langDropdownOpen.value = !langDropdownOpen.value
 }
 
+const handleClickOutside = (event: MouseEvent) => {
+  const target = event.target as HTMLElement
+  const mobileMenu = document.querySelector('.mu-nav__mobile')
+  const hamburger = document.querySelector('.mu-nav__hamburger')
+  const langDropdown = document.querySelector('.mu-lang-dropdown__menu')
+  const langTrigger = document.querySelector('.mu-lang-dropdown__trigger')
+  
+  if (mobileMenuOpen.value && mobileMenu && hamburger) {
+    if (!mobileMenu.contains(target) && !hamburger.contains(target)) {
+      mobileMenuOpen.value = false
+    }
+  }
+  
+  if (langDropdownOpen.value && langDropdown && langTrigger) {
+    if (!langDropdown.contains(target) && !langTrigger.contains(target)) {
+      langDropdownOpen.value = false
+    }
+  }
+}
+
 const handleOpenLogin = () => { showLoginModal.value = true }
 const handleOpenNewsDetail = (item: any) => {
   selectedNews.value = item
@@ -73,11 +93,13 @@ const handleScroll = () => {
 
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+  window.addEventListener('click', handleClickOutside)
   detectAndSetLocale()
   handleScroll()
 })
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
+  window.removeEventListener('click', handleClickOutside)
 })
 
 const languages = [
