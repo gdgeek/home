@@ -115,13 +115,14 @@ onUnmounted(() => {
 const navItems = [
   { text: '功能', url: '#features' },
   { text: '場景', url: '#scenes' },
+  { text: '合作', url: '#cases' },
   { text: '動態', url: '#news' }
 ]
 
 const stats = [
-  { number: '50+', label: '澳門學校' },
-  { number: '1萬+', label: '師生用戶' },
-  { number: '10萬+', label: 'AR作品' }
+  { number: '3+', label: '合作院校機構' },
+  { number: '3所', label: '高校教研共創' },
+  { number: '2026', label: '全澳AR創作比賽' }
 ]
 
 // Hero 背景图片
@@ -152,12 +153,15 @@ const scenes = [
 ]
 
 const cases = [
-  { school: '澳門培正中學', quote: '夏鼎讓生物課堂煥然一新，學生參與度提升了85%',
-    person: '陳老師', role: '生物科組長', stat: { value: '85%', label: '參與度提升' } },
-  { school: '澳門大學附屬應用學校', quote: '學生已創作超過500件AR作品，創新思維顯著提升',
-    person: '李主任', role: 'STEAM負責人', stat: { value: '500+', label: '學生作品' } },
-  { school: '澳門聖若瑟教區中學', quote: '零門檻操作讓每位老師都能輕鬆製作AR課件',
-    person: '黃校長', role: '教務主任', stat: { value: '98%', label: '教師使用率' } }
+  { school: '澳門濠江中學', quote: '夏鼎AI+AR課程已在我校常態班落地，學生在真實課堂中體驗沉浸式學習。',
+    person: '濠江中學', role: '常態班教學', stat: { value: '常態班', label: '已落地開課' },
+    image: '/images/ar-platform/school-classroom.webp' },
+  { school: '澳門勞校中學', quote: '作為課程共創與先行試點學校，師生共同參與AI+AR課程的設計與實踐。',
+    person: '勞校中學', role: '課程共創試點', stat: { value: '共創', label: '先行試點' },
+    image: '/images/ar-platform/students-collab.webp' },
+  { school: '澳門科學館', quote: '已採購夏鼎AI+AR課程套件，用於課程教學與教師培訓計畫。',
+    person: '澳門科學館', role: '課程+師資培訓', stat: { value: '採購', label: '課程+培訓' },
+    image: '/images/ar-platform/science-museum.webp' }
 ]
 </script>
 
@@ -210,13 +214,13 @@ const cases = [
       <div class="xd-hero__content reveal">
         <div class="xd-hero__badge">
           <span class="xd-hero__badge-dot"></span>
-          澳門人工智能AR教育科技平台
+          澳門本土研發 · 低代碼/零代碼AI+AR創作平台
         </div>
         <h1 class="xd-hero__title">
           <span class="xd-hero__title-line1">讓知識</span>
           <span class="xd-hero__title-accent">融入現實</span>
         </h1>
-        <p class="xd-hero__desc">零門檻AI/AR創作工具，助力師生開啟沉浸式教學體驗</p>
+        <p class="xd-hero__desc">澳門本土研發，低代碼/零代碼AI+AR創作平台，配套人工智能課程套件，助力師生開啟沉浸式教學體驗</p>
         <div class="xd-hero__cta">
           <button class="xd-btn xd-btn--white xd-btn--lg" @click="handleOpenLogin">
             免費試用
@@ -252,6 +256,45 @@ const cases = [
             <h3 class="xd-bento__title">{{ f.title }}</h3>
             <p class="xd-bento__desc">{{ f.desc }}</p>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 實踐基地 -->
+    <section class="xd-section xd-section--alt">
+      <div class="xd-section__header reveal">
+        <span class="xd-tag">實踐基地</span>
+        <h2 class="xd-section__title">真實場景，項目實踐</h2>
+        <p class="xd-section__sub">荔枝碗船廠片區、大賽車博物館、海事博物館等文旅場景為學生的項目實踐提供真實土壤</p>
+      </div>
+      <div class="xd-bases reveal">
+        <div class="xd-base">
+          <div class="xd-base__icon-wrap">
+            <svg class="xd-base__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-2-2.2-3.3C13 5.6 12 5 11 5H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 10v6c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+          </div>
+          <h4>大賽車博物館</h4>
+          <p>AR還原賽車歷史，沉浸式體驗澳門格蘭披治大賽車文化</p>
+        </div>
+        <div class="xd-base">
+          <div class="xd-base__icon-wrap">
+            <svg class="xd-base__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M17 18h1"/><path d="M12 18h1"/><path d="M7 18h1"/></svg>
+          </div>
+          <h4>海事博物館</h4>
+          <p>AR重現航海歷史，探索澳門海洋文化與貿易故事</p>
+        </div>
+        <div class="xd-base">
+          <div class="xd-base__icon-wrap">
+            <svg class="xd-base__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          </div>
+          <h4>荔枝碗船廠片區</h4>
+          <p>AR活化工業遺址，在真實場景中開展項目式學習</p>
+        </div>
+        <div class="xd-base">
+          <div class="xd-base__icon-wrap">
+            <svg class="xd-base__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2"/><path d="M8.5 2h7"/><path d="M7 16.5h10"/></svg>
+          </div>
+          <h4>澳門科學館</h4>
+          <p>2026年教師培訓計畫支持，科學教育與AR技術深度融合</p>
         </div>
       </div>
     </section>
@@ -295,29 +338,29 @@ const cases = [
       </div>
     </section>
 
-    <!-- 案例：大引號 + 橫排（暫時隱藏） -->
-    <!-- <section id="cases" class="xd-section">
+    <!-- 合作夥伴：圖片卡片 -->
+    <section id="cases" class="xd-section">
       <div class="xd-section__header reveal">
-        <span class="xd-tag">成功案例</span>
-        <h2 class="xd-section__title">澳門學校的選擇</h2>
+        <span class="xd-tag">合作落地</span>
+        <h2 class="xd-section__title">已落地的合作夥伴</h2>
       </div>
-      <div class="xd-testimonials">
-        <div v-for="(c, idx) in cases" :key="idx" class="xd-testimonial reveal">
-          <div class="xd-testimonial__top">
-            <span class="xd-testimonial__quote-mark">"</span>
-            <div class="xd-testimonial__stat">
-              <span class="xd-testimonial__stat-val">{{ c.stat.value }}</span>
-              <span class="xd-testimonial__stat-lbl">{{ c.stat.label }}</span>
+      <div class="xd-partners">
+        <div v-for="(c, idx) in cases" :key="idx" class="xd-partner reveal">
+          <div class="xd-partner__img">
+            <img :src="c.image" :alt="c.school" loading="lazy" />
+            <div class="xd-partner__badge">
+              <span class="xd-partner__badge-val">{{ c.stat.value }}</span>
+              <span class="xd-partner__badge-lbl">{{ c.stat.label }}</span>
             </div>
           </div>
-          <blockquote class="xd-testimonial__text">{{ c.quote }}</blockquote>
-          <div class="xd-testimonial__author">
-            <span class="xd-testimonial__school">{{ c.school }}</span>
-            <span class="xd-testimonial__person">{{ c.person }} · {{ c.role }}</span>
+          <div class="xd-partner__body">
+            <h3 class="xd-partner__name">{{ c.school }}</h3>
+            <p class="xd-partner__quote">{{ c.quote }}</p>
+            <span class="xd-partner__role">{{ c.role }}</span>
           </div>
         </div>
       </div>
-    </section> -->
+    </section>
 
     <!-- 新聞：非對稱佈局 左大右列表 -->
     <section v-if="news?.length" id="news" class="xd-section xd-section--alt">
@@ -344,12 +387,63 @@ const cases = [
       </div>
     </section>
 
+    <!-- 產學研背書 -->
+    <section class="xd-trust reveal">
+      <div class="xd-trust__inner">
+        <h3 class="xd-trust__title">產學研共創 · 權威背書</h3>
+        <div class="xd-trust__items">
+          <div class="xd-trust__item">
+            <div class="xd-trust__img">
+              <img src="/images/ar-platform/trust-scnu.webp" alt="華南師範大學" loading="lazy" />
+            </div>
+            <div class="xd-trust__text">
+              <span class="xd-trust__name">華南師範大學</span>
+              <span class="xd-trust__role">張新華團隊教研共創</span>
+            </div>
+          </div>
+          <div class="xd-trust__item">
+            <div class="xd-trust__img">
+              <img src="/images/ar-platform/trust-cityu.webp" alt="澳門城市大學" loading="lazy" />
+            </div>
+            <div class="xd-trust__text">
+              <span class="xd-trust__name">澳門城市大學</span>
+              <span class="xd-trust__role">教研共創</span>
+            </div>
+          </div>
+          <div class="xd-trust__item">
+            <div class="xd-trust__img">
+              <img src="/images/ar-platform/trust-must.webp" alt="澳門科技大學" loading="lazy" />
+            </div>
+            <div class="xd-trust__text">
+              <span class="xd-trust__name">澳門科技大學</span>
+              <span class="xd-trust__role">工程創新學院共創</span>
+            </div>
+          </div>
+          <div class="xd-trust__item">
+            <div class="xd-trust__img">
+              <img src="/images/ar-platform/trust-advisor.webp" alt="杜文麗委員" loading="lazy" />
+            </div>
+            <div class="xd-trust__text">
+              <span class="xd-trust__name">杜文麗委員</span>
+              <span class="xd-trust__role">廣東省基礎教育課程專委會顧問</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- CTA：全寬沉浸 -->
     <section class="xd-cta reveal">
-      <img class="xd-cta__bg" src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1400&q=80" alt="" aria-hidden="true" />
+      <img class="xd-cta__bg" src="/images/ar-platform/macau-cityscape.webp" alt="" aria-hidden="true" />
       <div class="xd-cta__inner">
         <h2>開啟AI/AR教育之旅</h2>
-        <p>教師、學生、校園用戶通用</p>
+        <p>2026年11月 · 全澳青少年AR創作比賽即將登場</p>
+        <div class="xd-cta__tags">
+          <span class="xd-cta__tag">入校示範課</span>
+          <span class="xd-cta__tag">師資培訓</span>
+          <span class="xd-cta__tag">平台試用</span>
+          <span class="xd-cta__tag">參賽通道</span>
+        </div>
         <div class="xd-cta__actions">
           <button class="xd-btn xd-btn--white xd-btn--lg" @click="handleOpenLogin">立即免費試用</button>
           <button class="xd-btn xd-btn--ghost-light xd-btn--lg">聯繫我們</button>
@@ -573,23 +667,28 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
   svg { width: 16px; height: 16px; }
 
   &--primary { background: $steel; color: white; box-shadow: 0 2px 14px rgba($steel, 0.25);
-    &:hover { background: $steel-light; transform: translateY(-1px); box-shadow: 0 4px 22px rgba($steel, 0.3); } }
+    &:hover { background: $steel-light; transform: translateY(-1px); box-shadow: 0 6px 24px rgba($steel, 0.3); } }
   &--ghost { background: transparent; color: $text-muted;
     &:hover { color: $steel; background: rgba($steel, 0.06); } }
   &--outline { background: transparent; color: $text-body; border: 1.5px solid $border;
     &:hover { border-color: $steel; color: $steel; } }
   &--white { background: white; color: $steel; font-weight: 700; box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-    &:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.12); } }
-  &--ghost-light { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.9); border: 1px solid rgba(255,255,255,0.3);
-    &:hover { background: rgba(255,255,255,0.3); color: white; } }
+    &:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.14); } }
+  &--ghost-light { background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.9); border: 1px solid rgba(255,255,255,0.25);
+    &:hover { background: rgba(255,255,255,0.25); color: white; } }
   &--lg { padding: 14px 30px; font-size: 15px; border-radius: 12px; }
   &--block { width: 100%; justify-content: center; }
 }
 
 .xd-tag {
-  display: inline-block; padding: 6px 16px;
+  display: inline-flex; align-items: center; gap: 6px; padding: 6px 18px;
   background: rgba($steel, 0.06); border: 1px solid rgba($steel, 0.12);
-  border-radius: 100px; font-size: 13px; font-weight: 500; color: $steel; letter-spacing: 0.04em;
+  border-radius: 100px; font-size: 13px; font-weight: 500; color: $steel; letter-spacing: 0.06em;
+
+  &::before {
+    content: ''; width: 6px; height: 6px; border-radius: 50%;
+    background: $steel; opacity: 0.4;
+  }
 }
 
 // ═══════════════════════════════════════
@@ -597,21 +696,21 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
 // ═══════════════════════════════════════
 .xd-section {
   position: relative; z-index: 1;
-  max-width: $max-w; margin: 0 auto; padding: 64px 24px;
-  @media (max-width: 768px) { padding: 40px 16px; }
+  max-width: $max-w; margin: 0 auto; padding: 80px 24px;
+  @media (max-width: 768px) { padding: 56px 16px; }
 
   &--alt { background: $bg-alt; max-width: none;
     > * { max-width: $max-w; margin-left: auto; margin-right: auto; } }
   &--full { max-width: none; padding-left: 0; padding-right: 0;
     .xd-section__header { max-width: $max-w; margin-left: auto; margin-right: auto; padding: 0 24px; } }
 
-  &__header { text-align: center; margin-bottom: 36px; }
+  &__header { text-align: center; margin-bottom: 48px; }
   &__title {
     font-family: 'Zen Kaku Gothic New', sans-serif;
     font-size: clamp(26px, 4.5vw, 40px); font-weight: 700;
     color: $text-dark; margin-top: 14px; letter-spacing: -0.01em; line-height: 1.25;
   }
-  &__sub { font-size: 16px; color: $text-muted; margin-top: 10px; font-weight: 300; }
+  &__sub { font-size: 16px; color: $text-muted; margin-top: 12px; font-weight: 300; max-width: 560px; margin-left: auto; margin-right: auto; line-height: 1.7; }
 }
 
 // ═══════════════════════════════════════
@@ -638,12 +737,12 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
   &__overlay {
     position: absolute; inset: 0;
     background:
-      linear-gradient(180deg, rgba(#0a1628, 0.15) 0%, rgba(#0a1628, 0.45) 40%, rgba(#0a1628, 0.7) 70%, rgba(#0a1628, 0.88) 100%);
+      linear-gradient(180deg, rgba(#0a1628, 0.1) 0%, rgba(#0a1628, 0.4) 35%, rgba(#0a1628, 0.68) 65%, rgba(#0a1628, 0.88) 100%);
   }
 
   &__content {
     position: relative; z-index: 2;
-    padding: 120px 24px 48px;
+    padding: 140px 24px 56px;
     max-width: 680px;
   }
 
@@ -687,27 +786,29 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
   &__stats {
     position: relative; z-index: 2;
     display: flex; justify-content: center; gap: 1px;
-    width: 100%; max-width: 480px;
-    margin: 32px auto 0;
+    width: 100%; max-width: 520px;
+    margin: 40px auto 0;
   }
 
   &__stat {
     flex: 1; text-align: center;
-    padding: 16px 12px;
-    background: rgba(255,255,255,0.08);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255,255,255,0.1);
+    padding: 18px 14px;
+    background: rgba(255,255,255,0.06);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255,255,255,0.08);
+    transition: background 0.3s $ease;
     &:first-child { border-radius: $r 0 0 $r; }
     &:last-child { border-radius: 0 $r $r 0; }
+    &:hover { background: rgba(255,255,255,0.1); }
   }
 
   &__stat-num {
     display: block;
     font-family: 'Zen Kaku Gothic New', sans-serif;
-    font-size: 26px; font-weight: 900; color: white;
+    font-size: 28px; font-weight: 900; color: white;
     letter-spacing: -0.03em;
   }
-  &__stat-label { font-size: 11px; color: rgba(255,255,255,0.45); font-weight: 300; margin-top: 2px; }
+  &__stat-label { font-size: 12px; color: rgba(255,255,255,0.5); font-weight: 300; margin-top: 4px; display: block; }
 }
 
 // ═══════════════════════════════════════
@@ -717,7 +818,7 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: auto auto;
-  gap: 16px;
+  gap: 18px;
 
   // 第一項佔2列，視覺主角
   &__item--hero { grid-column: span 2; }
@@ -729,12 +830,12 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
 
   &__item {
     position: relative; border-radius: $r; overflow: hidden;
-    border: 2px solid $border-hover;
+    border: 1px solid rgba($steel, 0.12);
     box-shadow: $shadow-s;
     cursor: pointer;
-    transition: all 0.3s $ease;
+    transition: all 0.35s $ease;
 
-    &:hover { transform: translateY(-4px); box-shadow: $shadow-l;
+    &:hover { transform: translateY(-5px); box-shadow: $shadow-l; border-color: $border-hover;
       .xd-bento__img img { transform: scale(1.05); }
       .xd-bento__overlay { background: linear-gradient(0deg, rgba(#0a1628, 0.88) 0%, rgba(#0a1628, 0.3) 60%, transparent 100%); }
       .xd-bento__desc { opacity: 1; transform: translateY(0); }
@@ -813,28 +914,28 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
   &__content {
-    display: grid; grid-template-columns: 1.4fr 1fr; height: 360px;
+    display: grid; grid-template-columns: 1.4fr 1fr; height: 380px;
     @media (max-width: 768px) { grid-template-columns: 1fr; height: auto; }
   }
 
   &__img {
     overflow: hidden;
-    img { width: 100%; height: 360px; object-fit: cover; display: block; }
-    @media (max-width: 768px) { img { height: 220px; } }
+    img { width: 100%; height: 380px; object-fit: cover; display: block; }
+    @media (max-width: 768px) { img { height: 240px; } }
   }
 
   &__text {
     display: flex; flex-direction: column; justify-content: center;
-    padding: 40px;
-    @media (max-width: 768px) { padding: 24px; }
+    padding: 44px;
+    @media (max-width: 768px) { padding: 28px; }
 
     h3 {
       font-family: 'Zen Kaku Gothic New', sans-serif;
-      font-size: 24px; font-weight: 700; color: $text-dark;
-      margin-bottom: 12px; line-height: 1.3;
+      font-size: 26px; font-weight: 700; color: $text-dark;
+      margin-bottom: 14px; line-height: 1.3;
     }
     p {
-      font-size: 15px; color: $text-muted; line-height: 1.8; font-weight: 300;
+      font-size: 15px; color: $text-muted; line-height: 1.85; font-weight: 300;
     }
   }
 }
@@ -934,14 +1035,21 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .xd-news-featured {
-  padding: 28px; background: $card;
+  padding: 32px; background: $card;
   border: 1px solid $border; border-radius: $r;
-  cursor: pointer; transition: all 0.25s $ease;
+  cursor: pointer; transition: all 0.3s $ease;
   box-shadow: $shadow-s;
   display: flex; flex-direction: column; justify-content: flex-end;
-  min-height: 220px;
+  min-height: 240px;
+  position: relative; overflow: hidden;
 
-  &:hover { border-color: $border-hover; box-shadow: $shadow-l; }
+  &::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+    background: linear-gradient(180deg, $steel, $steel-pale);
+    border-radius: 0 2px 2px 0; opacity: 0; transition: opacity 0.3s $ease;
+  }
+
+  &:hover { border-color: $border-hover; box-shadow: $shadow-l; &::before { opacity: 1; } }
 
   &__date { font-family: 'Zen Kaku Gothic New', monospace; font-size: 12px; color: $text-faint; font-weight: 300; }
   &__title {
@@ -980,6 +1088,173 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 // ═══════════════════════════════════════
+// 產學研背書
+// ═══════════════════════════════════════
+.xd-trust {
+  position: relative; z-index: 1;
+  max-width: $max-w; margin: 0 auto; padding: 48px 24px;
+
+  &__inner {
+    background: linear-gradient(135deg, $card 0%, rgba($ice, 0.5) 100%);
+    border: 1px solid $border; border-radius: 24px;
+    padding: 40px 36px; box-shadow: $shadow-m;
+    position: relative; overflow: hidden;
+
+    &::before {
+      content: ''; position: absolute; top: -60px; right: -60px;
+      width: 200px; height: 200px; border-radius: 50%;
+      background: rgba($steel-wash, 0.4); filter: blur(60px);
+      pointer-events: none;
+    }
+  }
+
+  &__title {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 16px; font-weight: 500; color: $text-muted;
+    text-align: center; margin-bottom: 28px; letter-spacing: 0.1em;
+    position: relative;
+
+    &::after {
+      content: ''; display: block; width: 40px; height: 2px;
+      background: linear-gradient(90deg, $steel-pale, $steel);
+      border-radius: 1px; margin: 12px auto 0;
+    }
+  }
+
+  &__items {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+    @media (max-width: 768px) { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 480px) { grid-template-columns: 1fr; }
+  }
+
+  &__item {
+    border-radius: 14px; overflow: hidden;
+    border: 1px solid $border; background: $card;
+    transition: all 0.35s $ease;
+    &:hover { transform: translateY(-4px); box-shadow: $shadow-l; border-color: $border-hover;
+      .xd-trust__img img { transform: scale(1.06); }
+    }
+  }
+
+  &__img {
+    height: 130px; overflow: hidden;
+    img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s $ease; }
+  }
+
+  &__text { padding: 14px 16px; }
+
+  &__name {
+    display: block; font-size: 14px; font-weight: 700; color: $text-dark;
+  }
+
+  &__role {
+    display: block; font-size: 12px; color: $text-muted; font-weight: 300; margin-top: 3px;
+  }
+}
+
+// ═══════════════════════════════════════
+// 合作夥伴卡片
+// ═══════════════════════════════════════
+.xd-partners {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  @media (max-width: 768px) { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; }
+}
+
+.xd-partner {
+  background: $card; border: 1px solid $border; border-radius: $r;
+  overflow: hidden; transition: all 0.35s $ease; box-shadow: $shadow-s;
+
+  &:hover { transform: translateY(-5px); box-shadow: $shadow-l; border-color: $border-hover;
+    .xd-partner__img img { transform: scale(1.06); }
+  }
+
+  &__img {
+    position: relative; height: 200px; overflow: hidden;
+    img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s $ease; }
+    &::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
+      background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.08));
+    }
+  }
+
+  &__badge {
+    position: absolute; top: 14px; right: 14px;
+    background: rgba($steel, 0.92); backdrop-filter: blur(10px);
+    padding: 8px 14px; border-radius: 10px; text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+
+  &__badge-val {
+    display: block; font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 17px; font-weight: 900; color: white;
+  }
+
+  &__badge-lbl { font-size: 10px; color: rgba(255,255,255,0.75); font-weight: 300; }
+
+  &__body { padding: 22px 20px; }
+
+  &__name {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 18px; font-weight: 700; color: $text-dark; margin-bottom: 10px;
+  }
+
+  &__quote {
+    font-size: 14px; color: $text-body; line-height: 1.75; font-weight: 300;
+    margin-bottom: 14px;
+  }
+
+  &__role {
+    font-size: 12px; color: $steel; font-weight: 500;
+    padding: 5px 12px; background: rgba($steel, 0.06);
+    border: 1px solid rgba($steel, 0.1);
+    border-radius: 100px; display: inline-block;
+  }
+}
+
+// ═══════════════════════════════════════
+// 實踐基地
+// ═══════════════════════════════════════
+.xd-bases {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+  @media (max-width: 768px) { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 480px) { grid-template-columns: 1fr; }
+}
+
+.xd-base {
+  background: $card; border: 1px solid $border; border-radius: $r;
+  padding: 28px 24px; text-align: center; transition: all 0.35s $ease;
+  position: relative; overflow: hidden;
+
+  &::before {
+    content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 60px; height: 3px; background: linear-gradient(90deg, transparent, $steel-pale, transparent);
+    border-radius: 0 0 4px 4px; opacity: 0; transition: opacity 0.3s $ease;
+  }
+
+  &:hover {
+    transform: translateY(-5px); box-shadow: $shadow-l; border-color: $border-hover;
+    &::before { opacity: 1; }
+    .xd-base__icon-wrap { background: $steel; .xd-base__svg { stroke: white; } }
+  }
+
+  &__icon-wrap {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 52px; height: 52px; border-radius: 14px;
+    background: rgba($steel, 0.08); margin-bottom: 16px;
+    transition: all 0.35s $ease;
+  }
+
+  &__svg { width: 24px; height: 24px; stroke: $steel; transition: stroke 0.35s $ease; }
+
+  h4 {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+    font-size: 16px; font-weight: 700; color: $text-dark; margin-bottom: 8px;
+  }
+
+  p { font-size: 13px; color: $text-muted; line-height: 1.7; font-weight: 300; }
+}
+
+// ═══════════════════════════════════════
 // CTA
 // ═══════════════════════════════════════
 .xd-cta {
@@ -994,17 +1269,36 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
 
   &::after {
     content: ''; position: absolute; inset: 0;
-    background: linear-gradient(135deg, rgba($accent, 0.88) 0%, rgba($steel, 0.82) 50%, rgba($steel-light, 0.78) 100%);
+    background: linear-gradient(135deg, rgba($accent, 0.9) 0%, rgba($steel, 0.85) 50%, rgba($steel-light, 0.8) 100%);
     z-index: 1;
   }
 
   &__inner {
     position: relative; z-index: 2;
-    text-align: center; padding: 56px 24px;
-    h2 { font-family: 'Zen Kaku Gothic New', sans-serif; font-size: clamp(24px, 4vw, 36px); font-weight: 700; color: white; margin-bottom: 10px; }
-    p { font-size: 15px; color: rgba(255,255,255,0.7); margin-bottom: 24px; font-weight: 300; }
+    text-align: center; padding: 72px 24px;
+    @media (max-width: 768px) { padding: 48px 20px; }
+
+    h2 {
+      font-family: 'Zen Kaku Gothic New', sans-serif;
+      font-size: clamp(26px, 4.5vw, 40px); font-weight: 700; color: white;
+      margin-bottom: 12px; letter-spacing: -0.01em;
+    }
+    p { font-size: 16px; color: rgba(255,255,255,0.75); margin-bottom: 20px; font-weight: 300; }
   }
-  &__actions { display: flex; gap: 12px; justify-content: center;
+
+  &__tags {
+    display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-bottom: 28px;
+  }
+
+  &__tag {
+    padding: 6px 18px; font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25);
+    border-radius: 100px; backdrop-filter: blur(8px);
+    transition: all 0.25s $ease;
+    &:hover { background: rgba(255,255,255,0.22); }
+  }
+
+  &__actions { display: flex; gap: 14px; justify-content: center;
     @media (max-width: 480px) { flex-direction: column; align-items: center; } }
 }
 
@@ -1013,7 +1307,7 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
 // ═══════════════════════════════════════
 .xd-footer {
   position: relative; z-index: 1;
-  border-top: 1px solid $border; margin-top: 48px;
+  border-top: 1px solid $border; margin-top: 64px;
 
   &__inner {
     max-width: $max-w; margin: 0 auto;
