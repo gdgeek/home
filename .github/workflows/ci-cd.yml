@@ -50,7 +50,6 @@ jobs:
         with:
           images: ${{ env.TCR_REGISTRY }}/${{ env.TCR_NAMESPACE }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=sha,prefix=,format=short
             type=raw,value=develop,enable=${{ github.ref == 'refs/heads/develop' }}
             type=raw,value=main,enable=${{ github.ref == 'refs/heads/main' }}
             type=raw,value=release,enable=${{ github.ref == 'refs/heads/release' }}

@@ -115,7 +115,6 @@ onUnmounted(() => {
 const navItems = [
   { text: '功能', url: '#features' },
   { text: '場景', url: '#scenes' },
-  { text: '案例', url: '#cases' },
   { text: '動態', url: '#news' }
 ]
 
@@ -296,8 +295,8 @@ const cases = [
       </div>
     </section>
 
-    <!-- 案例：大引號 + 橫排 -->
-    <section id="cases" class="xd-section">
+    <!-- 案例：大引號 + 橫排（暫時隱藏） -->
+    <!-- <section id="cases" class="xd-section">
       <div class="xd-section__header reveal">
         <span class="xd-tag">成功案例</span>
         <h2 class="xd-section__title">澳門學校的選擇</h2>
@@ -318,7 +317,7 @@ const cases = [
           </div>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <!-- 新聞：非對稱佈局 左大右列表 -->
     <section v-if="news?.length" id="news" class="xd-section xd-section--alt">
