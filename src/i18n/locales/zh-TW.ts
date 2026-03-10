@@ -73,6 +73,7 @@ export default {
     forgotPassword: "忘記密碼？",
     hint: "支持學校統一身份認證",
     success: "登錄成功！",
+    redirecting: "正在跳轉到工作台...",
     failed: "登錄失敗",
   },
   error: {

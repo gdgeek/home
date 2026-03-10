@@ -73,6 +73,7 @@ export default {
     forgotPassword: "忘记密码？",
     hint: "支持学校统一身份认证",
     success: "登录成功！",
+    redirecting: "正在跳转到工作台...",
     failed: "登录失败",
   },
   error: {

@@ -154,7 +154,7 @@ const scenes = [
 
 const cases = [
   { school: '澳門濠江中學', quote: '夏鼎AI+AR課程已在我校常態班落地，學生在真實課堂中體驗沉浸式學習。',
-    person: '濠江中學', role: '常態班教學', stat: { value: '常態班', label: '已落地開課' },
+    person: '濠江中學', role: '实验室班', stat: { value: '常態班', label: '已落地開課' },
     image: '/images/ar-platform/school-classroom.webp' },
   { school: '澳門勞校中學', quote: '作為課程共創與先行試點學校，師生共同參與AI+AR課程的設計與實踐。',
     person: '勞校中學', role: '課程共創試點', stat: { value: '共創', label: '先行試點' },

@@ -73,6 +73,7 @@ export default {
     forgotPassword: "Forgot password?",
     hint: "Supports unified school authentication",
     success: "Login successful!",
+    redirecting: "Redirecting to workspace...",
     failed: "Login failed",
   },
   error: {

@@ -73,6 +73,7 @@ export default {
     forgotPassword: "パスワードを忘れた？",
     hint: "学校統一認証に対応",
     success: "ログイン成功！",
+    redirecting: "ワークスペースにリダイレクト中...",
     failed: "ログイン失敗",
   },
   error: {
