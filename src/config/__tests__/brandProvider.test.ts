@@ -35,12 +35,12 @@ describe('brandProvider - brand resolution priority', () => {
     expect(getCurrentBrandId()).toBe('xrugc')
   })
 
-  it('defaults to xingkou when neither is set', async () => {
+  it('defaults to xiading when neither is set', async () => {
     delete (window as unknown as Record<string, unknown>).__BRAND_ID__
     vi.stubEnv('VITE_BRAND_ID', '')
     vi.resetModules()
     const { getCurrentBrandId } = await import('../brandProvider')
-    expect(getCurrentBrandId()).toBe('xingkou')
+    expect(getCurrentBrandId()).toBe('xiading')
   })
 
   it('invalid window.__BRAND_ID__ falls through to VITE_BRAND_ID', async () => {
@@ -51,12 +51,12 @@ describe('brandProvider - brand resolution priority', () => {
     expect(getCurrentBrandId()).toBe('xiading')
   })
 
-  it('invalid window.__BRAND_ID__ and invalid VITE_BRAND_ID defaults to xingkou', async () => {
+  it('invalid window.__BRAND_ID__ and invalid VITE_BRAND_ID defaults to xiading', async () => {
     ;(window as unknown as Record<string, unknown>).__BRAND_ID__ = 'bad'
     vi.stubEnv('VITE_BRAND_ID', 'also-bad')
     vi.resetModules()
     const { getCurrentBrandId } = await import('../brandProvider')
-    expect(getCurrentBrandId()).toBe('xingkou')
+    expect(getCurrentBrandId()).toBe('xiading')
   })
 
   // Property test: any valid brand set in window.__BRAND_ID__ is resolved correctly

@@ -200,7 +200,7 @@ const brandRegistry: BrandRegistry = {
  * @requirements 2.2, 2.3
  */
 export function getBrandConfig(brandId: string): BrandConfig | null {
-  if (brandId in brandRegistry) {
+  if (Object.prototype.hasOwnProperty.call(brandRegistry, brandId)) {
     return brandRegistry[brandId as BrandId]
   }
   return null
@@ -227,7 +227,7 @@ export function getBrandConfig(brandId: string): BrandConfig | null {
  * @requirements 2.2
  */
 export function isValidBrandId(brandId: string): brandId is BrandId {
-  return brandId in brandRegistry
+  return Object.prototype.hasOwnProperty.call(brandRegistry, brandId)
 }
 
 // ============================================
