@@ -8,7 +8,7 @@
  */
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useBrand } from '@/composables/useBrand'
-import { useNews } from '@/composables/useNews'
+// import { useNews } from '@/composables/useNews' // 暫時隱藏平台資訊
 import LoginModal from '@/components/common/LoginModal.vue'
 
 const { footer } = useBrand()
@@ -33,7 +33,7 @@ const navScrolled = ref(false)
 const activeScene = ref(0)
 const mobileMenuOpen = ref(false)
 
-const { news } = useNews()
+// const { news } = useNews() // 暫時隱藏平台資訊
 
 const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value
@@ -72,12 +72,13 @@ const pauseScene = () => { scenePaused.value = true }
 const resumeScene = () => { scenePaused.value = false }
 
 const handleOpenLogin = () => { showLoginModal.value = true }
-const handleOpenNewsDetail = (item: any) => {
-  selectedNews.value = item
-  showNewsModal.value = true
-}
+// 暫時隱藏平台資訊
+// const handleOpenNewsDetail = (item: any) => {
+//   selectedNews.value = item
+//   showNewsModal.value = true
+// }
 
-const blogUrl = computed(() => window.__WORDPRESS_API_URL__ || 'https://blog.hxgxonline.com')
+// const blogUrl = computed(() => window.__WORDPRESS_API_URL__ || 'https://blog.hxgxonline.com')
 
 const formatDate = (dateString: string): string => {
   const date = new Date(dateString)
@@ -361,8 +362,8 @@ const cases = [
       </div>
     </section>
 
-    <!-- 新聞：非對稱佈局 左大右列表（暫時隱藏） -->
-    <section v-if="false && news?.length" id="news" class="xd-section xd-section--alt">
+    <!-- 新聞：非對稱佈局 左大右列表（暫時隱藏）
+    <section v-if="news?.length" id="news" class="xd-section xd-section--alt">
       <div class="xd-section__header reveal">
         <span class="xd-tag">最新動態</span>
         <h2 class="xd-section__title">平台資訊</h2>
@@ -385,6 +386,7 @@ const cases = [
         </div>
       </div>
     </section>
+    -->
 
     <!-- 產學研背書 -->
     <section class="xd-trust reveal">
