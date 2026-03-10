@@ -115,8 +115,7 @@ onUnmounted(() => {
 const navItems = [
   { text: '功能', url: '#features' },
   { text: '場景', url: '#scenes' },
-  { text: '合作', url: '#cases' },
-  { text: '動態', url: '#news' }
+  { text: '合作', url: '#cases' }
 ]
 
 const stats = [
@@ -362,8 +361,8 @@ const cases = [
       </div>
     </section>
 
-    <!-- 新聞：非對稱佈局 左大右列表 -->
-    <section v-if="news?.length" id="news" class="xd-section xd-section--alt">
+    <!-- 新聞：非對稱佈局 左大右列表（暫時隱藏） -->
+    <section v-if="false && news?.length" id="news" class="xd-section xd-section--alt">
       <div class="xd-section__header reveal">
         <span class="xd-tag">最新動態</span>
         <h2 class="xd-section__title">平台資訊</h2>
