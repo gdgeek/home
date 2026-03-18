@@ -16,11 +16,12 @@ const animatedSections = ref<Set<HTMLElement>>(new Set())
 const activeScene = ref(0)
 const mobileMenuOpen = ref(false)
 
-// 明暗主题
-const isDark = ref(true) // 默认深色，匹配腾讯云活动页
+// 明暗主题 — 跟随系统，用户手动切换后记忆
+const getSystemDark = () => window.matchMedia('(prefers-color-scheme: dark)').matches
+const isDark = ref(true)
 const initTheme = () => {
   const saved = localStorage.getItem('mrpp-theme')
-  if (saved) isDark.value = saved === 'dark'
+  isDark.value = saved ? saved === 'dark' : getSystemDark()
 }
 const toggleTheme = () => {
   isDark.value = !isDark.value
