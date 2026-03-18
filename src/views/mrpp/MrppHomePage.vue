@@ -55,9 +55,9 @@ const stats = [
 
 const features = [
   { id: 'lowcode', icon: 'cube', title: '零代码/低代码创作', desc: '可视化拖拽场景编辑，无需编程基础即可上手。支持拖拽3D素材、设置"触发器+动作"交互逻辑，内置资源库与多场景模板，快速构建MR实训内容。', highlight: '核心', img: '/images/ar-platform/UGC场景编辑器界面.webp' },
-  { id: 'ai', icon: 'chart', title: 'AI引擎加持', desc: '集成AI 3D生成能力，通过文本描述或图片即可创建3D模型，极大简化内容制作流程，非专业设计师也能轻松创建复杂MR场景。', highlight: '智能', img: '/images/ar-platform/拖拽程序生成工具.webp' },
+  { id: 'ai', icon: 'chart', title: 'AI引擎加持', desc: '集成AI 3D生成能力，通过文本描述或图片即可创建3D模型，极大简化内容制作流程，非专业设计师也能轻松创建复杂MR场景。', highlight: '智能', img: '/images/ar-platform/高中生操作AR内容，欢笑.webp' },
   { id: 'multimodal', icon: 'device', title: '多模态空间交互', desc: '支持手势识别（抓取、点击、滑动）与语音指令双通道操作，自然交互直接操控虚拟物体，适用于需要双手进行其他任务的实训场景。', highlight: '交互', img: '/images/ar-platform/女士操作Rokid AR Studio.webp' },
-  { id: 'logic', icon: 'grid', title: '可视化逻辑编排', desc: '图形化逻辑编辑工具，以拖拽积木块方式搭建交互逻辑。设置"如果…就…"触发规则，无需编程即可实现复杂交互功能，大幅降低内容创作门槛。', highlight: '编排', img: '/images/ar-platform/高中生操作AR内容，欢笑.webp' },
+  { id: 'logic', icon: 'grid', title: '可视化逻辑编排', desc: '图形化逻辑编辑工具，以拖拽积木块方式搭建交互逻辑。设置"如果…就…"触发规则，无需编程即可实现复杂交互功能，大幅降低内容创作门槛。', highlight: '编排', img: '/images/ar-platform/拖拽程序生成工具.webp' },
   { id: 'thirdview', icon: 'doc', title: '第三方视角与多设备互联', desc: '支持外部设备实时同步展示MR场景，可大屏投屏供观众共同观看；多设备连接同一场景，实时位置同步与交互共享，支持团队协作。', highlight: '协同', img: '/images/ar-platform/third-person-view.webp' },
   { id: 'oneclick', icon: 'shield', title: '一键生成应用', desc: '自动编译并打包MR应用，快速测试和发布。从场景编辑到逻辑编排到应用生成，全流程在线完成，降低发布门槛。', highlight: '发布', img: '/images/ar-platform/本课程操作AR内容.webp' }
 ]
@@ -96,7 +96,7 @@ const partners = [
     role: '硬件技术合作伙伴',
     desc: '成立于2014年，总部位于杭州，是全球领先的AR智能眼镜品牌。产品覆盖80+国家，累计出货超100万台设备，拥有400+研发专家。曾获CES、WIRED等20+国际大奖，估值超10亿美元。',
     highlights: ['80+国家覆盖', '100万+设备出货', '400+研发专家', '20+国际大奖'],
-    logo: '/images/rokid/rokid-ar-spatial.webp',
+    logo: '/images/rokid/rokid-logo.webp',
     url: 'https://global.rokid.com'
   },
   {
