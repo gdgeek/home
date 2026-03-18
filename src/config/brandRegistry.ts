@@ -128,6 +128,59 @@ const brandRegistry: BrandRegistry = {
     }
   },
 
+  // MRPP 混合现实实训平台 - 腾讯云活动页风格深色主题
+  mrpp: {
+    id: 'mrpp',
+    name: '混合现实实训平台',
+    locale: 'zh-CN',
+    loginUrl: 'https://mrpp.com/login',
+    theme: {
+      primaryColor: '#3B82F6',
+      secondaryColor: '#60A5FA',
+      ctaColor: '#FF6A00',
+      backgroundColor: '#080E1E',
+      textColor: '#F1F5F9',
+      logoPath: '/logo/mrpp/logo.svg',
+      logoAlt: 'MRPP 混合现实实训平台',
+      faviconPath: '/logo/mrpp/logo.svg'
+    },
+    hero: {
+      title: 'MRPP — 混合现实实训平台',
+      subtitle: '面向职业教育与产业培训的新一代混合现实实训解决方案，赋能实操技能培养。',
+      primaryButtonText: '免费试用',
+      secondaryButtonText: '查看方案',
+      highlights: ['虚实融合', '安全实训', '数据驱动', '产教融合']
+    },
+    footer: {
+      copyright: '© 2025 MRPP 混合现实实训平台 版权所有',
+      contactInfo: {
+        phone: '400-xxx-xxxx',
+        email: 'contact@mrpp.com',
+        wechat: 'mrpp_official'
+      },
+      navigation: [
+        {
+          title: '产品方案',
+          links: [
+            { text: '实训平台', url: '#' },
+            { text: '课程资源', url: '#' },
+            { text: '硬件适配', url: '#' },
+            { text: '技术文档', url: '#' }
+          ]
+        },
+        {
+          title: '关于我们',
+          links: [
+            { text: '公司介绍', url: '#' },
+            { text: '合作案例', url: '#' },
+            { text: '联系我们', url: '#' },
+            { text: '加入我们', url: '#' }
+          ]
+        }
+      ]
+    }
+  },
+
   // XR UGC 国际版配置 - 紫橙渐变科技主题
   xrugc: {
     id: 'xrugc',

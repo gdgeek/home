@@ -23,6 +23,8 @@ function getHomeComponent() {
       return () => import('@/views/xiading/XiadingHomePage.vue')
     case 'xrugc':
       return () => import('@/views/xrugc/XrugcHomePage.vue')
+    case 'mrpp':
+      return () => import('@/views/mrpp/MrppHomePage.vue')
     default:
       return () => import('@/views/xingkou/XingkouHomePage.vue')
   }

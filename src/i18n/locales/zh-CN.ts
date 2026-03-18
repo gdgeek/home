@@ -1,4 +1,29 @@
 export default {
+  mrpp: {
+    nav: {
+      features: '核心能力',
+      scenes: '实训场景',
+      cases: '合作案例',
+      trust: '资质荣誉',
+    },
+    hero: {
+      badge: 'Mixed Reality Practical Platform',
+      subtitle: '新一代',
+      title: '混合现实实训平台',
+      desc: '面向职业教育与产业培训，以混合现实技术重构实训教学，让技能培养更安全、更高效、更可量化',
+      cta: '申请试用',
+      whitepaper: '下载方案白皮书',
+    },
+    features: {
+      tag: '核心能力',
+      title: '六大核心能力，赋能实训教学',
+      subtitle: '从环境构建到教学管理，提供完整的混合现实实训解决方案',
+    },
+    auth: {
+      login: '登录',
+      getStarted: '申请试用',
+    },
+  },
   xrugc: {
     nav: {
       features: '功能特性',

@@ -3,9 +3,8 @@
  * 
  * 品牌判断优先级：
  * 1. 生产环境：Docker 注入 window.__BRAND_ID__（docker-entrypoint.sh）—— 锁定品牌
- * 2. 本地开发：.env 中的 VITE_BRAND_ID —— 锁定品牌
- * 3. URL 参数：?brand=xxx —— 动态切换（仅在前两者都未设置时生效）
- * 4. 默认：xingkou
+ * 2. URL 参数：?brand=xxx —— 本地开发动态切换
+ * 3. 默认：xingkou
  */
 
 import { getBrandConfig } from './brandRegistry'
@@ -13,7 +12,7 @@ export { getBrandConfig } from './brandRegistry'
 import type { BrandConfig, BrandId } from '@/types/brand'
 
 const DEFAULT_BRAND_ID: BrandId = 'xiading'
-const VALID_BRAND_IDS: readonly string[] = ['xingkou', 'xiading', 'xrugc']
+const VALID_BRAND_IDS: readonly string[] = ['xingkou', 'xiading', 'xrugc', 'mrpp']
 
 function getBrandFromUrl(): BrandId | null {
   if (typeof window === 'undefined') return null
@@ -34,19 +33,13 @@ function resolveBrandId(): BrandId {
     }
   }
 
-  // 2. Vite 环境变量（本地开发）—— 锁定品牌
-  const envBrand = import.meta.env.VITE_BRAND_ID || ''
-  if (envBrand && VALID_BRAND_IDS.includes(envBrand)) {
-    return envBrand as BrandId
-  }
-
-  // 3. URL 参数 ?brand=xxx —— 动态切换（仅在未锁定时）
+  // 2. URL 参数 ?brand=xxx —— 本地开发动态切换
   const urlBrand = getBrandFromUrl()
   if (urlBrand) {
     return urlBrand
   }
 
-  // 4. 默认品牌
+  // 3. 默认品牌
   return DEFAULT_BRAND_ID
 }
 
