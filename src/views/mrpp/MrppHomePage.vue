@@ -164,9 +164,9 @@ onUnmounted(() => {
           <span class="mp-nav__logo-icon">
             <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="2" fill="#3B82F6"/><rect x="13" y="3" width="8" height="8" rx="2" fill="#60A5FA" opacity="0.7"/><rect x="3" y="13" width="8" height="8" rx="2" fill="#60A5FA" opacity="0.7"/><rect x="13" y="13" width="8" height="8" rx="2" fill="#93C5FD" opacity="0.4"/></svg>
           </span>
-          <span class="mp-nav__logo-mark">MRPP</span>
+          <span class="mp-nav__logo-mark"><span style="color:#3B82F6">M</span><span style="color:#60A5FA">R</span><span style="color:#60A5FA">P</span><span style="color:#93C5FD">P</span></span>
           <span class="mp-nav__logo-divider"></span>
-          <span class="mp-nav__logo-text">混合现实实训平台</span>
+          <span class="mp-nav__logo-text">混合现实<span style="color:#3B82F6">实</span><span style="color:#60A5FA">训</span><span style="color:#60A5FA">平</span><span style="color:#93C5FD">台</span></span>
         </a>
         <nav class="mp-nav__links" aria-label="主导航">
           <a v-for="item in navItems" :key="item.text" :href="item.url">{{ item.text }}</a>
@@ -440,7 +440,7 @@ onUnmounted(() => {
     <footer class="mp-footer">
       <div class="mp-footer__inner">
         <div class="mp-footer__brand">
-          <span class="mp-footer__logo">MRPP</span>
+          <span class="mp-footer__logo"><span style="color:#3B82F6">M</span><span style="color:#60A5FA">R</span><span style="color:#60A5FA">P</span><span style="color:#93C5FD">P</span></span>
           <p>混合现实实训平台 · 让技能培养更高效</p>
         </div>
         <div class="mp-footer__links">
@@ -592,7 +592,7 @@ $max-w: 1200px;
 
   &__logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
   &__logo-icon { width: 28px; height: 28px; display: flex; align-items: center; svg { width: 100%; height: 100%; } }
-  &__logo-mark { font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 700; color: #fff; letter-spacing: 0.04em; }
+  &__logo-mark { font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 700; letter-spacing: 0.04em; }
   &__logo-divider { width: 1px; height: 16px; background: rgba(255,255,255,0.15); margin: 0 4px; }
   &__logo-text { font-size: 13px; color: rgba(255,255,255,0.4); @media (max-width: 640px) { display: none; } }
 
@@ -620,7 +620,6 @@ $max-w: 1200px;
 }
 .mp--light .mp-nav { background: rgba(255,255,255,0.85); border-bottom-color: rgba(0,0,0,0.06); }
 .mp--light .mp-nav--scrolled { background: rgba(255,255,255,0.95); box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
-.mp--light .mp-nav__logo-mark { color: var(--brand-dim); }
 .mp--light .mp-nav__logo-divider { background: rgba(0,0,0,0.1); }
 .mp--light .mp-nav__logo-text { color: var(--text-dim); }
 .mp--light .mp-nav__links a { color: var(--text-dim); &:hover { color: var(--brand); } }
