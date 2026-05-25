@@ -10,6 +10,7 @@
 import { useI18n } from 'vue-i18n'
 import { useRouter, useRoute } from 'vue-router'
 import { isSupportedLocale } from '@/router'
+import { deploymentMode, featureEnabled } from '@/utils/externalAssets'
 
 /** 国家代码 → locale 映射（统一5字符标准格式） */
 const COUNTRY_LOCALE_MAP: Record<string, string> = {
@@ -23,6 +24,9 @@ const COUNTRY_LOCALE_MAP: Record<string, string> = {
 
 const STORAGE_KEY = 'xrugc_user_locale'
 const GEO_CACHE_KEY = 'xrugc_geo_country'
+
+const geoIpLocaleEnabled = () =>
+  featureEnabled('ENABLE_GEO_IP_LOCALE', deploymentMode() !== 'local')
 
 export function useGeoLocale() {
   const { locale } = useI18n({ useScope: 'global' })
@@ -45,6 +49,10 @@ export function useGeoLocale() {
 
   /** 自动检测并设置语言（仅在 URL 和 localStorage 都没有时生效） */
   const detectAndSetLocale = async () => {
+    if (!geoIpLocaleEnabled()) {
+      return
+    }
+
     // URL 已有有效 ?lang= 参数，跳过检测
     const queryLang = (route.query.lang as string) || ''
     if (queryLang && isSupportedLocale(queryLang)) {

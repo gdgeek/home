@@ -8,6 +8,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useBrand } from '@/composables/useBrand'
 import LoginModal from '@/components/common/LoginModal.vue'
+import { loadExternalStylesheet } from '@/utils/externalAssets'
 
 const { footer } = useBrand()
 const showLoginModal = ref(false)
@@ -136,6 +137,10 @@ const handleScroll = () => {
 }
 
 onMounted(() => {
+  loadExternalStylesheet(
+    'mrpp-google-fonts',
+    'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@200;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700;900&family=Inter:wght@400;500;600;700;800&display=swap',
+  )
   initTheme()
   window.addEventListener('scroll', handleScroll)
   handleScroll()
@@ -463,8 +468,6 @@ onUnmounted(() => {
 </template>
 
 <style lang="scss" scoped>
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@200;400;500;600;700;800&family=IBM+Plex+Mono:wght@400;600;700&family=Noto+Sans+SC:wght@300;400;500;700;900&family=Inter:wght@400;500;600;700;800&display=swap');
-
 $ease: cubic-bezier(0.22, 1, 0.36, 1);
 $r: 0;
 $r-sm: 6px;
