@@ -4,8 +4,8 @@
 # 阶段1: 构建
 FROM node:18-alpine AS builder
 
-# 启用 corepack 以使用 pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
+# 启用 corepack 并固定 pnpm 版本，避免 CI 构建拉取不兼容的 latest
+RUN corepack enable && corepack prepare pnpm@9.15.0 --activate
 
 WORKDIR /app
 
