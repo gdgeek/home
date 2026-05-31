@@ -208,9 +208,6 @@ const doLogin = async (
 
   const data = response.data;
   if (data.success && data.token) {
-    localStorage.setItem("accessToken", data.token.accessToken);
-    localStorage.setItem("refreshToken", data.token.refreshToken);
-    localStorage.setItem("tokenExpires", data.token.expires);
     console.log("authApi: 登录成功");
   }
 

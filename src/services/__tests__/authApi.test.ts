@@ -65,15 +65,15 @@ describe('authApi', () => {
       )
     })
 
-    it('stores tokens in localStorage on success', async () => {
+    it('does not persist tokens in localStorage on success', async () => {
       mockedAxios.get = vi.fn().mockResolvedValue({ data: { status: 'healthy' } })
       mockedAxios.post = vi.fn().mockResolvedValue({ data: mockLoginSuccess })
 
       const { login } = await getFreshLogin()
       await login('user', 'pass')
 
-      expect(localStorage.getItem('accessToken')).toBe('acc')
-      expect(localStorage.getItem('refreshToken')).toBe('ref')
+      expect(localStorage.getItem('accessToken')).toBeNull()
+      expect(localStorage.getItem('refreshToken')).toBeNull()
     })
   })
 

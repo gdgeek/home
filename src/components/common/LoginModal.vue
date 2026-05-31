@@ -76,6 +76,7 @@ import { User, Lock } from '@element-plus/icons-vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { useBrand } from '@/composables/useBrand'
 import { login as authLogin, AuthError } from '@/services/authApi'
+import { buildWorkbenchSsoUrl } from '@/utils/workbenchRedirect'
 
 /** 将 AuthErrorCode 映射到 i18n key */
 const AUTH_ERROR_I18N: Record<string, string> = {
@@ -98,7 +99,7 @@ const emit = defineEmits<{
   (e: 'login', data: { username: string; password: string }): void
 }>()
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const { brandName, theme } = useBrand()
 
 const loading = ref(false)
@@ -154,8 +155,11 @@ const handleLogin = async () => {
           const workbenchUrl = window.__WORKBENCH_URL__ || import.meta.env.VITE_WORKBENCH_URL
           
           if (workbenchUrl) {
-            const baseUrl = workbenchUrl.replace(/\/$/, '')
-            const redirectUrl = `${baseUrl}/sso?refreshToken=${result.token.refreshToken}`
+            const redirectUrl = buildWorkbenchSsoUrl(
+              workbenchUrl,
+              result.token.refreshToken,
+              locale.value
+            )
             // 延遲跳轉，讓用戶看到成功動畫
             setTimeout(() => {
               window.location.href = redirectUrl
