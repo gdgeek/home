@@ -1,13 +1,11 @@
 version: "3.8"
 
 # 测试环境
-# 通过 BRAND_ID 环境变量指定品牌：xingkou | xiading
+# 默认根据访问域名选择品牌；如需锁定单品牌，可显式设置 BRAND_ID。
 
 services:
   frontend:
     image: ar-home:latest
     ports:
       - "8777:80"
-    environment:
-      - BRAND_ID=xiading
     restart: unless-stopped

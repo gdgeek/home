@@ -3,7 +3,7 @@
  * 通过 Docker 容器启动脚本注入到 window 对象
  */
 interface RuntimeConfig {
-  __BRAND_ID__?: string
+  __BRAND_ID__?: string | null
   __WORDPRESS_API_URL__?: string
   __API_URL__?: string
   __BACKUP_API_URL__?: string

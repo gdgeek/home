@@ -1,6 +1,7 @@
 #!/bin/sh
 # 容器启动时注入运行时配置（JSON 安全编码，防止注入）
-BRAND_ID="${BRAND_ID:-xiading}"
+# BRAND_ID 不设默认值；为空时前端会根据访问域名选择品牌。
+BRAND_ID="${BRAND_ID:-}"
 WORDPRESS_API_URL="${WORDPRESS_API_URL:-}"
 API_URL="${API_URL:-}"
 BACKUP_API_URL="${BACKUP_API_URL:-}"

@@ -1,5 +1,5 @@
 # 多阶段构建 Dockerfile
-# 通过环境变量 BRAND_ID 指定品牌
+# 默认根据访问域名选择品牌；也可通过环境变量 BRAND_ID 锁定品牌。
 
 # 阶段1: 构建
 FROM node:18-alpine AS builder
