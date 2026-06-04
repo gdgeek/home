@@ -53,6 +53,16 @@ cp .env.example .env
 | `VITE_WORDPRESS_API_URL` | WordPress REST API 地址，用于获取新闻内容 |
 | `VITE_BACKEND_API_URL` | 后端 API 地址，用于获取平台基础配置 |
 
+Docker 运行时后端代理使用 `APP_API_N_URL`：
+
+| 变量 | 说明 |
+|------|------|
+| `APP_API_1_URL` / `APP_API_N_URL` | 主后端 API 上游地址；容器内前端统一请求同源 `/api/`，由 Nginx 负责分流与 failover |
+| `APP_API_1_WEIGHT` / `APP_API_N_WEIGHT` | 可选权重；未配置时平均分配 |
+| `APP_RESOLVER` | 可选 DNS resolver；默认 `8.8.8.8 223.5.5.5` |
+| `API_URL` | 兼容旧部署，等同于 `APP_API_1_URL` |
+| `BACKUP_API_URL` | 兼容旧部署，等同于 `APP_API_2_URL` |
+
 ### 启动开发服务器
 
 ```bash

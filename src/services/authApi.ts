@@ -57,15 +57,25 @@ export class AuthError extends Error {
 /**
  * 获取主API地址（运行时注入）
  */
+const normalizeApiBaseUrl = (url: string | null | undefined): string | null => {
+  const trimmed = url?.trim();
+  if (!trimmed) return null;
+  return trimmed.replace(/\/+$/, "");
+};
+
 const getApiUrl = (): string => {
-  return window.__API_URL__ || "https://api.xrteeth.com";
+  return normalizeApiBaseUrl(window.__API_URL__) || "https://api.xrteeth.com";
 };
 
 /**
  * 获取备用API地址（运行时注入）
  */
-const getBackupApiUrl = (): string => {
-  return window.__BACKUP_API_URL__ || "https://api.tmrpp.com";
+const getBackupApiUrl = (): string | null => {
+  const primaryUrl = normalizeApiBaseUrl(window.__API_URL__);
+  return (
+    normalizeApiBaseUrl(window.__BACKUP_API_URL__) ||
+    (primaryUrl === "/api" ? null : "https://api.tmrpp.com")
+  );
 };
 
 // ============================================
@@ -105,11 +115,13 @@ const discoverApiUrl = async (): Promise<string | null> => {
     return primaryUrl;
   }
 
-  console.log("authApi: 主API不可用，检查备用API...", backupUrl);
-  if (await checkHealth(backupUrl)) {
-    console.log("authApi: 备用API可用");
-    cachedApiUrl = backupUrl;
-    return backupUrl;
+  if (backupUrl) {
+    console.log("authApi: 主API不可用，检查备用API...", backupUrl);
+    if (await checkHealth(backupUrl)) {
+      console.log("authApi: 备用API可用");
+      cachedApiUrl = backupUrl;
+      return backupUrl;
+    }
   }
 
   console.error("authApi: 主备API均不可用");

@@ -12,8 +12,8 @@ services:
     environment:
       - WORKBENCH_URL=https://d.xiading.hxgxonline.com/
       - WORDPRESS_API_URL=
-      - API_URL=
-      - BACKUP_API_URL=
+      - APP_API_1_URL=https://api.d.xrteeth.com
+      - APP_API_2_URL=https://api.d.tmrpp.com
     restart: unless-stopped
 
   wordpress:

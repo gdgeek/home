@@ -17,8 +17,8 @@ import * as fc from 'fast-check'
 vi.mock('@/types/runtime', () => ({
   getRuntimeConfig: () => ({
     __WORDPRESS_API_URL__: 'https://test.blog.com',
-    __APP_VERSION__: '2.0.0',
-    __BUILD_TIME__: '2024-01-01',
+    __APP_VERSION__: '2024-01-01 08:00:00 GMT+8',
+    __BUILD_TIME__: '2024-01-01T08:00:00+08:00',
   }),
 }))
 
@@ -211,7 +211,7 @@ describe('usePageCommon', () => {
 
     it('version returns value from runtime config', () => {
       const [result, wrapper] = withSetup(() => usePageCommon())
-      expect(result.version.value).toBe('2.0.0')
+      expect(result.version.value).toBe('2024-01-01 08:00:00 GMT+8')
       wrapper.unmount()
     })
   })

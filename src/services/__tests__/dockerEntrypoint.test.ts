@@ -19,6 +19,11 @@
 
 import { describe, it, expect } from 'vitest'
 import * as fc from 'fast-check'
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
+
+const dockerEntrypoint = readFileSync(join(process.cwd(), 'docker-entrypoint.sh'), 'utf8')
+const nginxConfig = readFileSync(join(process.cwd(), 'nginx.conf'), 'utf8')
 
 // ---------------------------------------------------------------------------
 // The encoding function — mirrors docker-entrypoint.sh's json_encode()
@@ -40,6 +45,27 @@ function buildInjection(varName: string, value: string): string {
 // ---------------------------------------------------------------------------
 
 describe('docker-entrypoint.sh JSON encoding security', () => {
+  describe('API proxy runtime wiring', () => {
+    it('maps legacy API_URL and BACKUP_API_URL to APP_API_N_URL variables', () => {
+      expect(dockerEntrypoint).toContain('APP_API_1_URL="$API_URL"')
+      expect(dockerEntrypoint).toContain('APP_API_2_URL="$BACKUP_API_URL"')
+    })
+
+    it('generates the same split_clients/map/failover proxy shape as the main frontend', () => {
+      expect(dockerEntrypoint).toContain('split_clients \\"\\$request_id\\" \\$${PREFIX_NAME}_pool')
+      expect(dockerEntrypoint).toContain('map \\$${PREFIX_NAME}_pool \\$${PREFIX_NAME}_backend_url')
+      expect(dockerEntrypoint).toContain('error_page ${FAILOVER_STATUS_CODES} = @${PREFIX_NAME}_failover')
+      expect(dockerEntrypoint).toContain('generate_lb_config "APP_API" "/api/" "api" "yes"')
+    })
+
+    it('injects generated API locations into the nginx template', () => {
+      expect(nginxConfig).toContain('# __RESOLVER__')
+      expect(nginxConfig).toContain('# __LB_HTTP_BLOCK__')
+      expect(nginxConfig).toContain('# __API_LOCATIONS__')
+      expect(nginxConfig).toContain('location = /debug-env')
+    })
+  })
+
   /**
    * Property 1: Round-trip fidelity
    * For any string value, JSON.stringify produces output that parses back

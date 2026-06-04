@@ -82,11 +82,11 @@ export function usePageCommon(animateSelector = '.animate-on-scroll'): UsePageCo
   })
 
   /**
-   * 应用版本号，读取运行时注入的 __APP_VERSION__，默认 '1.0.0'
+   * 应用版本号，使用打包时间作为版本号
    */
   const version = computed<string>(() => {
     const config = getRuntimeConfig()
-    return config.__APP_VERSION__ ?? '1.0.0'
+    return config.__APP_VERSION__ ?? config.__BUILD_TIME__ ?? 'dev'
   })
 
   /**
@@ -94,7 +94,7 @@ export function usePageCommon(animateSelector = '.animate-on-scroll'): UsePageCo
    */
   const buildTime = computed<string>(() => {
     const config = getRuntimeConfig()
-    return config.__BUILD_TIME__ ?? new Date().toISOString().split('T')[0]
+    return config.__BUILD_TIME__ ?? config.__APP_VERSION__ ?? new Date().toISOString().split('T')[0]
   })
 
   // ---- 方法 ----
