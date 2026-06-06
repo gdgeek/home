@@ -6,11 +6,13 @@ import { useNews } from '@/composables/useNews'
 import LoginModal from '@/components/common/LoginModal.vue'
 import { useGeoLocale } from '@/composables/useGeoLocale'
 import { useLocaleRoute } from '@/composables/useLocaleRoute'
+import { useRoute } from 'vue-router'
 
 const { footer } = useBrand()
 const { t } = useI18n({ useScope: 'global' })
 const { detectAndSetLocale } = useGeoLocale()
 const { activeLang, switchLocale } = useLocaleRoute('en-US')
+const route = useRoute()
 const buildTime = computed(() => {
   const timestamp = window.__BUILD_TIME__ || __BUILD_TIME__ || new Date().toISOString()
   const date = new Date(timestamp)
@@ -116,11 +118,21 @@ const switchLang = (code: string) => {
   langDropdownOpen.value = false
 }
 
+const getLocalizedPath = (path: string): string => {
+  const params = new URLSearchParams()
+  params.set('lang', activeLang.value)
+  if (typeof route.query.brand === 'string') {
+    params.set('brand', route.query.brand)
+  }
+  return `${path}?${params.toString()}`
+}
+
 const navItems = computed(() => [
   { text: t('xrugc.nav.features'), url: '#features' },
   { text: t('xrugc.nav.useCases'), url: '#scenes' },
   { text: t('xrugc.nav.testimonials'), url: '#cases' },
   { text: t('xrugc.nav.news'), url: '#news' },
+  { text: t('xrugc.nav.devlog'), url: getLocalizedPath('/devlog') },
 ])
 
 const stats = computed(() => [

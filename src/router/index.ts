@@ -35,6 +35,16 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     name: 'Home',
     component: getHomeComponent()
+  },
+  {
+    path: '/devlog',
+    name: 'DevlogList',
+    component: () => import('@/views/devlog/DevlogListPage.vue')
+  },
+  {
+    path: '/devlog/:slug',
+    name: 'DevlogDetail',
+    component: () => import('@/views/devlog/DevlogDetailPage.vue')
   }
 ]
 
