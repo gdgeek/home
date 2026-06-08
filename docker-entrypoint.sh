@@ -13,11 +13,16 @@ set -e
 #   APP_API_2_URL=https://api.tmrpp.com
 #   APP_API_2_WEIGHT=40
 #   APP_API_3_URL=https://api.third.com
+#   AUTH_API_URL=https://identity.xrteeth.com           兼容旧变量，等同 APP_AUTH_1_URL
+#   AUTH_PROVIDER=identity                              可选，默认 legacy
+#   APP_AUTH_1_URL=https://identity.xrteeth.com
+#   APP_AUTH_1_WEIGHT=100                               （可选，默认平均分配）
 #   APP_RESOLVER=8.8.8.8 223.5.5.5                    （可选，DNS 解析服务器）
 #
 # 生成负载均衡 + failover：
 #   split_clients 按权重分流 → map 映射后端 URL/Host
-#   /api/ → 加权分流到 APP_API_N → failover 到环形下一个
+#   /api/      → 加权分流到 APP_API_N → failover 到环形下一个
+#   /api-auth/ → 加权分流到 APP_AUTH_N → failover 到环形下一个
 # ============================================================
 
 TEMPLATE="/etc/nginx/templates/default.conf.template"
@@ -54,6 +59,26 @@ configure_api_upstreams() {
     normalized=$(normalize_url "$url")
     eval "APP_API_${i}_URL=\"\$normalized\""
     eval "export APP_API_${i}_URL"
+
+    i=$((i + 1))
+  done
+}
+
+configure_auth_upstreams() {
+  # 兼容旧变量：AUTH_API_URL 等同 APP_AUTH_1_URL。
+  if [ -z "${APP_AUTH_1_URL:-}" ] && [ -n "${AUTH_API_URL:-}" ]; then
+    APP_AUTH_1_URL="$AUTH_API_URL"
+    export APP_AUTH_1_URL
+  fi
+
+  i=1
+  while true; do
+    eval "url=\${APP_AUTH_${i}_URL:-}"
+    [ -z "$url" ] && break
+
+    normalized=$(normalize_url "$url")
+    eval "APP_AUTH_${i}_URL=\"\$normalized\""
+    eval "export APP_AUTH_${i}_URL"
 
     i=$((i + 1))
   done
@@ -377,31 +402,39 @@ json_encode() {
 }
 
 configure_api_upstreams
+configure_auth_upstreams
 
 # --- 1. 生成 API 负载均衡配置 ---
 generate_lb_config "APP_API" "/api/" "api" "yes"
 API_LOCATIONS="$CHAIN_RESULT"
 
-# --- 2. 生成 resolver 配置 ---
+# --- 2. 生成统一认证 API 负载均衡配置 ---
+generate_lb_config "APP_AUTH" "/api-auth/" "auth" "yes"
+AUTH_LOCATIONS="$CHAIN_RESULT"
+
+# --- 3. 生成 resolver 配置 ---
 RESOLVER_SERVERS="${APP_RESOLVER:-8.8.8.8 223.5.5.5}"
 RESOLVER_BLOCK="resolver ${RESOLVER_SERVERS} valid=30s ipv6=off;
 resolver_timeout 5s;"
 echo "[entrypoint] DNS resolver: ${RESOLVER_SERVERS} (valid=30s)"
 
-# --- 3. 复制模板并注入动态配置 ---
+# --- 4. 复制模板并注入动态配置 ---
 cp "$TEMPLATE" "$OUTPUT"
 inject_locations "# __RESOLVER__" "$RESOLVER_BLOCK"
 inject_locations "# __LB_HTTP_BLOCK__" "$LB_HTTP_BLOCK"
 inject_locations "# __API_LOCATIONS__" "$API_LOCATIONS"
+inject_locations "# __AUTH_LOCATIONS__" "$AUTH_LOCATIONS"
 
 echo "[entrypoint] Nginx config generated at $OUTPUT"
 
-# --- 4. 容器启动时注入运行时配置（JSON 安全编码，防止注入）---
+# --- 5. 容器启动时注入运行时配置（JSON 安全编码，防止注入）---
 # BRAND_ID 不设默认值；为空时前端会根据访问域名选择品牌。
 BRAND_ID="${BRAND_ID:-}"
 WORDPRESS_API_URL="${WORDPRESS_API_URL:-}"
 API_URL="${API_URL:-}"
 BACKUP_API_URL="${BACKUP_API_URL:-}"
+AUTH_API_URL="${AUTH_API_URL:-}"
+AUTH_PROVIDER="${AUTH_PROVIDER:-}"
 WORKBENCH_URL="${WORKBENCH_URL:-}"
 
 # 已配置 APP_API_N_URL 时，浏览器只访问同源 /api，由 Nginx 负责主备/分流/failover。
@@ -411,6 +444,13 @@ if [ -n "${APP_API_1_URL:-}" ]; then
 else
   RUNTIME_API_URL="$API_URL"
   RUNTIME_BACKUP_API_URL="$BACKUP_API_URL"
+fi
+
+# 已配置 APP_AUTH_N_URL 时，浏览器只访问同源 /api-auth，由 Nginx 负责主备/分流/failover。
+if [ -n "${APP_AUTH_1_URL:-}" ]; then
+  RUNTIME_AUTH_API_URL="/api-auth"
+else
+  RUNTIME_AUTH_API_URL="$AUTH_API_URL"
 fi
 
 # 从构建产物中读取打包时间版本号（北京时间）
@@ -437,6 +477,8 @@ BRAND_ID_JSON=$(json_encode "$BRAND_ID")
 WORDPRESS_API_URL_JSON=$(json_encode "$WORDPRESS_API_URL")
 API_URL_JSON=$(json_encode "$RUNTIME_API_URL")
 BACKUP_API_URL_JSON=$(json_encode "$RUNTIME_BACKUP_API_URL")
+AUTH_API_URL_JSON=$(json_encode "$RUNTIME_AUTH_API_URL")
+AUTH_PROVIDER_JSON=$(json_encode "$AUTH_PROVIDER")
 WORKBENCH_URL_JSON=$(json_encode "$WORKBENCH_URL")
 APP_VERSION_JSON=$(json_encode "$APP_VERSION")
 BUILD_TIME_JSON=$(json_encode "$BUILD_TIME")
@@ -446,15 +488,17 @@ echo "  BRAND_ID=${BRAND_ID_JSON}"
 echo "  WORDPRESS_API_URL=${WORDPRESS_API_URL_JSON}"
 echo "  API_URL=${API_URL_JSON}"
 echo "  BACKUP_API_URL=${BACKUP_API_URL_JSON}"
+echo "  AUTH_API_URL=${AUTH_API_URL_JSON}"
+echo "  AUTH_PROVIDER=${AUTH_PROVIDER_JSON}"
 echo "  WORKBENCH_URL=${WORKBENCH_URL_JSON}"
 echo "  APP_VERSION=${APP_VERSION_JSON}"
 echo "  BUILD_TIME=${BUILD_TIME_JSON}"
 
-sed -i "s|<head>|<head><script>window.__BRAND_ID__=${BRAND_ID_JSON};window.__WORDPRESS_API_URL__=${WORDPRESS_API_URL_JSON};window.__API_URL__=${API_URL_JSON};window.__BACKUP_API_URL__=${BACKUP_API_URL_JSON};window.__WORKBENCH_URL__=${WORKBENCH_URL_JSON};window.__APP_VERSION__=${APP_VERSION_JSON};window.__BUILD_TIME__=${BUILD_TIME_JSON};</script>|" /usr/share/nginx/html/index.html
+sed -i "s|<head>|<head><script>window.__BRAND_ID__=${BRAND_ID_JSON};window.__WORDPRESS_API_URL__=${WORDPRESS_API_URL_JSON};window.__API_URL__=${API_URL_JSON};window.__BACKUP_API_URL__=${BACKUP_API_URL_JSON};window.__AUTH_API_URL__=${AUTH_API_URL_JSON};window.__AUTH_PROVIDER__=${AUTH_PROVIDER_JSON};window.__WORKBENCH_URL__=${WORKBENCH_URL_JSON};window.__APP_VERSION__=${APP_VERSION_JSON};window.__BUILD_TIME__=${BUILD_TIME_JSON};</script>|" /usr/share/nginx/html/index.html
 
 printf '{\n  "status": "healthy",\n  "version": %s,\n  "buildTime": %s\n}\n' "$APP_VERSION_JSON" "$BUILD_TIME_JSON" > /usr/share/nginx/html/health
 
-# --- 5. 生成调试信息 ---
+# --- 6. 生成调试信息 ---
 API_LIST=""
 i=1
 while true; do
@@ -467,12 +511,28 @@ while true; do
   i=$((i + 1))
 done
 
+AUTH_LIST=""
+i=1
+while true; do
+  eval "url=\${APP_AUTH_${i}_URL:-}"
+  [ -z "$url" ] && break
+  url_json=$(json_encode "$url")
+  [ -n "$AUTH_LIST" ] && AUTH_LIST="${AUTH_LIST},
+  "
+  AUTH_LIST="${AUTH_LIST}\"APP_AUTH_${i}_URL\": ${url_json}"
+  i=$((i + 1))
+done
+
 cat > /usr/share/nginx/html/debug-env.json <<EOF
 {
   ${API_LIST}${API_LIST:+,}
+  ${AUTH_LIST}${AUTH_LIST:+,}
   "runtimeApiUrl": ${API_URL_JSON},
+  "runtimeAuthApiUrl": ${AUTH_API_URL_JSON},
+  "authProvider": ${AUTH_PROVIDER_JSON},
   "legacyApiUrl": $(json_encode "$API_URL"),
   "legacyBackupApiUrl": $(json_encode "$BACKUP_API_URL"),
+  "legacyAuthApiUrl": $(json_encode "$AUTH_API_URL"),
   "buildTime": "$(TZ='Asia/Shanghai' date '+%Y-%m-%d %H:%M:%S')",
   "hostname": "$(hostname)"
 }

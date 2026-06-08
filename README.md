@@ -59,9 +59,13 @@ Docker 运行时后端代理使用 `APP_API_N_URL`：
 |------|------|
 | `APP_API_1_URL` / `APP_API_N_URL` | 主后端 API 上游地址；容器内前端统一请求同源 `/api/`，由 Nginx 负责分流与 failover |
 | `APP_API_1_WEIGHT` / `APP_API_N_WEIGHT` | 可选权重；未配置时平均分配 |
+| `APP_AUTH_1_URL` / `APP_AUTH_N_URL` | 统一认证服务上游地址；容器内前端统一请求同源 `/api-auth/`，由 Nginx 负责分流与 failover |
+| `APP_AUTH_1_WEIGHT` / `APP_AUTH_N_WEIGHT` | 可选权重；未配置时平均分配 |
+| `AUTH_PROVIDER` | 登录服务选择；默认 `legacy` 继续走 `/api/`，设为 `identity` 后登录走 `/api-auth/` |
 | `APP_RESOLVER` | 可选 DNS resolver；默认 `8.8.8.8 223.5.5.5` |
 | `API_URL` | 兼容旧部署，等同于 `APP_API_1_URL` |
 | `BACKUP_API_URL` | 兼容旧部署，等同于 `APP_API_2_URL` |
+| `AUTH_API_URL` | 兼容旧部署，等同于 `APP_AUTH_1_URL` |
 
 ### 启动开发服务器
 
