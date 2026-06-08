@@ -1,10 +1,36 @@
 export default {
+  mrpp: {
+    nav: {
+      features: '核心能力',
+      scenes: '实训场景',
+      cases: '合作案例',
+      trust: '资质荣誉',
+    },
+    hero: {
+      badge: 'Mixed Reality Practical Platform',
+      subtitle: '新一代',
+      title: '混合现实实训平台',
+      desc: '面向职业教育与产业培训，以混合现实技术重构实训教学，让技能培养更安全、更高效、更可量化',
+      cta: '申请试用',
+      whitepaper: '下载方案白皮书',
+    },
+    features: {
+      tag: '核心能力',
+      title: '六大核心能力，赋能实训教学',
+      subtitle: '从环境构建到教学管理，提供完整的混合现实实训解决方案',
+    },
+    auth: {
+      login: '登录',
+      getStarted: '申请试用',
+    },
+  },
   xrugc: {
     nav: {
       features: '功能特性',
       useCases: '应用场景',
       testimonials: '用户评价',
       news: '新闻动态',
+      devlog: '开发日志',
     },
     hero: {
       badge: '公测进行中',
@@ -61,6 +87,21 @@ export default {
       login: '登录',
       getStarted: '开始使用',
     },
+  },
+  devlog: {
+    kicker: 'Build Notes',
+    title: '开发日志',
+    subtitle: '记录 XR UGC 平台公开可见的工程进展、产品迭代和发布说明。',
+    listLabel: '开发日志列表',
+    readMore: '阅读详情 →',
+    backHome: '返回首页',
+    backList: '返回开发日志',
+    detailNavLabel: '开发日志导航',
+    sourceLabel: '来源：',
+    emptyTitle: '还没有公开日志',
+    emptyBody: 'CI 只会发布 work-log 中明确标记为 publish: true 的条目。',
+    notFoundTitle: '没有找到这篇日志',
+    notFoundBody: '这篇日志可能还未公开，或已经从发布列表中移除。',
   },
   login: {
     title: "平台登录",

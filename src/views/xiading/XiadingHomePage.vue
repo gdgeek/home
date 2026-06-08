@@ -10,6 +10,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useBrand } from '@/composables/useBrand'
 // import { useNews } from '@/composables/useNews' // 暫時隱藏平台資訊
 import LoginModal from '@/components/common/LoginModal.vue'
+import { loadExternalStylesheet } from '@/utils/externalAssets'
 
 const { footer } = useBrand()
 const buildTime = computed(() => {
@@ -102,6 +103,10 @@ const handleScroll = () => {
 }
 
 onMounted(() => {
+  loadExternalStylesheet(
+    'xiading-google-fonts',
+    'https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&family=Noto+Sans+TC:wght@200;400;500;700&display=swap',
+  )
   window.addEventListener('scroll', handleScroll)
   window.addEventListener('click', handleClickOutside)
   handleScroll()
@@ -501,8 +506,6 @@ const cases = [
 
 
 <style lang="scss" scoped>
-@import url('https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&family=Noto+Sans+TC:wght@200;400;500;700&display=swap');
-
 // ═══════════════════════════════════════
 // 色彩系統
 // ═══════════════════════════════════════

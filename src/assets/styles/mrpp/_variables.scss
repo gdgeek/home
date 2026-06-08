@@ -1,0 +1,44 @@
+// ============================================
+// MRPP 混合现实实训平台 — 腾讯云活动页风格
+// 设计参考：cloud.tencent.com/act/pro
+// 深色背景 + 渐变光效 + 彩色卡片 + 视觉丰富
+// ============================================
+
+// 品牌色
+$mrpp-primary: #3B82F6;
+$mrpp-primary-bright: #60A5FA;
+$mrpp-primary-dim: #1D4ED8;
+$mrpp-accent: #FF6A00;
+$mrpp-accent-light: #FF8C38;
+$mrpp-success: #10B981;
+
+// 深色背景
+$mrpp-bg-deep: #080E1E;
+$mrpp-bg-base: #0C1529;
+$mrpp-bg-card: #111B33;
+$mrpp-bg-card-hover: #162040;
+$mrpp-bg-elevated: #1A2744;
+
+// 文字颜色
+$mrpp-text-bright: #F1F5F9;
+$mrpp-text-main: #CBD5E1;
+$mrpp-text-dim: #64748B;
+$mrpp-text-faint: #475569;
+
+// 边框
+$mrpp-border-card: rgba(59, 130, 246, 0.12);
+$mrpp-border-subtle: rgba(255, 255, 255, 0.06);
+$mrpp-border-radius-sm: 8px;
+$mrpp-border-radius-md: 12px;
+$mrpp-border-radius-lg: 16px;
+
+// 字体
+$mrpp-font-family: 'Noto Sans SC', 'IBM Plex Sans', -apple-system, sans-serif;
+$mrpp-font-family-display: 'IBM Plex Sans', 'Noto Sans SC', sans-serif;
+$mrpp-font-family-mono: 'IBM Plex Mono', monospace;
+
+// 容器
+$mrpp-container-max-width: 1200px;
+
+// 动画
+$mrpp-ease-out: cubic-bezier(0.22, 1, 0.36, 1);

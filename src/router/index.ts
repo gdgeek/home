@@ -23,6 +23,8 @@ function getHomeComponent() {
       return () => import('@/views/xiading/XiadingHomePage.vue')
     case 'xrugc':
       return () => import('@/views/xrugc/XrugcHomePage.vue')
+    case 'mrpp':
+      return () => import('@/views/mrpp/MrppHomePage.vue')
     default:
       return () => import('@/views/xingkou/XingkouHomePage.vue')
   }
@@ -33,6 +35,16 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     name: 'Home',
     component: getHomeComponent()
+  },
+  {
+    path: '/devlog',
+    name: 'DevlogList',
+    component: () => import('@/views/devlog/DevlogListPage.vue')
+  },
+  {
+    path: '/devlog/:slug',
+    name: 'DevlogDetail',
+    component: () => import('@/views/devlog/DevlogDetailPage.vue')
   }
 ]
 

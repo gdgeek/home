@@ -3,9 +3,9 @@
  * 
  * 品牌判断优先级：
  * 1. 生产环境：Docker 注入 window.__BRAND_ID__（docker-entrypoint.sh）—— 锁定品牌
- * 2. 本地开发：.env 中的 VITE_BRAND_ID —— 锁定品牌
- * 3. URL 参数：?brand=xxx —— 动态切换（仅在前两者都未设置时生效）
- * 4. 默认：xingkou
+ * 2. URL 参数：?brand=xxx —— 本地开发动态切换
+ * 3. 访问域名映射 —— 单个 Docker 镜像服务多品牌
+ * 4. 默认：xiading
  */
 
 import { getBrandConfig } from './brandRegistry'
@@ -13,41 +13,94 @@ export { getBrandConfig } from './brandRegistry'
 import type { BrandConfig, BrandId } from '@/types/brand'
 
 const DEFAULT_BRAND_ID: BrandId = 'xiading'
-const VALID_BRAND_IDS: readonly string[] = ['xingkou', 'xiading', 'xrugc']
+const VALID_BRAND_IDS: readonly BrandId[] = ['xingkou', 'xiading', 'xrugc', 'mrpp']
 
-function getBrandFromUrl(): BrandId | null {
-  if (typeof window === 'undefined') return null
-  const params = new URLSearchParams(window.location.search)
-  const brandParam = params.get('brand')
-  if (brandParam && VALID_BRAND_IDS.includes(brandParam)) {
-    return brandParam as BrandId
+const DOMAIN_BRAND_RULES: readonly {
+  hostname: string
+  brandId: BrandId
+  includeSubdomains?: boolean
+}[] = [
+  { hostname: 'mrpp.com', brandId: 'mrpp', includeSubdomains: true },
+  { hostname: 'xrugc.com', brandId: 'xrugc', includeSubdomains: true },
+  { hostname: 'ar-creator.cn', brandId: 'xingkou', includeSubdomains: true },
+  { hostname: 'xiading.hxgxonline.com', brandId: 'xiading', includeSubdomains: true }
+]
+
+type BrandSourceValue = string | null | undefined
+
+function normalizeHostname(hostname: string): string {
+  const normalized = hostname.trim().toLowerCase().replace(/\.$/, '')
+  if (!normalized.startsWith('[') && normalized.includes(':')) {
+    return normalized.split(':')[0]
+  }
+  return normalized
+}
+
+function getValidBrandId(brandId: BrandSourceValue): BrandId | null {
+  if (brandId && VALID_BRAND_IDS.includes(brandId as BrandId)) {
+    return brandId as BrandId
   }
   return null
 }
 
-function resolveBrandId(): BrandId {
-  // 1. Docker 注入（生产环境）—— 锁定品牌
-  if (typeof window !== 'undefined') {
-    const injected = window.__BRAND_ID__
-    if (injected && VALID_BRAND_IDS.includes(injected)) {
-      return injected as BrandId
+export function getBrandFromHostname(hostname: string): BrandId | null {
+  const normalized = normalizeHostname(hostname)
+  if (!normalized) return null
+
+  for (const rule of DOMAIN_BRAND_RULES) {
+    if (normalized === rule.hostname) {
+      return rule.brandId
+    }
+
+    if (rule.includeSubdomains && normalized.endsWith(`.${rule.hostname}`)) {
+      return rule.brandId
     }
   }
 
-  // 2. Vite 环境变量（本地开发）—— 锁定品牌
-  const envBrand = import.meta.env.VITE_BRAND_ID || ''
-  if (envBrand && VALID_BRAND_IDS.includes(envBrand)) {
-    return envBrand as BrandId
+  return null
+}
+
+function getBrandFromUrl(): BrandId | null {
+  if (typeof window === 'undefined') return null
+  const params = new URLSearchParams(window.location.search)
+  return getValidBrandId(params.get('brand'))
+}
+
+export function resolveBrandIdFromSources(sources: {
+  injectedBrandId?: BrandSourceValue
+  urlBrandId?: BrandSourceValue
+  hostname?: BrandSourceValue
+}): BrandId {
+  const injectedBrand = getValidBrandId(sources.injectedBrandId)
+  if (injectedBrand) {
+    return injectedBrand
   }
 
-  // 3. URL 参数 ?brand=xxx —— 动态切换（仅在未锁定时）
-  const urlBrand = getBrandFromUrl()
+  const urlBrand = getValidBrandId(sources.urlBrandId)
   if (urlBrand) {
     return urlBrand
   }
 
-  // 4. 默认品牌
+  if (sources.hostname) {
+    const hostBrand = getBrandFromHostname(sources.hostname)
+    if (hostBrand) {
+      return hostBrand
+    }
+  }
+
   return DEFAULT_BRAND_ID
+}
+
+function resolveBrandId(): BrandId {
+  if (typeof window === 'undefined') {
+    return DEFAULT_BRAND_ID
+  }
+
+  return resolveBrandIdFromSources({
+    injectedBrandId: window.__BRAND_ID__,
+    urlBrandId: getBrandFromUrl(),
+    hostname: window.location.hostname
+  })
 }
 
 const _brandId: BrandId = resolveBrandId()

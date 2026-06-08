@@ -65,15 +65,34 @@ describe('authApi', () => {
       )
     })
 
-    it('stores tokens in localStorage on success', async () => {
+    it('does not persist tokens in localStorage on success', async () => {
       mockedAxios.get = vi.fn().mockResolvedValue({ data: { status: 'healthy' } })
       mockedAxios.post = vi.fn().mockResolvedValue({ data: mockLoginSuccess })
 
       const { login } = await getFreshLogin()
       await login('user', 'pass')
 
-      expect(localStorage.getItem('accessToken')).toBe('acc')
-      expect(localStorage.getItem('refreshToken')).toBe('ref')
+      expect(localStorage.getItem('accessToken')).toBeNull()
+      expect(localStorage.getItem('refreshToken')).toBeNull()
+    })
+
+    it('uses same-origin /api proxy when runtime API URL is proxied', async () => {
+      ;(window as unknown as Record<string, unknown>).__API_URL__ = '/api/'
+      ;(window as unknown as Record<string, unknown>).__BACKUP_API_URL__ = ''
+      mockedAxios.get = vi.fn().mockResolvedValue({ data: { status: 'healthy' } })
+      mockedAxios.post = vi.fn().mockResolvedValue({ data: mockLoginSuccess })
+
+      const { login } = await getFreshLogin()
+      await login('user', 'pass')
+
+      expect(mockedAxios.get).toHaveBeenCalledWith(
+        '/api/health',
+        expect.any(Object),
+      )
+      expect(mockedAxios.post).toHaveBeenCalledWith(
+        '/api/v1/auth/login',
+        expect.any(Object),
+      )
     })
   })
 

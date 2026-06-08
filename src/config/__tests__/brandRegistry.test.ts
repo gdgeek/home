@@ -6,7 +6,7 @@ import { getBrandConfig, isValidBrandId, getAllBrandIds } from '../brandRegistry
  * Validates: Requirements 15.1, 16.2
  */
 
-const VALID_BRAND_IDS = ['xingkou', 'xiading', 'xrugc'] as const
+const VALID_BRAND_IDS = ['xingkou', 'xiading', 'xrugc', 'mrpp'] as const
 
 describe('brandRegistry', () => {
   describe('getBrandConfig', () => {
@@ -62,12 +62,12 @@ describe('brandRegistry', () => {
   })
 
   describe('getAllBrandIds', () => {
-    it('returns all three brand IDs', () => {
+    it('returns all registered brand IDs', () => {
       const ids = getAllBrandIds()
-      expect(ids).toHaveLength(3)
-      expect(ids).toContain('xingkou')
-      expect(ids).toContain('xiading')
-      expect(ids).toContain('xrugc')
+      expect(ids).toHaveLength(VALID_BRAND_IDS.length)
+      for (const id of VALID_BRAND_IDS) {
+        expect(ids).toContain(id)
+      }
     })
   })
 

@@ -2,6 +2,7 @@ version: "3.8"
 
 # Release 环境 - 用于生产前测试
 # 使用 release 标签的镜像
+# 默认根据访问域名选择品牌；如需锁定单品牌，可显式设置 BRAND_ID。
 
 services:
   frontend:
@@ -9,11 +10,10 @@ services:
     ports:
       - "80:80"
     environment:
-      - BRAND_ID=xiading
       - WORKBENCH_URL=https://d.xiading.hxgxonline.com/
       - WORDPRESS_API_URL=
-      - API_URL=
-      - BACKUP_API_URL=
+      - APP_API_1_URL=https://api.d.xrteeth.com
+      - APP_API_2_URL=https://api.d.tmrpp.com
     restart: unless-stopped
 
   wordpress:

@@ -1,8 +1,16 @@
 # 生产环境 docker-compose 配置示例
 #
-# 品牌切换：修改 BRAND_ID 环境变量
+# 默认根据访问域名选择品牌：
+#   mrpp.com / *.mrpp.com       → mrpp
+#   xrugc.com / *.xrugc.com     → xrugc
+#   ar-creator.cn / *.ar-creator.cn → xingkou
+#   xiading.hxgxonline.com / *.xiading.hxgxonline.com → xiading
+#
+# 可选：设置 BRAND_ID 锁定单品牌
 #   BRAND_ID=xingkou  → 星扣（简体中文，大陆市场）
 #   BRAND_ID=xiading   → 夏鼎（繁体中文，澳门市场）
+#   BRAND_ID=xrugc     → XRUGC
+#   BRAND_ID=mrpp      → MRPP
 
 version: "3.8"
 
@@ -12,8 +20,6 @@ services:
     ports:
       - "80:80"
     environment:
-      - BRAND_ID=xingkou
-      - BRAND_ID=xingkou
       - WORKBENCH_URL=https://your-workbench-url.com/
     restart: unless-stopped
 
