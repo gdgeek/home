@@ -111,13 +111,14 @@ let cachedApiUrl: string | null = null;
  * 检查API是否可用
  */
 const checkHealth = async (baseUrl: string): Promise<boolean> => {
+  const healthUrl = `${baseUrl}/health`;
   try {
-    const response = await axios.get<HealthResponse>(`${baseUrl}/health`, {
+    const response = await axios.get<HealthResponse>(healthUrl, {
       timeout: 5000,
     });
     return response.data?.status === "healthy" || response.data?.status === "ok";
   } catch (err) {
-    console.warn(`API健康检查失败: ${baseUrl}`, err);
+    console.warn(`API健康检查失败: ${healthUrl}`, err);
     return false;
   }
 };
@@ -165,15 +166,9 @@ const getAvailableIdentityAuthUrl = async (): Promise<string | null> => {
   if (!authApiUrl) return null;
   if (cachedApiUrl === authApiUrl) return cachedApiUrl;
 
-  console.log("authApi: 检查统一认证API...", authApiUrl);
-  if (await checkHealth(authApiUrl)) {
-    console.log("authApi: 统一认证API可用");
-    cachedApiUrl = authApiUrl;
-    return authApiUrl;
-  }
-
-  cachedApiUrl = null;
-  return null;
+  console.log("authApi: 使用统一认证API...", authApiUrl);
+  cachedApiUrl = authApiUrl;
+  return authApiUrl;
 };
 
 const getAvailableLoginApiUrl = async (): Promise<string | null> => {

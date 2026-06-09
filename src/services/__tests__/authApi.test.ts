@@ -121,16 +121,29 @@ describe('authApi', () => {
       ;(window as unknown as Record<string, unknown>).__API_URL__ = '/api/'
       ;(window as unknown as Record<string, unknown>).__AUTH_API_URL__ = '/api-auth/'
       ;(window as unknown as Record<string, unknown>).__AUTH_PROVIDER__ = 'identity'
-      mockedAxios.get = vi.fn().mockResolvedValue({ data: { status: 'ok' } })
       mockedAxios.post = vi.fn().mockResolvedValue({ data: mockLoginSuccess })
 
       const { login } = await getFreshLogin()
       await login('user', 'pass')
 
-      expect(mockedAxios.get).toHaveBeenCalledWith(
-        '/api-auth/health',
+      expect(mockedAxios.get).not.toHaveBeenCalled()
+      expect(mockedAxios.post).toHaveBeenCalledWith(
+        '/api-auth/v1/auth/login',
         expect.any(Object),
       )
+    })
+
+    it('does not block identity login on a slow health endpoint', async () => {
+      ;(window as unknown as Record<string, unknown>).__AUTH_API_URL__ = '/api-auth/'
+      ;(window as unknown as Record<string, unknown>).__AUTH_PROVIDER__ = 'identity'
+      mockedAxios.get = vi.fn().mockRejectedValue(new Error('timeout'))
+      mockedAxios.post = vi.fn().mockResolvedValue({ data: mockLoginSuccess })
+
+      const { login } = await getFreshLogin()
+      const result = await login('user', 'pass')
+
+      expect(result.success).toBe(true)
+      expect(mockedAxios.get).not.toHaveBeenCalled()
       expect(mockedAxios.post).toHaveBeenCalledWith(
         '/api-auth/v1/auth/login',
         expect.any(Object),
