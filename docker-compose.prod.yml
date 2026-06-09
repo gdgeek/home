@@ -12,6 +12,7 @@ services:
       - WORKBENCH_URL=https://d.xiading.hxgxonline.com/
       - APP_API_1_URL=https://api.xrteeth.com
       - APP_API_2_URL=https://api.tmrpp.com
+      - APP_AUTH_1_URL=https://identity.xrteeth.com
     restart: unless-stopped
 
   wordpress:

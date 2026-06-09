@@ -51,18 +51,31 @@ describe('docker-entrypoint.sh JSON encoding security', () => {
       expect(dockerEntrypoint).toContain('APP_API_2_URL="$BACKUP_API_URL"')
     })
 
+    it('maps legacy AUTH_API_URL to APP_AUTH_1_URL', () => {
+      expect(dockerEntrypoint).toContain('APP_AUTH_1_URL="$AUTH_API_URL"')
+    })
+
     it('generates the same split_clients/map/failover proxy shape as the main frontend', () => {
       expect(dockerEntrypoint).toContain('split_clients \\"\\$request_id\\" \\$${PREFIX_NAME}_pool')
       expect(dockerEntrypoint).toContain('map \\$${PREFIX_NAME}_pool \\$${PREFIX_NAME}_backend_url')
       expect(dockerEntrypoint).toContain('error_page ${FAILOVER_STATUS_CODES} = @${PREFIX_NAME}_failover')
       expect(dockerEntrypoint).toContain('generate_lb_config "APP_API" "/api/" "api" "yes"')
+      expect(dockerEntrypoint).toContain('generate_lb_config "APP_AUTH" "/api-auth/" "auth" "yes"')
     })
 
     it('injects generated API locations into the nginx template', () => {
       expect(nginxConfig).toContain('# __RESOLVER__')
       expect(nginxConfig).toContain('# __LB_HTTP_BLOCK__')
       expect(nginxConfig).toContain('# __API_LOCATIONS__')
+      expect(nginxConfig).toContain('# __AUTH_LOCATIONS__')
       expect(nginxConfig).toContain('location = /debug-env')
+    })
+
+    it('injects runtime auth config into the page and debug endpoint', () => {
+      expect(dockerEntrypoint).toContain('window.__AUTH_API_URL__=${AUTH_API_URL_JSON}')
+      expect(dockerEntrypoint).toContain('window.__AUTH_PROVIDER__=${AUTH_PROVIDER_JSON}')
+      expect(dockerEntrypoint).toContain('"runtimeAuthApiUrl": ${AUTH_API_URL_JSON}')
+      expect(dockerEntrypoint).toContain('"authProvider": ${AUTH_PROVIDER_JSON}')
     })
   })
 
