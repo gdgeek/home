@@ -23,6 +23,8 @@ interface HealthResponse {
   status: string;
 }
 
+type AuthProvider = "legacy" | "identity";
+
 /**
  * 认证错误码，由调用方负责本地化处理
  */
@@ -63,8 +65,28 @@ const normalizeApiBaseUrl = (url: string | null | undefined): string | null => {
   return trimmed.replace(/\/+$/, "");
 };
 
+const normalizeAuthProvider = (value: string | null | undefined): AuthProvider => {
+  const provider = value?.trim().toLowerCase();
+  return provider === "identity" ? "identity" : "legacy";
+};
+
+const getAuthProvider = (): AuthProvider =>
+  normalizeAuthProvider(
+    window.__AUTH_PROVIDER__ ||
+      import.meta.env.VITE_AUTH_PROVIDER ||
+      ""
+  );
+
 const getApiUrl = (): string => {
   return normalizeApiBaseUrl(window.__API_URL__) || "https://api.xrteeth.com";
+};
+
+const getAuthApiUrl = (): string => {
+  return (
+    normalizeApiBaseUrl(window.__AUTH_API_URL__) ||
+    normalizeApiBaseUrl(import.meta.env.VITE_AUTH_API) ||
+    (import.meta.env.DEV ? "" : "/api-auth")
+  );
 };
 
 /**
@@ -93,7 +115,7 @@ const checkHealth = async (baseUrl: string): Promise<boolean> => {
     const response = await axios.get<HealthResponse>(`${baseUrl}/health`, {
       timeout: 5000,
     });
-    return response.data?.status === "healthy";
+    return response.data?.status === "healthy" || response.data?.status === "ok";
   } catch (err) {
     console.warn(`API健康检查失败: ${baseUrl}`, err);
     return false;
@@ -138,6 +160,28 @@ const getAvailableApiUrl = async (): Promise<string | null> => {
   return discoverApiUrl();
 };
 
+const getAvailableIdentityAuthUrl = async (): Promise<string | null> => {
+  const authApiUrl = getAuthApiUrl();
+  if (!authApiUrl) return null;
+  if (cachedApiUrl === authApiUrl) return cachedApiUrl;
+
+  console.log("authApi: 检查统一认证API...", authApiUrl);
+  if (await checkHealth(authApiUrl)) {
+    console.log("authApi: 统一认证API可用");
+    cachedApiUrl = authApiUrl;
+    return authApiUrl;
+  }
+
+  cachedApiUrl = null;
+  return null;
+};
+
+const getAvailableLoginApiUrl = async (): Promise<string | null> => {
+  return getAuthProvider() === "identity"
+    ? getAvailableIdentityAuthUrl()
+    : getAvailableApiUrl();
+};
+
 // ============================================
 // 登录
 // ============================================
@@ -169,7 +213,7 @@ export const login = async (
   username: string,
   password: string,
 ): Promise<LoginResponse> => {
-  const apiUrl = await getAvailableApiUrl();
+  const apiUrl = await getAvailableLoginApiUrl();
   if (!apiUrl) {
     throw new AuthError("SERVER_UNAVAILABLE");
   }
@@ -181,7 +225,7 @@ export const login = async (
     if (err && typeof err === 'object' && !('response' in err)) {
       console.warn("authApi: 请求失败，重新检查API可用性...");
       cachedApiUrl = null;
-      const newApiUrl = await discoverApiUrl();
+      const newApiUrl = await getAvailableLoginApiUrl();
       if (newApiUrl && newApiUrl !== apiUrl) {
         return await doLogin(newApiUrl, username, password);
       }

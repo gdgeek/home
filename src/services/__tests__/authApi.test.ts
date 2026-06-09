@@ -33,6 +33,8 @@ beforeEach(() => {
 afterEach(() => {
   delete (window as unknown as Record<string, unknown>).__API_URL__
   delete (window as unknown as Record<string, unknown>).__BACKUP_API_URL__
+  delete (window as unknown as Record<string, unknown>).__AUTH_API_URL__
+  delete (window as unknown as Record<string, unknown>).__AUTH_PROVIDER__
   vi.resetModules()
 })
 
@@ -91,6 +93,46 @@ describe('authApi', () => {
       )
       expect(mockedAxios.post).toHaveBeenCalledWith(
         '/api/v1/auth/login',
+        expect.any(Object),
+      )
+    })
+
+    it('keeps using legacy /api when AUTH_PROVIDER is not identity', async () => {
+      ;(window as unknown as Record<string, unknown>).__API_URL__ = '/api/'
+      ;(window as unknown as Record<string, unknown>).__AUTH_API_URL__ = '/api-auth/'
+      ;(window as unknown as Record<string, unknown>).__AUTH_PROVIDER__ = ''
+      mockedAxios.get = vi.fn().mockResolvedValue({ data: { status: 'healthy' } })
+      mockedAxios.post = vi.fn().mockResolvedValue({ data: mockLoginSuccess })
+
+      const { login } = await getFreshLogin()
+      await login('user', 'pass')
+
+      expect(mockedAxios.get).toHaveBeenCalledWith(
+        '/api/health',
+        expect.any(Object),
+      )
+      expect(mockedAxios.post).toHaveBeenCalledWith(
+        '/api/v1/auth/login',
+        expect.any(Object),
+      )
+    })
+
+    it('uses /api-auth when AUTH_PROVIDER is identity', async () => {
+      ;(window as unknown as Record<string, unknown>).__API_URL__ = '/api/'
+      ;(window as unknown as Record<string, unknown>).__AUTH_API_URL__ = '/api-auth/'
+      ;(window as unknown as Record<string, unknown>).__AUTH_PROVIDER__ = 'identity'
+      mockedAxios.get = vi.fn().mockResolvedValue({ data: { status: 'ok' } })
+      mockedAxios.post = vi.fn().mockResolvedValue({ data: mockLoginSuccess })
+
+      const { login } = await getFreshLogin()
+      await login('user', 'pass')
+
+      expect(mockedAxios.get).toHaveBeenCalledWith(
+        '/api-auth/health',
+        expect.any(Object),
+      )
+      expect(mockedAxios.post).toHaveBeenCalledWith(
+        '/api-auth/v1/auth/login',
         expect.any(Object),
       )
     })
