@@ -23,6 +23,7 @@ const DOMAIN_BRAND_RULES: readonly {
   { hostname: 'mrpp.com', brandId: 'mrpp', includeSubdomains: true },
   { hostname: 'xrugc.com', brandId: 'xrugc', includeSubdomains: true },
   { hostname: 'ar-creator.cn', brandId: 'xingkou', includeSubdomains: true },
+  { hostname: 'xiading.cc', brandId: 'xiading', includeSubdomains: true },
   { hostname: 'xiading.hxgxonline.com', brandId: 'xiading', includeSubdomains: true }
 ]
 
