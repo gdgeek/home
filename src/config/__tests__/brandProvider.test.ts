@@ -108,6 +108,8 @@ describe('brandProvider - brand resolution priority', () => {
       ['ar-creator.cn', 'xingkou'],
       ['www.ar-creator.cn', 'xingkou'],
       ['studio.preview.ar-creator.cn', 'xingkou'],
+      ['xiading.cc', 'xiading'],
+      ['www.xiading.cc', 'xiading'],
       ['xiading.hxgxonline.com', 'xiading'],
       ['www.xiading.hxgxonline.com', 'xiading'],
       ['studio.xiading.hxgxonline.com:5173', 'xiading']
@@ -121,6 +123,7 @@ describe('brandProvider - brand resolution priority', () => {
       'mrpp.com.example.com',
       'xrugc.com.example.com',
       'ar-creator.cn.example.com',
+      'xiading.cc.example.com',
       'xiading.hxgxonline.com.example.com'
     ])('does not map unsupported host %s', async (hostname) => {
       const { getBrandFromHostname } = await loadBrandProvider()

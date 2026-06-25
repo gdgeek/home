@@ -71,6 +71,11 @@ describe('docker-entrypoint.sh JSON encoding security', () => {
       expect(nginxConfig).toContain('location = /debug-env')
     })
 
+    it('serves the xiading.cc shortcut domain without redirecting it', () => {
+      expect(nginxConfig).toContain('server_name localhost xiading.cc www.xiading.cc;')
+      expect(nginxConfig).not.toContain('return 301 https://xiading.hxgxonline.com$request_uri;')
+    })
+
     it('injects runtime auth config into the page and debug endpoint', () => {
       expect(dockerEntrypoint).toContain('window.__AUTH_API_URL__=${AUTH_API_URL_JSON}')
       expect(dockerEntrypoint).toContain('window.__AUTH_PROVIDER__=${AUTH_PROVIDER_JSON}')
