@@ -9,7 +9,7 @@ export default {
     hero: {
       badge: 'Mixed Reality Practical Platform',
       subtitle: '新一代',
-      title: '混合现实实训平台',
+      title: 'Rokid AR 创作平台',
       desc: '面向职业教育与产业培训，以混合现实技术重构实训教学，让技能培养更安全、更高效、更可量化',
       cta: '申请试用',
       whitepaper: '下载方案白皮书',
