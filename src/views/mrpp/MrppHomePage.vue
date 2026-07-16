@@ -102,7 +102,7 @@ const partners = [
     url: 'https://global.rokid.com'
   },
   {
-    name: '杭州求证科技',
+    name: '杭州灵伴科技',
     role: 'XR教育解决方案集成商',
     desc: '专注于XR技术在教育领域的落地应用，整合行业领先的硬件与软件资源，为教育机构和企业提供从需求规划、内容定制到部署实施的一站式MR实训解决方案。',
     highlights: ['教育行业深耕', '一站式解决方案', '内容定制服务', '部署实施支持'],
@@ -170,9 +170,9 @@ onUnmounted(() => {
           <span class="mp-nav__logo-icon">
             <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="2" fill="#3B82F6"/><rect x="13" y="3" width="8" height="8" rx="2" fill="#60A5FA" opacity="0.7"/><rect x="3" y="13" width="8" height="8" rx="2" fill="#60A5FA" opacity="0.7"/><rect x="13" y="13" width="8" height="8" rx="2" fill="#93C5FD" opacity="0.4"/></svg>
           </span>
-          <span class="mp-nav__logo-mark"><span style="color:#3B82F6">M</span><span style="color:#60A5FA">R</span><span style="color:#60A5FA">P</span><span style="color:#93C5FD">P</span></span>
+          <span class="mp-nav__logo-mark">ROKID</span>
           <span class="mp-nav__logo-divider"></span>
-          <span class="mp-nav__logo-text">混合现实<span style="color:#3B82F6">实</span><span style="color:#60A5FA">训</span><span style="color:#60A5FA">平</span><span style="color:#93C5FD">台</span></span>
+          <span class="mp-nav__logo-text"><span class="mp-nav__logo-text-accent">AR</span> 创作平台</span>
         </a>
         <nav class="mp-nav__links" aria-label="主导航">
           <a v-for="item in navItems" :key="item.text" :href="item.url">{{ item.text }}</a>
@@ -201,10 +201,10 @@ onUnmounted(() => {
       <div class="mp-hero__content reveal">
         <div class="mp-hero__badge">
           <span class="mp-hero__badge-hot">HOT</span>
-          Mixed Reality Practical Platform
+          Augmented Reality Creation Platform
         </div>
         <h1 class="mp-hero__title">
-          混合现实<span class="mp-hero__title-accent">实训平台</span>
+          Rokid <span class="mp-hero__title-accent">AR 创作平台</span>
         </h1>
         <p class="mp-hero__desc">零代码/低代码MR内容创作平台，AI加持3D生成<br>让实训内容开发更简单、教学交互更沉浸</p>
         <div class="mp-hero__cta">
@@ -445,8 +445,8 @@ onUnmounted(() => {
     <footer class="mp-footer">
       <div class="mp-footer__inner">
         <div class="mp-footer__brand">
-          <span class="mp-footer__logo"><span style="color:#3B82F6">M</span><span style="color:#60A5FA">R</span><span style="color:#60A5FA">P</span><span style="color:#93C5FD">P</span></span>
-          <p>混合现实实训平台 · 让技能培养更高效</p>
+          <span class="mp-footer__logo">ROKID</span>
+          <p>Rokid AR 创作平台 · 让空间内容创作更简单</p>
         </div>
         <div class="mp-footer__links">
           <a href="#">产品方案</a><a href="#">技术文档</a><a href="#">合作案例</a>
@@ -458,7 +458,7 @@ onUnmounted(() => {
         </div>
       </div>
       <div class="mp-footer__bottom">
-        <span>{{ footer.copyright || '© 2025 MRPP 混合现实实训平台' }}</span>
+        <span>{{ footer.copyright || '© 2025 Rokid AR 创作平台' }}</span>
         <span class="mp-footer__ver">{{ buildTime }}</span>
       </div>
     </footer>
@@ -595,9 +595,13 @@ $max-w: 1200px;
 
   &__logo { display: flex; align-items: center; gap: 8px; text-decoration: none; }
   &__logo-icon { width: 28px; height: 28px; display: flex; align-items: center; svg { width: 100%; height: 100%; } }
-  &__logo-mark { font-family: 'IBM Plex Mono', monospace; font-size: 18px; font-weight: 700; letter-spacing: 0.04em; }
+  &__logo-mark {
+    font-family: 'IBM Plex Sans', sans-serif; font-size: 17px; font-weight: 800;
+    letter-spacing: 0.08em; color: var(--text-bright);
+  }
   &__logo-divider { width: 1px; height: 16px; background: rgba(255,255,255,0.15); margin: 0 4px; }
-  &__logo-text { font-size: 13px; color: rgba(255,255,255,0.4); @media (max-width: 640px) { display: none; } }
+  &__logo-text { font-size: 13px; color: rgba(255,255,255,0.48); white-space: nowrap; @media (max-width: 640px) { display: none; } }
+  &__logo-text-accent { color: var(--brand-bright); font-weight: 700; letter-spacing: 0.04em; }
 
   &__links {
     display: flex; gap: 28px;

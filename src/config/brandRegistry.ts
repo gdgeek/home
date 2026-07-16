@@ -128,10 +128,10 @@ const brandRegistry: BrandRegistry = {
     }
   },
 
-  // MRPP 混合现实实训平台 - 腾讯云活动页风格深色主题
+  // Rokid AR 创作平台 - 腾讯云活动页风格深色主题
   mrpp: {
     id: 'mrpp',
-    name: '混合现实实训平台',
+    name: 'Rokid AR 创作平台',
     locale: 'zh-CN',
     loginUrl: 'https://mrpp.com/login',
     theme: {
@@ -141,18 +141,18 @@ const brandRegistry: BrandRegistry = {
       backgroundColor: '#080E1E',
       textColor: '#F1F5F9',
       logoPath: '/logo/mrpp/logo.svg',
-      logoAlt: 'MRPP 混合现实实训平台',
+      logoAlt: 'Rokid AR 创作平台',
       faviconPath: '/logo/mrpp/logo.svg'
     },
     hero: {
-      title: 'MRPP — 混合现实实训平台',
+      title: 'Rokid AR 创作平台',
       subtitle: '面向职业教育与产业培训的新一代混合现实实训解决方案，赋能实操技能培养。',
       primaryButtonText: '免费试用',
       secondaryButtonText: '查看方案',
       highlights: ['虚实融合', '安全实训', '数据驱动', '产教融合']
     },
     footer: {
-      copyright: '© 2025 MRPP 混合现实实训平台 版权所有',
+      copyright: '© 2025 Rokid AR 创作平台 版权所有',
       contactInfo: {
         phone: '400-xxx-xxxx',
         email: 'contact@mrpp.com',
