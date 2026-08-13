@@ -1,0 +1,14 @@
+{
+  "default": "https://d.xrugc.com",
+  "domains": {
+    "xrugc.com": "https://d.xrugc.com",
+    "dev.xrugc.com": "https://d.dev.xrugc.com",
+    "mrpp.com": "https://d.mrpp.com",
+    "ar-creator.cn": "https://d.ar-creator.cn",
+    "xingkou.net": "https://d.xingkou.net",
+    "bujiaban.com": "https://www.bujiaban.com",
+    "xiading.cc": "https://d.xiading.cc",
+    "xiading.hxgxonline.com": "https://d.xiading.hxgxonline.com",
+    "dev.xiading.hxgxonline.com": "https://d.dev.xiading.hxgxonline.com"
+  }
+}

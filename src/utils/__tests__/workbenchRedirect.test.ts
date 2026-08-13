@@ -3,20 +3,45 @@ import { buildWorkbenchSsoUrl, resolveWorkbenchUrl } from '../workbenchRedirect'
 
 describe('resolveWorkbenchUrl', () => {
   it.each([
+    ['xrugc.com', 'https://d.xrugc.com'],
+    ['www.xrugc.com', 'https://d.xrugc.com'],
+    ['studio.preview.xrugc.com', 'https://d.xrugc.com'],
+    ['dev.xrugc.com', 'https://d.dev.xrugc.com'],
+    ['www.dev.xrugc.com', 'https://d.dev.xrugc.com'],
+    ['mrpp.com', 'https://d.mrpp.com'],
+    ['www.mrpp.com', 'https://d.mrpp.com'],
+    ['ar-creator.cn', 'https://d.ar-creator.cn'],
+    ['www.ar-creator.cn', 'https://d.ar-creator.cn'],
+    ['xingkou.net', 'https://d.xingkou.net'],
+    ['www.xingkou.net', 'https://d.xingkou.net'],
+    ['bujiaban.com', 'https://www.bujiaban.com'],
+    ['www.bujiaban.com', 'https://www.bujiaban.com'],
     ['xiading.cc', 'https://d.xiading.cc'],
+    ['www.xiading.cc', 'https://d.xiading.cc'],
     ['XIADING.CC.', 'https://d.xiading.cc'],
     ['xiading.hxgxonline.com', 'https://d.xiading.hxgxonline.com'],
+    ['www.xiading.hxgxonline.com', 'https://d.xiading.hxgxonline.com'],
     ['xiading.hxgxonline.com:443', 'https://d.xiading.hxgxonline.com'],
+    ['dev.xiading.hxgxonline.com', 'https://d.dev.xiading.hxgxonline.com'],
+    ['www.dev.xiading.hxgxonline.com', 'https://d.dev.xiading.hxgxonline.com'],
   ])('maps the homepage host %s to %s', (hostname, expected) => {
-    expect(resolveWorkbenchUrl('https://configured.example.com', hostname)).toBe(expected)
+    expect(resolveWorkbenchUrl(hostname)).toBe(expected)
   })
 
-  it('keeps the configured URL for other homepage hosts', () => {
-    expect(resolveWorkbenchUrl('https://d.xrugc.com', 'xrugc.com')).toBe('https://d.xrugc.com')
+  it('uses the JSON default for an unconfigured hostname', () => {
+    expect(resolveWorkbenchUrl('unknown.example.com')).toBe('https://d.xrugc.com')
   })
 
-  it('returns undefined when no mapping or configured URL exists', () => {
-    expect(resolveWorkbenchUrl(undefined, 'localhost')).toBeUndefined()
+  it('inherits the configured URL for nested subdomains', () => {
+    expect(resolveWorkbenchUrl('studio.xiading.cc')).toBe('https://d.xiading.cc')
+  })
+
+  it.each([
+    'fake-xiading.cc',
+    'xrugc.com.example.com',
+    'xiading.cc.example.com',
+  ])('does not match an unrelated hostname containing %s', (hostname) => {
+    expect(resolveWorkbenchUrl(hostname)).toBe('https://d.xrugc.com')
   })
 })
 
