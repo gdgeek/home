@@ -5,14 +5,14 @@
  * 1. 生产环境：Docker 注入 window.__BRAND_ID__（docker-entrypoint.sh）—— 锁定品牌
  * 2. URL 参数：?brand=xxx —— 本地开发动态切换
  * 3. 访问域名映射 —— 单个 Docker 镜像服务多品牌
- * 4. 默认：xiading
+ * 4. 默认：xrugc
  */
 
 import { getBrandConfig } from './brandRegistry'
 export { getBrandConfig } from './brandRegistry'
 import type { BrandConfig, BrandId } from '@/types/brand'
 
-const DEFAULT_BRAND_ID: BrandId = 'xiading'
+const DEFAULT_BRAND_ID: BrandId = 'xrugc'
 const VALID_BRAND_IDS: readonly BrandId[] = ['xingkou', 'xiading', 'xrugc', 'mrpp']
 
 const DOMAIN_BRAND_RULES: readonly {
