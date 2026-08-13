@@ -9,7 +9,6 @@ declare module "*.vue" {
 
 interface ImportMetaEnv {
   readonly VITE_BACKEND_API_URL: string;
-  readonly VITE_WORKBENCH_URL: string;
   readonly VITE_AUTH_API?: string;
   readonly VITE_AUTH_PROVIDER?: string;
 }
@@ -30,6 +29,5 @@ interface Window {
   __BACKUP_API_URL__?: string;
   __AUTH_API_URL__?: string;
   __AUTH_PROVIDER__?: string;
-  __WORKBENCH_URL__?: string;
   __BUILD_TIME__?: string;
 }

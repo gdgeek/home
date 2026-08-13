@@ -435,7 +435,6 @@ API_URL="${API_URL:-}"
 BACKUP_API_URL="${BACKUP_API_URL:-}"
 AUTH_API_URL="${AUTH_API_URL:-}"
 AUTH_PROVIDER="${AUTH_PROVIDER:-}"
-WORKBENCH_URL="${WORKBENCH_URL:-}"
 
 # 已配置 APP_API_N_URL 时，浏览器只访问同源 /api，由 Nginx 负责主备/分流/failover。
 if [ -n "${APP_API_1_URL:-}" ]; then
@@ -479,7 +478,6 @@ API_URL_JSON=$(json_encode "$RUNTIME_API_URL")
 BACKUP_API_URL_JSON=$(json_encode "$RUNTIME_BACKUP_API_URL")
 AUTH_API_URL_JSON=$(json_encode "$RUNTIME_AUTH_API_URL")
 AUTH_PROVIDER_JSON=$(json_encode "$AUTH_PROVIDER")
-WORKBENCH_URL_JSON=$(json_encode "$WORKBENCH_URL")
 APP_VERSION_JSON=$(json_encode "$APP_VERSION")
 BUILD_TIME_JSON=$(json_encode "$BUILD_TIME")
 
@@ -490,11 +488,10 @@ echo "  API_URL=${API_URL_JSON}"
 echo "  BACKUP_API_URL=${BACKUP_API_URL_JSON}"
 echo "  AUTH_API_URL=${AUTH_API_URL_JSON}"
 echo "  AUTH_PROVIDER=${AUTH_PROVIDER_JSON}"
-echo "  WORKBENCH_URL=${WORKBENCH_URL_JSON}"
 echo "  APP_VERSION=${APP_VERSION_JSON}"
 echo "  BUILD_TIME=${BUILD_TIME_JSON}"
 
-sed -i "s|<head>|<head><script>window.__BRAND_ID__=${BRAND_ID_JSON};window.__WORDPRESS_API_URL__=${WORDPRESS_API_URL_JSON};window.__API_URL__=${API_URL_JSON};window.__BACKUP_API_URL__=${BACKUP_API_URL_JSON};window.__AUTH_API_URL__=${AUTH_API_URL_JSON};window.__AUTH_PROVIDER__=${AUTH_PROVIDER_JSON};window.__WORKBENCH_URL__=${WORKBENCH_URL_JSON};window.__APP_VERSION__=${APP_VERSION_JSON};window.__BUILD_TIME__=${BUILD_TIME_JSON};</script>|" /usr/share/nginx/html/index.html
+sed -i "s|<head>|<head><script>window.__BRAND_ID__=${BRAND_ID_JSON};window.__WORDPRESS_API_URL__=${WORDPRESS_API_URL_JSON};window.__API_URL__=${API_URL_JSON};window.__BACKUP_API_URL__=${BACKUP_API_URL_JSON};window.__AUTH_API_URL__=${AUTH_API_URL_JSON};window.__AUTH_PROVIDER__=${AUTH_PROVIDER_JSON};window.__APP_VERSION__=${APP_VERSION_JSON};window.__BUILD_TIME__=${BUILD_TIME_JSON};</script>|" /usr/share/nginx/html/index.html
 
 printf '{\n  "status": "healthy",\n  "version": %s,\n  "buildTime": %s\n}\n' "$APP_VERSION_JSON" "$BUILD_TIME_JSON" > /usr/share/nginx/html/health
 

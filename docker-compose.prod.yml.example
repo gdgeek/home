@@ -19,8 +19,6 @@ services:
     image: ccr.ccs.tencentyun.com/your-namespace/ar-home:latest
     ports:
       - "80:80"
-    environment:
-      - WORKBENCH_URL=https://your-workbench-url.com/
     restart: unless-stopped
 
   wordpress:

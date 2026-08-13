@@ -82,6 +82,11 @@ describe('docker-entrypoint.sh JSON encoding security', () => {
       expect(dockerEntrypoint).toContain('"runtimeAuthApiUrl": ${AUTH_API_URL_JSON}')
       expect(dockerEntrypoint).toContain('"authProvider": ${AUTH_PROVIDER_JSON}')
     })
+
+    it('does not require or inject WORKBENCH_URL runtime configuration', () => {
+      expect(dockerEntrypoint).not.toContain('WORKBENCH_URL')
+      expect(dockerEntrypoint).not.toContain('window.__WORKBENCH_URL__')
+    })
   })
 
   /**
@@ -190,7 +195,7 @@ describe('docker-entrypoint.sh JSON encoding security', () => {
   it('property: window.__VAR__ = <encoded> is syntactically valid JS', () => {
     fc.assert(
       fc.property(
-        fc.constantFrom('BRAND_ID', 'WORDPRESS_API_URL', 'API_URL', 'BACKUP_API_URL', 'WORKBENCH_URL'),
+        fc.constantFrom('BRAND_ID', 'WORDPRESS_API_URL', 'API_URL', 'BACKUP_API_URL'),
         fc.string(),
         (varName, value) => {
           const statement = buildInjection(varName, value)
