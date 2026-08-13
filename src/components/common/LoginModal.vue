@@ -152,11 +152,7 @@ const handleLogin = async () => {
           })
 
           // 登录成功后跳转到工作台 SSO
-          const configuredWorkbenchUrl = window.__WORKBENCH_URL__ || import.meta.env.VITE_WORKBENCH_URL
-          const workbenchUrl = resolveWorkbenchUrl(
-            configuredWorkbenchUrl,
-            window.location.hostname,
-          )
+          const workbenchUrl = resolveWorkbenchUrl(window.location.hostname)
 
           if (workbenchUrl) {
             const redirectUrl = buildWorkbenchSsoUrl(

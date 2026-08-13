@@ -9,7 +9,6 @@ interface RuntimeConfig {
   __BACKUP_API_URL__?: string
   __AUTH_API_URL__?: string
   __AUTH_PROVIDER__?: string
-  __WORKBENCH_URL__?: string
   __APP_VERSION__?: string
   __BUILD_TIME__?: string
 }
@@ -41,7 +40,6 @@ export function getRuntimeConfig(): RuntimeConfig {
     __BACKUP_API_URL__: window.__BACKUP_API_URL__,
     __AUTH_API_URL__: window.__AUTH_API_URL__,
     __AUTH_PROVIDER__: window.__AUTH_PROVIDER__,
-    __WORKBENCH_URL__: window.__WORKBENCH_URL__,
     __APP_VERSION__: getAppVersion(buildTime),
     __BUILD_TIME__: buildTime,
   }

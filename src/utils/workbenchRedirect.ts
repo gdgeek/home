@@ -1,7 +1,13 @@
-const WORKBENCH_URL_BY_HOMEPAGE_HOST: Readonly<Record<string, string>> = {
-  'xiading.cc': 'https://d.xiading.cc',
-  'xiading.hxgxonline.com': 'https://d.xiading.hxgxonline.com',
+import workbenchDomains from '@/config/workbenchDomains.json'
+
+interface WorkbenchDomainConfig {
+  default: string
+  domains: Readonly<Record<string, string>>
 }
+
+const workbenchConfig = workbenchDomains as WorkbenchDomainConfig
+const configuredDomains = Object.entries(workbenchConfig.domains)
+  .sort(([left], [right]) => right.length - left.length)
 
 function normalizeHostname(hostname: string): string {
   const normalized = hostname.trim().toLowerCase().replace(/\.$/, '')
@@ -14,12 +20,14 @@ function normalizeHostname(hostname: string): string {
 }
 
 export function resolveWorkbenchUrl(
-  configuredWorkbenchUrl: string | undefined,
   homepageHostname: string,
-): string | undefined {
+): string {
   const hostname = normalizeHostname(homepageHostname)
+  const matchedDomain = configuredDomains.find(([domain]) =>
+    hostname === domain || hostname.endsWith(`.${domain}`)
+  )
 
-  return WORKBENCH_URL_BY_HOMEPAGE_HOST[hostname] ?? configuredWorkbenchUrl
+  return matchedDomain?.[1] ?? workbenchConfig.default
 }
 
 export function buildWorkbenchSsoUrl(
