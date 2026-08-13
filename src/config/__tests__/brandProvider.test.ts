@@ -48,11 +48,11 @@ describe('brandProvider - brand resolution priority', () => {
     expect(resolveBrandIdFromSources({ urlBrandId: 'xrugc', hostname: 'mrpp.com' })).toBe('xrugc')
   })
 
-  it('defaults to xiading when neither is set', async () => {
+  it('defaults to xrugc when neither is set', async () => {
     delete (window as unknown as Record<string, unknown>).__BRAND_ID__
     window.history.replaceState({}, '', '/')
     const { getCurrentBrandId } = await loadBrandProvider()
-    expect(getCurrentBrandId()).toBe('xiading')
+    expect(getCurrentBrandId()).toBe('xrugc')
   })
 
   it('invalid window.__BRAND_ID__ falls through to URL brand parameter', async () => {
@@ -73,11 +73,11 @@ describe('brandProvider - brand resolution priority', () => {
     ).toBe('xingkou')
   })
 
-  it('invalid window.__BRAND_ID__ and invalid URL brand parameter defaults to xiading', async () => {
+  it('invalid window.__BRAND_ID__ and invalid URL brand parameter defaults to xrugc', async () => {
     ;(window as unknown as Record<string, unknown>).__BRAND_ID__ = 'bad'
     window.history.replaceState({}, '', '/?brand=also-bad')
     const { getCurrentBrandId } = await loadBrandProvider()
-    expect(getCurrentBrandId()).toBe('xiading')
+    expect(getCurrentBrandId()).toBe('xrugc')
   })
 
   // Property test: any valid brand set in window.__BRAND_ID__ is resolved correctly
@@ -123,6 +123,9 @@ describe('brandProvider - brand resolution priority', () => {
       'mrpp.com.example.com',
       'xrugc.com.example.com',
       'ar-creator.cn.example.com',
+      '01xr.com',
+      'www.01xr.com',
+      '01xr.com.example.com',
       'xiading.cc.example.com',
       'xiading.hxgxonline.com.example.com'
     ])('does not map unsupported host %s', async (hostname) => {

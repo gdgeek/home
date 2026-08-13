@@ -1,5 +1,24 @@
 import { describe, expect, it } from 'vitest'
-import { buildWorkbenchSsoUrl } from '../workbenchRedirect'
+import { buildWorkbenchSsoUrl, resolveWorkbenchUrl } from '../workbenchRedirect'
+
+describe('resolveWorkbenchUrl', () => {
+  it.each([
+    ['xiading.cc', 'https://d.xiading.cc'],
+    ['XIADING.CC.', 'https://d.xiading.cc'],
+    ['xiading.hxgxonline.com', 'https://d.xiading.hxgxonline.com'],
+    ['xiading.hxgxonline.com:443', 'https://d.xiading.hxgxonline.com'],
+  ])('maps the homepage host %s to %s', (hostname, expected) => {
+    expect(resolveWorkbenchUrl('https://configured.example.com', hostname)).toBe(expected)
+  })
+
+  it('keeps the configured URL for other homepage hosts', () => {
+    expect(resolveWorkbenchUrl('https://d.xrugc.com', 'xrugc.com')).toBe('https://d.xrugc.com')
+  })
+
+  it('returns undefined when no mapping or configured URL exists', () => {
+    expect(resolveWorkbenchUrl(undefined, 'localhost')).toBeUndefined()
+  })
+})
 
 describe('buildWorkbenchSsoUrl', () => {
   it('passes refreshToken and lang to the workbench SSO route', () => {

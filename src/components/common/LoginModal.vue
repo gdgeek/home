@@ -76,7 +76,7 @@ import { User, Lock } from '@element-plus/icons-vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import { useBrand } from '@/composables/useBrand'
 import { login as authLogin, AuthError } from '@/services/authApi'
-import { buildWorkbenchSsoUrl } from '@/utils/workbenchRedirect'
+import { buildWorkbenchSsoUrl, resolveWorkbenchUrl } from '@/utils/workbenchRedirect'
 
 /** 将 AuthErrorCode 映射到 i18n key */
 const AUTH_ERROR_I18N: Record<string, string> = {
@@ -152,8 +152,12 @@ const handleLogin = async () => {
           })
 
           // 登录成功后跳转到工作台 SSO
-          const workbenchUrl = window.__WORKBENCH_URL__ || import.meta.env.VITE_WORKBENCH_URL
-          
+          const configuredWorkbenchUrl = window.__WORKBENCH_URL__ || import.meta.env.VITE_WORKBENCH_URL
+          const workbenchUrl = resolveWorkbenchUrl(
+            configuredWorkbenchUrl,
+            window.location.hostname,
+          )
+
           if (workbenchUrl) {
             const redirectUrl = buildWorkbenchSsoUrl(
               workbenchUrl,
