@@ -34,15 +34,18 @@
         </div>
       </Transition>
 
-      <el-form ref="formRef" :model="loginForm" :rules="rules" label-position="top" size="large">
+      <el-form :id="LOGIN_FORM_ID" ref="formRef" :model="loginForm" :rules="rules" label-position="top"
+        size="large" autocomplete="on" @submit.prevent="handleLogin">
         <el-form-item :label="t('login.username')" prop="username">
           <el-input v-model="loginForm.username" :placeholder="t('login.usernamePlaceholder')" :prefix-icon="User"
-            clearable @focus="clearError" />
+            name="username" autocomplete="username" autocapitalize="none" :spellcheck="false" clearable
+            @focus="clearError" />
         </el-form-item>
 
         <el-form-item :label="t('login.password')" prop="password">
           <el-input v-model="loginForm.password" type="password" :placeholder="t('login.passwordPlaceholder')"
-            :prefix-icon="Lock" show-password @keyup.enter="handleLogin" @focus="clearError" />
+            :prefix-icon="Lock" name="password" autocomplete="current-password" show-password
+            @focus="clearError" />
         </el-form-item>
 
         <div class="login-options">
@@ -54,7 +57,8 @@
 
     <template v-if="!loginSuccess" #footer>
       <div class="login-footer">
-        <el-button type="primary" size="large" style="width: 100%" :loading="loading" @click="handleLogin">
+        <el-button type="primary" native-type="submit" :form="LOGIN_FORM_ID" size="large" style="width: 100%"
+          :loading="loading">
           {{ t('login.submit') }}
         </el-button>
         <p class="login-hint">{{ t('login.hint') }}</p>
@@ -89,6 +93,8 @@ const AUTH_ERROR_I18N: Record<string, string> = {
   LOGIN_FAILED: 'error.loginFailed',
   NETWORK_ERROR: 'error.serverUnavailable',
 }
+
+const LOGIN_FORM_ID = 'platform-login-form'
 
 defineProps<{
   modelValue: boolean
