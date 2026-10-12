@@ -2,7 +2,7 @@
 # 默认根据访问域名选择品牌；也可通过环境变量 BRAND_ID 锁定品牌。
 
 # 阶段1: 构建
-FROM node:18-alpine AS builder
+FROM node:24-alpine AS builder
 
 # 启用 corepack 并固定 pnpm 版本，避免 CI 构建拉取不兼容的 latest
 RUN corepack enable && corepack prepare pnpm@9.15.0 --activate
@@ -22,6 +22,9 @@ RUN pnpm run build
 
 # 阶段2: 运行
 FROM nginx:alpine
+ARG BUILD_REVISION=unknown
+LABEL org.opencontainers.image.revision=$BUILD_REVISION
+ENV BUILD_REVISION=$BUILD_REVISION
 
 COPY --from=builder /app/dist/ /usr/share/nginx/html/
 COPY nginx.conf /etc/nginx/templates/default.conf.template
