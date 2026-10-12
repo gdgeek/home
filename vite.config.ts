@@ -93,6 +93,11 @@ export default defineConfig({
       interval: 1000,
     },
     proxy: {
+      '/api-auth': {
+        target: process.env.VITE_AUTH_PROXY_TARGET || 'http://localhost:8086',
+        changeOrigin: true,
+        rewrite: (requestPath) => requestPath.replace(/^\/api-auth/, ''),
+      },
       '/wp-json': {
         target: 'http://localhost:8080',
         changeOrigin: true,

@@ -85,7 +85,7 @@ const getAuthApiUrl = (): string => {
   return (
     normalizeApiBaseUrl(window.__AUTH_API_URL__) ||
     normalizeApiBaseUrl(import.meta.env.VITE_AUTH_API) ||
-    (import.meta.env.DEV ? "" : "/api-auth")
+    "/api-auth"
   );
 };
 
