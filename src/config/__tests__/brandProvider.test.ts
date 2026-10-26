@@ -10,7 +10,7 @@ import * as fc from 'fast-check'
  * window.__BRAND_ID__ > URL ?brand 参数 > 域名映射 > 默认值
  */
 
-const VALID_BRANDS = ['xingkou', 'xiading', 'xrugc', 'mrpp'] as const
+const VALID_BRANDS = ['xingkou', 'xiading', 'xiading-rokid', 'xrugc', 'mrpp'] as const
 
 async function loadBrandProvider() {
   vi.resetModules()
@@ -46,6 +46,23 @@ describe('brandProvider - brand resolution priority', () => {
   it('URL brand parameter takes priority over domain mapping', async () => {
     const { resolveBrandIdFromSources } = await loadBrandProvider()
     expect(resolveBrandIdFromSources({ urlBrandId: 'xrugc', hostname: 'mrpp.com' })).toBe('xrugc')
+  })
+
+  it.each(['xiading', 'xiading-rokid'] as const)('explicit %s deployment remains locked across Xiading domains', async (brandId) => {
+    const { resolveBrandIdFromSources } = await loadBrandProvider()
+    for (const hostname of ['xiading.cc', 'xiading.hxgxonline.com']) {
+      expect(resolveBrandIdFromSources({
+        injectedBrandId: brandId,
+        urlBrandId: brandId === 'xiading' ? 'xiading-rokid' : 'xiading',
+        hostname,
+      })).toBe(brandId)
+    }
+  })
+
+  it('empty deployment brand lets each Xiading domain select its own design', async () => {
+    const { resolveBrandIdFromSources } = await loadBrandProvider()
+    expect(resolveBrandIdFromSources({ injectedBrandId: '', hostname: 'xiading.cc' })).toBe('xiading-rokid')
+    expect(resolveBrandIdFromSources({ injectedBrandId: '', hostname: 'xiading.hxgxonline.com' })).toBe('xiading')
   })
 
   it('defaults to xrugc when neither is set', async () => {
@@ -108,8 +125,10 @@ describe('brandProvider - brand resolution priority', () => {
       ['ar-creator.cn', 'xingkou'],
       ['www.ar-creator.cn', 'xingkou'],
       ['studio.preview.ar-creator.cn', 'xingkou'],
-      ['xiading.cc', 'xiading'],
-      ['www.xiading.cc', 'xiading'],
+      ['xiading.cc', 'xiading-rokid'],
+      ['www.xiading.cc', 'xiading-rokid'],
+      ['studio.xiading.cc:5173', 'xiading-rokid'],
+      ['XIADING.CC.', 'xiading-rokid'],
       ['xiading.hxgxonline.com', 'xiading'],
       ['www.xiading.hxgxonline.com', 'xiading'],
       ['studio.xiading.hxgxonline.com:5173', 'xiading']

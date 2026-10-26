@@ -6,7 +6,7 @@ import { getBrandConfig, isValidBrandId, getAllBrandIds } from '../brandRegistry
  * Validates: Requirements 15.1, 16.2
  */
 
-const VALID_BRAND_IDS = ['xingkou', 'xiading', 'xrugc', 'mrpp'] as const
+const VALID_BRAND_IDS = ['xingkou', 'xiading', 'xiading-rokid', 'xrugc', 'mrpp'] as const
 
 describe('brandRegistry', () => {
   describe('getBrandConfig', () => {
@@ -22,6 +22,18 @@ describe('brandRegistry', () => {
         expect(config).not.toBeNull()
         expect(config!.id).toBe(id)
       }
+    })
+
+    it('keeps the original Xiading brand separate from the Rokid collaboration', () => {
+      const legacy = getBrandConfig('xiading')!
+      const coBranded = getBrandConfig('xiading-rokid')!
+
+      expect(legacy.name).toBe('夏鼎科技AI/AR創作平台')
+      expect(legacy.hero.subtitle).not.toContain('Rokid')
+      expect(legacy.footer.navigation.flatMap(group => group.links).some(link => link.url.includes('rokid.com'))).toBe(false)
+      expect(coBranded.name).toBe('夏鼎 × Rokid AI/AR教育平台')
+      expect(coBranded.hero.subtitle).toContain('夏鼎攜手 Rokid')
+      expect(coBranded.footer.navigation.flatMap(group => group.links).some(link => link.url === 'https://www.rokid.com/')).toBe(true)
     })
 
     // Property test: for any valid brand ID, config is non-null and primaryColor starts with #

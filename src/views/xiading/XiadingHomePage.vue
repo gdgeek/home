@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /**
- * 夏鼎品牌首頁 - 教育AR創作平台（澳門版）
+ * 夏鼎品牌首頁與夏鼎 × Rokid 聯合品牌首頁（澳門版）
  * 設計方向：日系淺色清爽 + 科技感點綴 + 非對稱佈局
  * 字體：Zen Kaku Gothic New（標題）+ Noto Sans TC（正文）
  * 配色：淺藍冰白底 #F6F9FD，Logo鋼藍 #4A6FA5 科技強調
@@ -10,9 +10,15 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useBrand } from '@/composables/useBrand'
 // import { useNews } from '@/composables/useNews' // 暫時隱藏平台資訊
 import LoginModal from '@/components/common/LoginModal.vue'
+import HeroSection from './sections/HeroSection.vue'
+import LegacyHeroSection from './sections/LegacyHeroSection.vue'
+import PartnershipSection from './sections/PartnershipSection.vue'
+import FooterSection from './sections/FooterSection.vue'
+import LegacyFooterSection from './sections/LegacyFooterSection.vue'
 import { loadExternalStylesheet } from '@/utils/externalAssets'
 
-const { footer } = useBrand()
+const { footer, brandId } = useBrand()
+const isCoBranded = computed(() => brandId.value === 'xiading-rokid')
 const buildTime = computed(() => {
   const timestamp = window.__BUILD_TIME__ || __BUILD_TIME__ || new Date().toISOString()
   const date = new Date(timestamp)
@@ -32,25 +38,8 @@ const selectedNews = ref<any>(null)
 const animatedSections = ref<Set<HTMLElement>>(new Set())
 const navScrolled = ref(false)
 const activeScene = ref(0)
-const mobileMenuOpen = ref(false)
 
 // const { news } = useNews() // 暫時隱藏平台資訊
-
-const toggleMobileMenu = () => {
-  mobileMenuOpen.value = !mobileMenuOpen.value
-}
-
-const handleClickOutside = (event: MouseEvent) => {
-  const target = event.target as HTMLElement
-  const mobileMenu = document.querySelector('.xd-nav__mobile')
-  const hamburger = document.querySelector('.xd-nav__hamburger')
-  
-  if (mobileMenuOpen.value && mobileMenu && hamburger) {
-    if (!mobileMenu.contains(target) && !hamburger.contains(target)) {
-      mobileMenuOpen.value = false
-    }
-  }
-}
 
 // 場景標籤自動切換
 let sceneTimer: ReturnType<typeof setInterval> | null = null
@@ -108,32 +97,13 @@ onMounted(() => {
     'https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&family=Noto+Sans+TC:wght@200;400;500;700&display=swap',
   )
   window.addEventListener('scroll', handleScroll)
-  window.addEventListener('click', handleClickOutside)
   handleScroll()
   startSceneTimer()
 })
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll)
-  window.removeEventListener('click', handleClickOutside)
   stopSceneTimer()
 })
-
-const navItems = [
-  { text: '功能', url: '#features' },
-  { text: '場景', url: '#scenes' },
-  { text: '合作', url: '#cases' }
-]
-
-const stats = [
-  { number: '3+', label: '合作院校機構' },
-  { number: '3所', label: '高校教研共創' },
-  { number: '2026', label: '全澳AR創作比賽' }
-]
-
-// Hero 背景图片
-const heroImages = [
-  '/images/ar-platform/澳门AR.webp', // 澳門 AR 教育場景
-]
 
 const features = [
   { id: 'editor', title: '可視化場景編輯器', desc: '拖拽操作，所見即所得。零代碼搭建沉浸式AR教學場景，支持3D模型、音頻、視頻等多類型素材。',
@@ -179,69 +149,9 @@ const cases = [
       <div class="xd-bg__glow xd-bg__glow--2"></div>
     </div>
 
-    <!-- 導航 -->
-    <header class="xd-nav" :class="{ 'xd-nav--scrolled': navScrolled }">
-      <div class="xd-nav__inner">
-        <a href="#" class="xd-nav__logo">
-          <img src="/logo/xiading/bar.webp" alt="夏鼎科技" />
-        </a>
-        <nav class="xd-nav__links" aria-label="主導航">
-          <a v-for="item in navItems" :key="item.text" :href="item.url">{{ item.text }}</a>
-        </nav>
-        <div class="xd-nav__actions">
-          <button class="xd-btn xd-btn--primary" @click="handleOpenLogin">開始創作</button>
-          <button class="xd-nav__hamburger" @click="toggleMobileMenu" aria-label="切換選單">
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
-      </div>
-      <!-- 移動端選單 -->
-      <Transition name="mobile-menu">
-        <div v-if="mobileMenuOpen" class="xd-nav__mobile">
-          <nav class="xd-nav__mobile-links">
-            <a v-for="item in navItems" :key="item.url" :href="item.url" @click="mobileMenuOpen = false">{{ item.text }}</a>
-          </nav>
-          <div class="xd-nav__mobile-actions">
-            <button class="xd-btn xd-btn--primary xd-btn--block" @click="handleOpenLogin; mobileMenuOpen = false">開始創作</button>
-          </div>
-        </div>
-      </Transition>
-    </header>
-
-    <!-- Hero：雙層圖片 + 居中文字 -->
-    <section class="xd-hero">
-      <div class="xd-hero__bg">
-        <img :src="heroImages[0]" alt="澳門 AR 教育場景" />
-        <div class="xd-hero__overlay"></div>
-      </div>
-      <div class="xd-hero__content reveal">
-        <div class="xd-hero__badge">
-          <span class="xd-hero__badge-dot"></span>
-          澳門本土研發 · 低代碼/零代碼AI+AR創作平台
-        </div>
-        <h1 class="xd-hero__title">
-          <span class="xd-hero__title-line1">讓知識</span>
-          <span class="xd-hero__title-accent">融入現實</span>
-        </h1>
-        <p class="xd-hero__desc">澳門本土研發，低代碼/零代碼AI+AR創作平台，配套人工智能課程套件，助力師生開啟沉浸式教學體驗</p>
-        <div class="xd-hero__cta">
-          <button class="xd-btn xd-btn--white xd-btn--lg" @click="handleOpenLogin">
-            免費試用
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-          </button>
-          <button class="xd-btn xd-btn--ghost-light xd-btn--lg">觀看演示</button>
-        </div>
-        <!-- 數據條內嵌 -->
-        <div class="xd-hero__stats">
-          <div v-for="s in stats" :key="s.label" class="xd-hero__stat">
-            <span class="xd-hero__stat-num">{{ s.number }}</span>
-            <span class="xd-hero__stat-label">{{ s.label }}</span>
-          </div>
-        </div>
-      </div>
-    </section>
+    <HeroSection v-if="isCoBranded" :nav-scrolled="navScrolled" @open-login="handleOpenLogin" />
+    <LegacyHeroSection v-else :nav-scrolled="navScrolled" @open-login="handleOpenLogin" />
+    <PartnershipSection v-if="isCoBranded" />
 
     <!-- 功能：Bento Grid 便當盒佈局 -->
     <section id="features" class="xd-section">
@@ -442,7 +352,7 @@ const cases = [
     <section class="xd-cta reveal">
       <img class="xd-cta__bg" src="/images/ar-platform/macau-cityscape.webp" alt="" aria-hidden="true" />
       <div class="xd-cta__inner">
-        <h2>開啟AI/AR教育之旅</h2>
+        <h2>{{ isCoBranded ? '與夏鼎 × Rokid，開啟AI/AR教育之旅' : '開啟AI/AR教育之旅' }}</h2>
         <p>2026年11月 · 全澳青少年AR創作比賽即將登場</p>
         <div class="xd-cta__tags">
           <span class="xd-cta__tag">入校示範課</span>
@@ -457,31 +367,8 @@ const cases = [
       </div>
     </section>
 
-    <!-- Footer：簡潔橫排 -->
-    <footer class="xd-footer">
-      <div class="xd-footer__inner">
-        <div class="xd-footer__brand">
-          <img src="/logo/xiading/bar.webp" alt="夏鼎科技" class="xd-footer__logo" />
-          <p>專為澳門教育場景打造的AR創作工具</p>
-        </div>
-        <div class="xd-footer__links">
-          <a href="#">創作指南</a>
-          <a href="#">素材庫</a>
-          <a href="#">幫助中心</a>
-          <a href="#">公司介紹</a>
-          <a href="#">用戶協議</a>
-          <a href="#">隱私政策</a>
-        </div>
-        <div class="xd-footer__contact">
-          <span>+853 2888 8888</span>
-          <span>contact@xiading.mo</span>
-        </div>
-      </div>
-      <div class="xd-footer__bottom">
-        <span>{{ footer.copyright || '© 2025 夏鼎科技（澳門）' }}</span>
-        <span class="xd-footer__ver">{{ buildTime }}</span>
-      </div>
-    </footer>
+    <FooterSection v-if="isCoBranded" :footer="footer" :build-time="buildTime" />
+    <LegacyFooterSection v-else :copyright="footer.copyright" :build-time="buildTime" />
 
     <!-- Modals -->
     <Teleport to="body">
@@ -593,74 +480,6 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 // ═══════════════════════════════════════
-// 導航
-// ═══════════════════════════════════════
-.xd-nav {
-  position: fixed; top: 12px; left: 16px; right: 16px; z-index: 100;
-  padding: 12px 0;
-  background: rgba(255,255,255,0.6);
-  backdrop-filter: blur(24px) saturate(140%);
-  border: 1px solid rgba($steel, 0.08);
-  border-radius: 14px;
-  transition: all 0.3s $ease;
-
-  &--scrolled {
-    top: 8px;
-    background: rgba(255,255,255,0.88);
-    box-shadow: 0 4px 24px rgba($steel, 0.06);
-  }
-
-  &__inner { max-width: $max-w; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; }
-  &__logo img { height: 26px; }
-
-  &__links {
-    display: flex; gap: 36px;
-    a {
-      color: $text-muted; text-decoration: none; font-size: 14px; font-weight: 500;
-      transition: color 0.25s; position: relative;
-      &::after { content: ''; position: absolute; bottom: -5px; left: 50%; width: 0; height: 2px; background: $steel; border-radius: 1px; transition: all 0.25s $ease; transform: translateX(-50%); }
-      &:hover { color: $steel; &::after { width: 100%; } }
-    }
-    @media (max-width: 768px) { display: none; }
-  }
-  &__actions { display: flex; gap: 8px; align-items: center; }
-
-  &__hamburger {
-    display: none; flex-direction: column; gap: 4px; padding: 8px; background: transparent; border: none; cursor: pointer;
-    @media (max-width: 768px) { display: flex; }
-    span { width: 20px; height: 2px; background: $text-dark; border-radius: 2px; transition: all 0.3s $ease; }
-  }
-
-  &__mobile {
-    position: absolute; top: 100%; left: 0; right: 0; margin-top: 8px;
-    background: rgba(255,255,255,0.95); backdrop-filter: blur(24px);
-    border: 1px solid rgba($steel, 0.08); border-radius: 14px;
-    padding: 16px; box-shadow: 0 8px 32px rgba($steel, 0.12);
-
-    &-links {
-      display: flex; flex-direction: column; gap: 4px; margin-bottom: 16px;
-      a {
-        display: block; padding: 12px 16px; color: $text-dark; text-decoration: none; font-size: 15px; font-weight: 500;
-        border-radius: 8px; transition: all 0.2s;
-        &:hover { background: rgba($steel, 0.08); color: $steel; }
-      }
-    }
-
-    &-actions {
-      display: flex; flex-direction: column; gap: 8px;
-    }
-  }
-}
-
-.mobile-menu-enter-active, .mobile-menu-leave-active {
-  transition: all 0.3s $ease;
-}
-.mobile-menu-enter-from, .mobile-menu-leave-to {
-  opacity: 0;
-  transform: translateY(-10px);
-}
-
-// ═══════════════════════════════════════
 // 按鈕
 // ═══════════════════════════════════════
 .xd-btn {
@@ -700,7 +519,7 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
 // ═══════════════════════════════════════
 .xd-section {
   position: relative; z-index: 1;
-  max-width: $max-w; margin: 0 auto; padding: 80px 24px;
+  max-width: $max-w; margin: 0 auto; padding: 80px 24px; scroll-margin-top: 100px;
   @media (max-width: 768px) { padding: 56px 16px; }
 
   &--alt { background: $bg-alt; max-width: none;
@@ -715,104 +534,6 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
     color: $text-dark; margin-top: 14px; letter-spacing: -0.01em; line-height: 1.25;
   }
   &__sub { font-size: 16px; color: $text-muted; margin-top: 12px; font-weight: 300; max-width: 560px; margin-left: auto; margin-right: auto; line-height: 1.7; }
-}
-
-// ═══════════════════════════════════════
-// Hero：全寬圖片 + 居中覆蓋
-// ═══════════════════════════════════════
-.xd-hero {
-  position: relative; z-index: 1;
-  min-height: 92vh;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  text-align: center;
-  overflow: hidden;
-
-  &__bg {
-    position: absolute; inset: 0;
-    img { width: 100%; height: 100%; object-fit: cover; }
-    &::after {
-      content: ''; position: absolute; bottom: 0; left: 0; right: 0;
-      height: 120px;
-      background: linear-gradient(to bottom, transparent, $bg);
-    }
-  }
-
-  &__overlay {
-    position: absolute; inset: 0;
-    background:
-      linear-gradient(180deg, rgba(#0a1628, 0.1) 0%, rgba(#0a1628, 0.4) 35%, rgba(#0a1628, 0.68) 65%, rgba(#0a1628, 0.88) 100%);
-  }
-
-  &__content {
-    position: relative; z-index: 2;
-    padding: 140px 24px 56px;
-    max-width: 680px;
-  }
-
-  &__badge {
-    display: inline-flex; align-items: center; gap: 10px;
-    padding: 6px 16px; background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 100px; font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.85);
-    margin-bottom: 24px;
-  }
-  &__badge-dot { width: 7px; height: 7px; background: $steel-pale; border-radius: 50%; box-shadow: 0 0 8px rgba($steel-pale, 0.6); animation: softPulse 2.5s infinite; }
-
-  &__title { margin-bottom: 18px; }
-  &__title-line1 {
-    display: block;
-    font-family: 'Zen Kaku Gothic New', sans-serif;
-    font-size: clamp(14px, 2vw, 18px); font-weight: 300;
-    color: rgba(255,255,255,0.5); letter-spacing: 0.25em;
-  }
-  &__title-accent {
-    display: block;
-    font-family: 'Zen Kaku Gothic New', sans-serif;
-    font-size: clamp(52px, 11vw, 96px); font-weight: 900;
-    letter-spacing: -0.05em; line-height: 1;
-    color: white;
-    text-shadow: 0 4px 40px rgba($steel, 0.3);
-  }
-
-  &__desc {
-    font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.6);
-    line-height: 1.8; margin-bottom: 28px;
-  }
-
-  &__cta {
-    display: flex; gap: 14px; justify-content: center;
-    @media (max-width: 480px) { flex-direction: column; align-items: center; }
-  }
-
-  // 數據條：內嵌在content裡
-  &__stats {
-    position: relative; z-index: 2;
-    display: flex; justify-content: center; gap: 1px;
-    width: 100%; max-width: 520px;
-    margin: 40px auto 0;
-  }
-
-  &__stat {
-    flex: 1; text-align: center;
-    padding: 18px 14px;
-    background: rgba(255,255,255,0.06);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255,255,255,0.08);
-    transition: background 0.3s $ease;
-    &:first-child { border-radius: $r 0 0 $r; }
-    &:last-child { border-radius: 0 $r $r 0; }
-    &:hover { background: rgba(255,255,255,0.1); }
-  }
-
-  &__stat-num {
-    display: block;
-    font-family: 'Zen Kaku Gothic New', sans-serif;
-    font-size: 28px; font-weight: 900; color: white;
-    letter-spacing: -0.03em;
-  }
-  &__stat-label { font-size: 12px; color: rgba(255,255,255,0.5); font-weight: 300; margin-top: 4px; display: block; }
 }
 
 // ═══════════════════════════════════════
@@ -1304,47 +1025,6 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
 
   &__actions { display: flex; gap: 14px; justify-content: center;
     @media (max-width: 480px) { flex-direction: column; align-items: center; } }
-}
-
-// ═══════════════════════════════════════
-// Footer：簡潔橫排
-// ═══════════════════════════════════════
-.xd-footer {
-  position: relative; z-index: 1;
-  border-top: 1px solid $border; margin-top: 64px;
-
-  &__inner {
-    max-width: $max-w; margin: 0 auto;
-    padding: 36px 24px 24px;
-    display: flex; align-items: flex-start; gap: 48px;
-    @media (max-width: 768px) { flex-direction: column; gap: 32px; }
-  }
-
-  &__brand {
-    flex: 1;
-    p { font-size: 14px; color: $text-muted; margin-top: 10px; font-weight: 300; }
-  }
-  &__logo { height: 24px; }
-
-  &__links {
-    display: flex; flex-wrap: wrap; gap: 8px 24px;
-    a { font-size: 13px; color: $text-muted; text-decoration: none; font-weight: 300; transition: color 0.2s;
-      &:hover { color: $steel; } }
-  }
-
-  &__contact {
-    display: flex; flex-direction: column; gap: 4px; text-align: right;
-    span { font-family: 'Zen Kaku Gothic New', monospace; font-size: 13px; color: $text-faint; font-weight: 300; }
-    @media (max-width: 768px) { text-align: left; }
-  }
-
-  &__bottom {
-    max-width: $max-w; margin: 0 auto; padding: 16px 24px;
-    border-top: 1px solid $border;
-    display: flex; justify-content: space-between; align-items: center;
-    font-size: 12px; color: $text-faint; font-weight: 300;
-  }
-  &__ver { font-family: 'Zen Kaku Gothic New', monospace; opacity: 0.5; }
 }
 
 // ═══════════════════════════════════════

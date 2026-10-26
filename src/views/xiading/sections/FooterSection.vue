@@ -1,33 +1,32 @@
 <script setup lang="ts">
-defineProps<{
-  copyright: string
-  version: string
-}>()
+import type { BrandFooterConfig } from '@/types/brand'
+import XiadingBrandLockup from '../components/XiadingBrandLockup.vue'
+
+defineProps<{ footer: BrandFooterConfig; buildTime: string }>()
 </script>
 
 <template>
   <footer class="xd-footer">
     <div class="xd-footer__inner">
       <div class="xd-footer__brand">
-        <img src="/logo/xiading/bar.webp" alt="夏鼎科技" class="xd-footer__logo" width="100" height="24" />
-        <p>專為澳門教育場景打造的AR創作工具</p>
+        <a href="#top" aria-label="夏鼎 × Rokid 首頁"><XiadingBrandLockup /></a>
+        <p>夏鼎 × Rokid AI/AR教育平台<br />讓創意走進課堂，讓知識融入現實。</p>
+        <a v-if="footer.contactInfo.email" class="xd-footer__email" :href="`mailto:${footer.contactInfo.email}`">{{ footer.contactInfo.email }}</a>
       </div>
-      <div class="xd-footer__links">
-        <a href="#">創作指南</a>
-        <a href="#">素材庫</a>
-        <a href="#">幫助中心</a>
-        <a href="#">公司介紹</a>
-        <a href="#">用戶協議</a>
-        <a href="#">隱私政策</a>
-      </div>
-      <div class="xd-footer__contact">
-        <span>+853 2888 8888</span>
-        <span>contact@xiading.mo</span>
-      </div>
+      <nav v-for="group in footer.navigation" :key="group.title" class="xd-footer__links" :aria-label="group.title">
+        <h2>{{ group.title }}</h2>
+        <a
+          v-for="link in group.links"
+          :key="link.url"
+          :href="link.url"
+          :target="link.url.startsWith('https://') ? '_blank' : undefined"
+          :rel="link.url.startsWith('https://') ? 'noopener noreferrer' : undefined"
+        >{{ link.text }}</a>
+      </nav>
     </div>
     <div class="xd-footer__bottom">
-      <span>{{ copyright || '© 2025 夏鼎科技（澳門）' }}</span>
-      <span class="xd-footer__ver">v{{ version }}</span>
+      <span>{{ footer.copyright }}</span>
+      <span class="xd-footer__ver">{{ buildTime }}</span>
     </div>
   </footer>
 </template>
@@ -35,49 +34,34 @@ defineProps<{
 <style lang="scss" scoped>
 @use '@/assets/styles/xiading/variables' as xd;
 
-$steel: xd.$xiading-primary;
-$text-dark: xd.$xiading-text-primary;
-$text-muted: xd.$xiading-text-muted;
-$text-faint: xd.$xiading-text-faint;
-$border: xd.$xiading-border-color;
-$max-w: xd.$xiading-container-max-width;
-$ease: xd.$xiading-ease-out;
-
 .xd-footer {
-  position: relative; z-index: 1;
-  border-top: 1px solid $border; margin-top: 48px;
-
+  position: relative; z-index: 1; margin-top: 64px; border-top: 1px solid xd.$xiading-border-color;
   &__inner {
-    max-width: $max-w; margin: 0 auto;
-    padding: 36px 24px 24px;
-    display: flex; align-items: flex-start; gap: 48px;
-    @media (max-width: 768px) { flex-direction: column; gap: 32px; }
+    max-width: xd.$xiading-container-max-width; margin: 0 auto; padding: 44px 24px;
+    display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px;
   }
-
   &__brand {
-    flex: 1;
-    p { font-size: 14px; color: $text-muted; margin-top: 10px; font-weight: 300; }
+    p { margin: 18px 0 12px; font-size: 14px; color: xd.$xiading-text-secondary; line-height: 1.8; }
+    > a { display: inline-block; }
   }
-  &__logo { height: 24px; }
-
+  a { color: xd.$xiading-text-secondary; text-decoration: none; font-size: 13px; line-height: 1.6; }
+  a:hover { color: xd.$xiading-primary; }
+  a:focus-visible { outline: 3px solid xd.$xiading-primary; outline-offset: 4px; }
   &__links {
-    display: flex; flex-wrap: wrap; gap: 8px 24px;
-    a { font-size: 13px; color: $text-muted; text-decoration: none; font-weight: 300; transition: color 0.2s;
-      &:hover { color: $steel; } }
+    display: flex; flex-direction: column; align-items: flex-start; gap: 12px;
+    h2 { margin: 0 0 4px; color: xd.$xiading-text-primary; font-size: 14px; font-weight: 700; }
+    a { padding: 3px 0; }
   }
-
-  &__contact {
-    display: flex; flex-direction: column; gap: 4px; text-align: right;
-    span { font-family: 'Zen Kaku Gothic New', monospace; font-size: 13px; color: $text-faint; font-weight: 300; }
-    @media (max-width: 768px) { text-align: left; }
-  }
-
   &__bottom {
-    max-width: $max-w; margin: 0 auto; padding: 16px 24px;
-    border-top: 1px solid $border;
-    display: flex; justify-content: space-between; align-items: center;
-    font-size: 12px; color: $text-faint; font-weight: 300;
+    max-width: xd.$xiading-container-max-width; margin: 0 auto; padding: 20px 24px;
+    border-top: 1px solid xd.$xiading-border-color; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    font-size: 12px; color: xd.$xiading-text-secondary;
   }
-  &__ver { font-family: 'Zen Kaku Gothic New', monospace; opacity: 0.5; }
+  &__ver { font-variant-numeric: tabular-nums; }
+  @media (max-width: 768px) {
+    &__inner { padding: 36px 20px; grid-template-columns: 1fr 1fr; gap: 32px; }
+    &__brand { grid-column: 1 / -1; }
+    &__bottom { padding: 20px; }
+  }
 }
 </style>
