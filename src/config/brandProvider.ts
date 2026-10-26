@@ -13,7 +13,7 @@ export { getBrandConfig } from './brandRegistry'
 import type { BrandConfig, BrandId } from '@/types/brand'
 
 const DEFAULT_BRAND_ID: BrandId = 'xrugc'
-const VALID_BRAND_IDS: readonly BrandId[] = ['xingkou', 'xiading', 'xrugc', 'mrpp']
+const VALID_BRAND_IDS: readonly BrandId[] = ['xingkou', 'xiading', 'xiading-rokid', 'xrugc', 'mrpp']
 
 const DOMAIN_BRAND_RULES: readonly {
   hostname: string
@@ -23,7 +23,7 @@ const DOMAIN_BRAND_RULES: readonly {
   { hostname: 'mrpp.com', brandId: 'mrpp', includeSubdomains: true },
   { hostname: 'xrugc.com', brandId: 'xrugc', includeSubdomains: true },
   { hostname: 'ar-creator.cn', brandId: 'xingkou', includeSubdomains: true },
-  { hostname: 'xiading.cc', brandId: 'xiading', includeSubdomains: true },
+  { hostname: 'xiading.cc', brandId: 'xiading-rokid', includeSubdomains: true },
   { hostname: 'xiading.hxgxonline.com', brandId: 'xiading', includeSubdomains: true }
 ]
 

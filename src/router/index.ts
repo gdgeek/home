@@ -20,6 +20,7 @@ export function isSupportedLocale(value: string): value is SupportedLocale {
 function getHomeComponent() {
   switch (brandId) {
     case 'xiading':
+    case 'xiading-rokid':
       return () => import('@/views/xiading/XiadingHomePage.vue')
     case 'xrugc':
       return () => import('@/views/xrugc/XrugcHomePage.vue')

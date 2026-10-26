@@ -128,6 +128,54 @@ const brandRegistry: BrandRegistry = {
     }
   },
 
+  // 夏鼎 × Rokid - 澳門 AI/AR 教育聯合品牌
+  'xiading-rokid': {
+    id: 'xiading-rokid',
+    name: '夏鼎 × Rokid AI/AR教育平台',
+    locale: 'zh-TW',
+    loginUrl: 'https://xiading.com/login',
+    theme: {
+      primaryColor: '#0EA5E9',
+      secondaryColor: '#06B6D4',
+      ctaColor: '#10B981',
+      backgroundColor: '#F0F9FF',
+      textColor: '#0C4A6E',
+      logoPath: '/logo/xiading/bar.webp',
+      logoAlt: '夏鼎 × Rokid AI/AR教育平台',
+      faviconPath: '/logo/xiading/logo.webp'
+    },
+    hero: {
+      title: '夏鼎 × Rokid，讓學習走進真實世界',
+      subtitle: '夏鼎攜手 Rokid，將 AI/AR 內容創作、沉浸式體驗與澳門教育場景連接起來，讓教師輕鬆設計課堂，讓學生在探索與協作中實踐創意。',
+      primaryButtonText: '開始創作',
+      secondaryButtonText: '了解聯合方案',
+      highlights: ['夏鼎 × Rokid', 'AI/AR 內容創作', '沉浸式互動學習', '澳門教育場景']
+    },
+    footer: {
+      copyright: '© 2026 夏鼎科技（澳門）',
+      contactInfo: {
+        email: 'contact@xiading.mo'
+      },
+      navigation: [
+        {
+          title: '創作與教學',
+          links: [
+            { text: '平台功能', url: '#features' },
+            { text: '應用場景', url: '#scenes' },
+            { text: '教育實踐', url: '#cases' }
+          ]
+        },
+        {
+          title: '聯合品牌',
+          links: [
+            { text: '夏鼎 × Rokid', url: '#partnership' },
+            { text: 'Rokid 官網', url: 'https://www.rokid.com/' }
+          ]
+        }
+      ]
+    }
+  },
+
   // Rokid AR 创作平台 - 腾讯云活动页风格深色主题
   mrpp: {
     id: 'mrpp',

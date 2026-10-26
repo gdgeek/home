@@ -5,10 +5,13 @@
 #   xrugc.com / *.xrugc.com     → xrugc
 #   ar-creator.cn / *.ar-creator.cn → xingkou
 #   xiading.hxgxonline.com / *.xiading.hxgxonline.com → xiading
+#   xiading.cc / *.xiading.cc   → xiading-rokid
+# 同一实例服务两个夏鼎域名时，BRAND_ID 留空，分别按域名加载旧版和联合品牌新版。
 #
 # 可选：设置 BRAND_ID 锁定单品牌
 #   BRAND_ID=xingkou  → 星扣（简体中文，大陆市场）
-#   BRAND_ID=xiading   → 夏鼎（繁体中文，澳门市场）
+#   BRAND_ID=xiading   → 原夏鼎样式（繁体中文，澳门市场）
+#   BRAND_ID=xiading-rokid → 夏鼎 × Rokid 联合品牌新样式
 #   BRAND_ID=xrugc     → XRUGC
 #   BRAND_ID=mrpp      → MRPP
 

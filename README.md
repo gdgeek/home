@@ -93,6 +93,17 @@ npm run preview
 
 项目包含 Docker Compose 配置，可一键启动 WordPress + MySQL 作为内容管理后端。
 
+夏鼎首页按域名使用独立的品牌配置：
+
+| 域名（含子域名） | 品牌 ID | 首页样式 |
+|------|------|------|
+| `xiading.hxgxonline.com` | `xiading` | 原夏鼎样式 |
+| `xiading.cc` | `xiading-rokid` | 夏鼎 × Rokid 联合品牌新样式 |
+
+同一实例服务这两个域名时，Docker 环境变量 `BRAND_ID` 留空，前端自动按访问域名选择。
+设置 `BRAND_ID=xiading` 或 `BRAND_ID=xiading-rokid` 会锁定对应品牌，优先于域名和 URL 参数。
+本地开发可用 `/?brand=xiading` 和 `/?brand=xiading-rokid` 分别预览两套样式。
+
 ```bash
 # 启动服务
 docker-compose up -d
