@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>2026首屆青少年AR創作大賽·澳門｜所創即所見</title>
+<meta name="description" content="澳門首個以 AR＋AI 融合創作為核心的青少年科創賽事。圍繞澳門「1+4」產業設五大創作主題，零代碼創作，戴上 Rokid AR 眼鏡親眼看見自己的作品。11月9日開放報名。">
+<style>
+  :root {
+    --navy: #1A2330; --navy-2: #1D2A3A; --navy-3: #24344A;
+    --orange: #B4703F; --orange-lt: #A8622E; --cream: #F4F1EA;
+    --cream-dim: rgba(244,241,234,.72);
+    --bg: #FBF8F2; --bg-alt: #F4EDE2; --ink: #1A2330; --ink-dim: #5B6675;
+    --line: rgba(26,35,48,.15); --shadow: 0 6px 20px rgba(26,35,48,.07);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: "PingFang TC", "Microsoft JhengHei", "Microsoft YaHei", sans-serif;
+    background: var(--bg); color: var(--ink); line-height: 1.7;
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+  a { color: var(--orange-lt); text-decoration: none; }
+
+  /* ── 頂部主辦行 ── */
+  .topbar { border-bottom: 1px solid var(--line); font-size: 13px; color: var(--ink-dim); }
+  .topbar .wrap { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 24px; flex-wrap: wrap; }
+  .topbar b { color: var(--ink); font-weight: 600; }
+  .logo-inline { height: 20px; vertical-align: -4px; margin: 0 2px; }
+
+  /* ── Hero 眼鏡視覺（近方形產品圖，按寬度約束防佔高） ── */
+  .hero-img {
+    display: block; width: min(68%, 430px); margin: 30px auto 0;
+    filter: drop-shadow(0 16px 32px rgba(26,35,48,.28));
+  }
+
+  /* ── Hero ── */
+  .hero {
+    text-align: center; padding: 64px 24px 56px;
+    background:
+      radial-gradient(circle at 85% 0%, rgba(180,112,63,.12) 0%, rgba(180,112,63,0) 45%),
+      radial-gradient(circle at 8% 100%, rgba(180,112,63,.10) 0%, rgba(180,112,63,0) 40%),
+      linear-gradient(180deg, #FDFBF7 0%, var(--bg) 100%);
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 10px;
+    border: 1.5px solid var(--orange); border-radius: 999px; padding: 6px 18px;
+    background: rgba(180,112,63,.08); font-size: 14px; letter-spacing: 2px; color: var(--orange-lt);
+  }
+  .badge .dot { width: 26px; height: 26px; border-radius: 50%; border: 1.5px solid var(--orange); color: var(--orange);
+    display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+  .hero .year { margin-top: 26px; font-size: 17px; letter-spacing: 10px; color: var(--ink-dim); }
+  .hero h1 { margin-top: 10px; font-size: clamp(34px, 6vw, 60px); font-weight: 800; letter-spacing: 3px; color: var(--ink); }
+  .hero h1 .hl { color: var(--orange-lt); }
+  .hero .en { margin-top: 12px; font-size: 13px; letter-spacing: 3px; color: var(--ink-dim); }
+  .hero .tag { margin-top: 18px; font-size: clamp(16px, 2.4vw, 20px); color: #46536B; }
+  .hero .tag b { color: var(--orange-lt); }
+  .cta-row { margin-top: 34px; display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .btn {
+    display: inline-block; padding: 14px 34px; border-radius: 999px;
+    font-size: 17px; letter-spacing: 2px; font-weight: 700; transition: transform .15s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-main { background: linear-gradient(135deg, var(--orange), #C98A50); color: #fff; box-shadow: 0 6px 22px rgba(180,112,63,.30); }
+  .btn-ghost { border: 1.5px solid rgba(26,35,48,.35); color: var(--ink); background: #fff; }
+  .hero .note { margin-top: 14px; font-size: 13px; color: var(--ink-dim); }
+
+  /* ── 通用節 ── */
+  section { padding: 60px 0; }
+  .sec-head { text-align: center; margin-bottom: 36px; }
+  .sec-head .kicker { font-size: 13px; letter-spacing: 4px; color: var(--orange-lt); font-weight: 700; }
+  .sec-head h2 { margin-top: 8px; font-size: clamp(22px, 3.4vw, 30px); letter-spacing: 2px; color: var(--ink); }
+  .sec-head p { margin-top: 10px; color: var(--ink-dim); font-size: 15px; max-width: 720px; margin-left: auto; margin-right: auto; }
+  .alt { background: var(--bg-alt); }
+
+  /* ── 亮點 ── */
+  .grid-4 { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; align-items: stretch; }
+  .card {
+    background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow);
+    border-radius: 14px; padding: 28px 24px;
+    display: flex; flex-direction: column; align-items: flex-start;
+  }
+  .card .k { font-size: 12.5px; letter-spacing: 2px; color: var(--orange-lt); font-weight: 700;
+    border: 1px solid rgba(180,112,63,.35); border-radius: 999px; padding: 2px 12px; background: #FFF9F1; }
+  .card .v { margin-top: 12px; font-size: 19px; font-weight: 700; color: var(--ink); }
+  .card .s { margin-top: 10px; font-size: 13.5px; line-height: 1.75; color: var(--ink-dim); }
+
+  /* ── 五大主題 ── */
+  .grid-5 { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 16px; }
+  .theme { border: 1px solid var(--line); border-radius: 14px; padding: 22px 18px; background: #FFF9F1; text-align: center; }
+  .theme .num { font-size: 12px; letter-spacing: 2px; color: var(--ink-dim); }
+  .theme .name { margin-top: 6px; font-size: 21px; font-weight: 800; color: var(--ink); }
+  .theme .ind { margin-top: 8px; display: inline-block; font-size: 12px; border: 1px solid rgba(180,112,63,.45); color: var(--orange-lt);
+    border-radius: 999px; padding: 3px 12px; background: #fff; }
+  .theme .dir { margin-top: 12px; font-size: 13px; color: var(--ink-dim); }
+
+  /* ── 賽程 ── */
+  .timeline { max-width: 760px; margin: 0 auto; }
+  .tl-item { display: flex; gap: 18px; padding: 14px 0; border-left: 2px solid rgba(180,112,63,.45); padding-left: 22px; position: relative; }
+  .tl-item::before { content: ""; position: absolute; left: -6px; top: 24px; width: 10px; height: 10px; border-radius: 50%;
+    background: var(--orange); box-shadow: 0 0 0 4px rgba(180,112,63,.18); }
+  .tl-date { min-width: 132px; font-weight: 700; color: var(--orange-lt); font-size: 15px; }
+  .tl-body b { color: var(--ink); }
+  .tl-body span { display: block; font-size: 13.5px; color: var(--ink-dim); }
+
+  /* ── 組別 ── */
+  .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+  .group { border: 1px solid var(--line); border-radius: 14px; padding: 26px; background: #fff; box-shadow: var(--shadow); }
+  .group h3 { font-size: 20px; color: var(--ink); }
+  .group .who { margin-top: 6px; font-size: 13.5px; color: var(--ink-dim); }
+  .group ul { margin: 14px 0 0 18px; font-size: 14.5px; color: var(--ink); }
+  .group li { margin: 6px 0; }
+
+  /* ── 通道 ── */
+  .channel { border-left: 3px solid var(--orange); background: #F6EBDD;
+    border-radius: 0 12px 12px 0; padding: 22px 26px; }
+  .channel b { color: var(--orange-lt); }
+
+  /* ── 下載與公示 ── */
+  .dl-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+  .dl { display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    background: #fff; border: 1px dashed rgba(26,35,48,.28); border-radius: 12px; padding: 16px 20px; }
+  .dl .t { font-size: 15px; color: var(--ink); }
+  .dl .t small { display: block; font-size: 12px; color: var(--ink-dim); }
+  .dl a { font-size: 14px; white-space: nowrap; }
+  .dl .status { font-size: 14px; color: var(--ink-dim); white-space: nowrap; }
+
+  /* ── 鳴謝 ── */
+  .thanks { text-align: center; }
+  .thanks .row { margin-top: 16px; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 16px; }
+  .pill { border: 1px solid var(--line); border-radius: 999px; padding: 8px 22px; font-size: 15px; color: var(--ink); background: #fff; }
+  .logo-chip {
+    display: inline-flex; align-items: center; gap: 12px;
+    border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow);
+    padding: 16px 26px; background: #fff;
+  }
+  .logo-chip img { height: 34px; display: block; }
+  .logo-chip span { font-size: 15px; color: var(--ink); }
+  .logo-dark { filter: brightness(0); opacity: .82; }
+  .thanks .cap { font-size: 13px; letter-spacing: 3px; color: var(--ink-dim); margin-top: 26px; }
+
+  /* ── 報名 CTA ── */
+  .reg { text-align: center; background:
+    radial-gradient(circle at 50% 0%, rgba(180,112,63,.14) 0%, rgba(180,112,63,0) 55%), var(--bg-alt); }
+  .reg .period { margin-top: 12px; font-size: 15px; color: var(--ink-dim); }
+  .reg .steps { margin: 26px auto 0; max-width: 720px; font-size: 14px; color: var(--ink-dim); }
+
+  /* ── 頁腳（保留深藏青收尾） ── */
+  footer { background: var(--navy); padding: 34px 0 44px; font-size: 13.5px; color: var(--cream-dim); }
+  footer .wrap { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; }
+  footer b { color: var(--cream); }
+  footer .base { margin-top: 26px; text-align: center; font-size: 12px; }
+
+  /* ── 打印（A4 導出）：網格固定列數避免 3+1 參差，卡片不跨頁 ── */
+  @media print {
+    html, body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .grid-4 { grid-template-columns: repeat(2, 1fr); }
+    .grid-5 { grid-template-columns: repeat(3, 1fr); }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+    .card, .theme, .group, .tl-item, .logo-chip, .dl, .channel, .badge, .hero-img { break-inside: avoid; }
+  }
+
+  @media (max-width: 720px) {
+    .tl-item { flex-direction: column; gap: 4px; }
+    .tl-date { min-width: 0; }
+    .topbar .wrap { justify-content: center; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <div>主辦單位｜<img class="logo-inline" src="assets/assoc-logo.svg" alt="澳門人工智能應用研究協會"> <b>澳門人工智能應用研究協會</b> · <img class="logo-inline" src="assets/rokid-logo-dark.png" alt="Rokid"> · <img class="logo-inline" src="assets/xd-logo.webp" alt="夏鼎科技"> <b>夏鼎科技有限公司</b></div>
+    <div>協辦單位｜<b>澳門科技大學</b> · <b>澳門科學館</b></div>
+    <a href="/">返回夏鼎首頁</a>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="badge"><span class="dot">授</span>ROKID 官方授權賽事</div>
+  <div class="year">2 0 2 6 首 屆</div>
+  <h1>青少年 <span class="hl">AR</span> 創作大賽<span style="color:var(--orange)">·</span>澳門</h1>
+  <div class="en">THE 1ST YOUTH AR CREATION CHALLENGE, MACAO</div>
+  <div class="tag"><b>所創即所見</b>——零代碼創作，戴上 Rokid AR 眼鏡，親眼看見自己的作品立於眼前</div>
+  <!-- 素材：Rokid AR 眼鏡（帶顯示目鏡）產品透切圖，來源見上線檢查清單 H 節 -->
+  <img class="hero-img" src="assets/rokid-ar-glasses.webp" alt="Rokid AR 眼鏡" loading="lazy">
+  <div class="cta-row">
+    <a class="btn btn-main" href="#register">查看報名資訊</a>
+    <a class="btn btn-ghost" href="#downloads">查看賽事資料</a>
+  </div>
+  <div class="note">報名期：2026年11月9日 至 11月29日 ｜ 個人或 2–4 人組隊</div>
+</header>
+
+<section id="highlights">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">WHY JOIN</div>
+      <h2>四個理由，走進你的第一個 AR 世界</h2>
+    </div>
+    <div class="grid-4">
+      <div class="card"><div class="k">核心體驗</div><div class="v">所創即所見</div>
+        <div class="s">作品完成後戴上 Rokid AR 眼鏡，三維立體呈現眼前，語音手勢即可互動</div></div>
+      <div class="card"><div class="k">零門檻</div><div class="v">零代碼創作</div>
+        <div class="s">官方指定「夏鼎AR創作平台」，瀏覽器拖拽搭建場景，一句話 AI 生成三維模型</div></div>
+      <div class="card"><div class="k">全程扶持</div><div class="v">三場免費培訓</div>
+        <div class="s">入門／進階／衝刺三場實體培訓，零基礎入門場當堂完成首件作品</div></div>
+      <div class="card"><div class="k">後續通道</div><div class="v">通向國際賽場</div>
+        <div class="s">大學組獲獎作品經迭代指導推薦報名 Spatial Joy 2027；中學組入選「青年種子庫」</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="themes" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">五大創作主題</div>
+      <h2>對接澳門「1+4」產業 · 任選其一</h2>
+      <p>澳門產業多元的根基在人才，人才的起點在青少年——在創作中親近澳門的產業藍圖。</p>
+    </div>
+    <div class="grid-5">
+      <div class="theme"><div class="num">主題一 ·「1」</div><div class="name">暢遊澳門</div>
+        <div class="ind">綜合旅遊休閒</div>
+        <div class="dir">世遺街區與民俗風情 · 節慶盛事 · AR導覽 · 生態導賞</div></div>
+      <div class="theme"><div class="num">主題二 ·「4」</div><div class="name">健康澳門</div>
+        <div class="ind">大健康</div>
+        <div class="dir">中醫藥文化 · 運動與健康生活 · 本地自然生態與生物多樣性</div></div>
+      <div class="theme"><div class="num">主題三 ·「4」</div><div class="name">智慧澳門</div>
+        <div class="ind">高新技術</div>
+        <div class="dir">智慧城市 · AI＋AR 創新應用 · 智慧校園與數字社區</div></div>
+      <div class="theme"><div class="num">主題四 ·「4」</div><div class="name">金融澳門</div>
+        <div class="ind">現代金融</div>
+        <div class="dir">貨幣文化 · 智慧支付與生活理財 · 防詐騙與金融安全</div></div>
+      <div class="theme"><div class="num">主題五 ·「4」</div><div class="name">活力澳門</div>
+        <div class="ind">會展商貿及文化體育</div>
+        <div class="dir">體育盛事 · 會展與文創市集 · 本土文化與社區家庭生活</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="schedule">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">賽程</div>
+      <h2>從報名到國際賽場</h2>
+    </div>
+    <div class="timeline">
+      <div class="tl-item"><div class="tl-date">11月9日（一）</div>
+        <div class="tl-body"><b>開放報名 · 新聞發布會</b><span>官網上線；章程發布；報名即開通平台帳號</span></div></div>
+      <div class="tl-item"><div class="tl-date">11月15日（日）</div>
+        <div class="tl-body"><b>第一場培訓 · 入門</b><span>澳門科學館；當堂完成首件 AR 小作品；同步線上直播</span></div></div>
+      <div class="tl-item"><div class="tl-date">11月29日（日）</div>
+        <div class="tl-body"><b>第二場培訓 · 進階 ／ 報名截止</b><span>互動邏輯、動畫、AI 生成與眼鏡端適配</span></div></div>
+      <div class="tl-item"><div class="tl-date">12月6日（日）</div>
+        <div class="tl-body"><b>第三場培訓 · 衝刺</b><span>作品打磨、提交規範、評審要點解讀</span></div></div>
+      <div class="tl-item"><div class="tl-date">12月13日（日）</div>
+        <div class="tl-body"><b>作品提交截止</b><span>線上提交作品檔及創作說明，簽署原創聲明</span></div></div>
+      <div class="tl-item"><div class="tl-date">12月14日–15日</div>
+        <div class="tl-body"><b>線上評審</b><span>全部獎項由線上評委評出，評審委員會由邸銳、張雨末、關天德三位評委組成</span></div></div>
+      <div class="tl-item"><div class="tl-date">12月16日（三）</div>
+        <div class="tl-body"><b>入圍名單公布</b><span>入圍名單於本頁公示</span></div></div>
+      <div class="tl-item"><div class="tl-date">12月18日（五）</div>
+        <div class="tl-body"><b>頒獎典禮及作品展示 · 澳門科學館</b><span>入圍作品現場展示，公眾及評委可佩戴 AR 眼鏡觀摩體驗；同日頒獎典禮</span></div></div>
+      <div class="tl-item"><div class="tl-date">12月23日起</div>
+        <div class="tl-body"><b>作品展覽 · 澳門科技大學</b><span>入圍及獲獎優秀作品展與公眾 AR 體驗區，展至 2027年1月10日，免費參觀</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="groups" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">組別 · 評審 · 獎項</div>
+      <h2>兩個組別，獨立評審、獨立設獎</h2>
+    </div>
+    <div class="grid-2">
+      <div class="group">
+        <h3>中學組</h3>
+        <div class="who">初一至高三在校學生（個人或 2–4 人組隊，須指定 1 名指導教師）</div>
+        <ul>
+          <li>創作工具：夏鼎AR創作平台（零代碼、零基礎可參賽）</li>
+          <li>評分維度：創意原創 30%｜主題契合 20%｜技術實現 20%｜藝術表現 15%｜沉浸互動 15%</li>
+          <li>獎項：一等獎 1 名（MOP 5,000）｜二等獎 2 名（各 MOP 3,000）｜三等獎 3 名（各 MOP 1,000）；均頒獎杯與證書</li>
+        </ul>
+      </div>
+      <div class="group">
+        <h3>大學組</h3>
+        <div class="who">高等院校在校學生，含本科及研究生（指導教師可選）</div>
+        <ul>
+          <li>創作工具：夏鼎AR創作平台起步；能力較強者可選用 Unity（組委會提供終端適配支持）</li>
+          <li>評分維度：需求與場景契合 40%｜技術實現與性能 30%｜應用體驗與可推廣 30%（對齊 Spatial Joy AR 賽道）</li>
+          <li>獎項：同一等獎設置；獲獎作品另獲三個月迭代指導，推薦報名 Spatial Joy 2027</li>
+        </ul>
+      </div>
+    </div>
+    <p style="text-align:center;margin-top:20px;font-size:13.5px;color:var(--ink-dim)">
+      另各組別分設特別獎（各 1 名）：創新作品獎（MOP 2,000）· 人氣作品獎（MOP 1,000，線上公眾投票產生） ｜ 獲獎證書由主辦單位聯合蓋章、協辦單位聯合署名
+    </p>
+  </div>
+</section>
+
+<section id="channel">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">後續通道</div>
+      <h2>從澳門賽場到國際賽場</h2>
+    </div>
+    <div class="channel">
+      本賽事經 Rokid（靈伴科技）授權，作為 <b>Spatial Joy · Rokid 全球高校 AR &amp; AI 創新挑戰賽大灣區賽區</b>之澳門人才培育與作品輸送通道。
+      2026 年大灣區決賽中，澳門團隊奪得 <b>AR 賽道全場唯一金獎</b>、澳門科技大學團隊獲 <b>銀獎</b>（夏鼎科技全程技術支持）——本賽事，就是把這條通往國際賽場的路，鋪到每位澳門青少年腳下。
+    </div>
+  </div>
+</section>
+
+<section id="register" class="reg">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">報名</div>
+      <h2>創作屬於你的第一個 AR 世界</h2>
+      <div class="period">報名期 2026年11月9日 — 11月29日 ｜ 免費參賽</div>
+    </div>
+    <div class="cta-row">
+      <a class="btn btn-ghost" href="#contact">聯絡賽事組委會</a>
+    </div>
+    <p class="period">報名連結及官方交流群待公布。</p>
+    <div class="steps">報名開通帳號 → 參加培訓 → 平台創作 → 12月13日前線上提交 → 12月14日–15日線上評審（全部獎項由線上評委評出）→ 12月16日公布入圍 → 12月18日頒獎典禮及作品展示 → 12月23日起作品展覽</div>
+  </div>
+</section>
+
+<section id="downloads" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">文件下載</div>
+      <h2>章程與資料</h2>
+    </div>
+    <div class="dl-row">
+      <div class="dl"><div class="t">競賽章程</div><span class="status">待公布</span></div>
+      <div class="dl"><div class="t">賽事簡介</div><span class="status">待公布</span></div>
+      <div class="dl"><div class="t">賽事海報</div><span class="status">待公布</span></div>
+      <div class="dl"><div class="t">賽事官網預覽<small>A4 版</small></div><a href="website-preview-a4.pdf" download aria-label="下載賽事官網 A4 版 PDF">下載 PDF</a></div>
+      <div class="dl"><div class="t">賽事官網預覽<small>一頁長版</small></div><a href="website-preview-one-page.pdf" download aria-label="下載賽事官網一頁長版 PDF">下載 PDF</a></div>
+    </div>
+    <!-- 12/16 啟用：入圍名單公示區 -->
+    <div id="shortlist" style="margin-top:26px;text-align:center;font-size:14px;color:var(--ink-dim)">
+      入圍名單將於 12月16日 在此公示
+    </div>
+  </div>
+</section>
+
+<section id="thanks" class="thanks">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">鳴謝</div>
+      <h2>協辦與贊助單位</h2>
+    </div>
+    <div class="row">
+      <div class="logo-chip"><img src="assets/must-logo.png" alt="澳門科技大學"><span>澳門科技大學</span></div>
+      <div class="logo-chip"><img class="logo-dark" src="assets/msc-logo.png" alt="澳門科學館"><span>澳門科學館</span></div>
+    </div>
+    <!-- TODO: 贊助商名單按確認情況更新（贊助 logo 檔由各機構提供源檔後加入） -->
+    <div class="cap">贊助鳴謝（持續更新）｜誠邀企業與機構支持澳門青少年科技教育，贊助權益歡迎與組委會洽談</div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div>
+      <b>賽事聯絡（承辦單位）</b><br>
+      夏鼎科技有限公司（Rokid AR 眼鏡澳門區總代理）<br>
+      聯絡人：殷彥影 ｜ 電話：66351918<br>
+      電郵：xiadingtech@gmail.com
+    </div>
+    <div>
+      <b>主辦單位</b><br>
+      澳門人工智能應用研究協會<br>
+      靈伴科技（杭州）股份有限公司（Rokid）<br>
+      夏鼎科技有限公司
+    </div>
+    <div>
+      <b>協辦單位</b><br>
+      澳門科技大學<br>
+      澳門科學館
+    </div>
+  </div>
+  <div class="wrap"><div class="base">© 2026 賽事組織委員會 ｜ 2026首屆青少年AR創作大賽·澳門 ｜ 所創即所見</div></div>
+</footer>
+
+</body>
+</html>

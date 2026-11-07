@@ -10,6 +10,7 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useBrand } from '@/composables/useBrand'
 // import { useNews } from '@/composables/useNews' // 暫時隱藏平台資訊
 import LoginModal from '@/components/common/LoginModal.vue'
+import { competitionLink } from './competition'
 import HeroSection from './sections/HeroSection.vue'
 import LegacyHeroSection from './sections/LegacyHeroSection.vue'
 import PartnershipSection from './sections/PartnershipSection.vue'
@@ -353,12 +354,12 @@ const cases = [
       <img class="xd-cta__bg" src="/images/ar-platform/macau-cityscape.webp" alt="" aria-hidden="true" />
       <div class="xd-cta__inner">
         <h2>{{ isCoBranded ? '與夏鼎 × Rokid，開啟AI/AR教育之旅' : '開啟AI/AR教育之旅' }}</h2>
-        <p>2026年11月 · 全澳青少年AR創作比賽即將登場</p>
+        <p>2026 首屆青少年 AR 創作大賽 · 澳門</p>
         <div class="xd-cta__tags">
           <span class="xd-cta__tag">入校示範課</span>
           <span class="xd-cta__tag">師資培訓</span>
           <span class="xd-cta__tag">平台試用</span>
-          <span class="xd-cta__tag">參賽通道</span>
+          <a class="xd-cta__tag" :href="competitionLink.url">賽事官網</a>
         </div>
         <div class="xd-cta__actions">
           <button class="xd-btn xd-btn--white xd-btn--lg" @click="handleOpenLogin">立即免費試用</button>
@@ -1022,6 +1023,8 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
     transition: all 0.25s $ease;
     &:hover { background: rgba(255,255,255,0.22); }
   }
+
+  a.xd-cta__tag { text-decoration: underline; text-underline-offset: 0.2em; }
 
   &__actions { display: flex; gap: 14px; justify-content: center;
     @media (max-width: 480px) { flex-direction: column; align-items: center; } }
