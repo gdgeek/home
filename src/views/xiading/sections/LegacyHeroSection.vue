@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
+import { competitionLink } from '../competition'
 
 defineProps<{ navScrolled: boolean }>()
 const emit = defineEmits<{ 'open-login': [] }>()
@@ -29,7 +30,8 @@ onUnmounted(() => {
 const navItems = [
   { text: '功能', url: '#features' },
   { text: '場景', url: '#scenes' },
-  { text: '合作', url: '#cases' }
+  { text: '合作', url: '#cases' },
+  competitionLink,
 ]
 
 const stats = [
