@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
 import { useBrand } from '@/composables/useBrand'
+import { competitionLink } from '../competition'
 import XiadingBrandLockup from '../components/XiadingBrandLockup.vue'
 
 defineProps<{ navScrolled: boolean }>()
@@ -15,6 +16,7 @@ const navItems = [
   { text: '功能', url: '#features' },
   { text: '場景', url: '#scenes' },
   { text: '教育實踐', url: '#cases' },
+  competitionLink,
 ]
 const stats = [
   { number: '3+', label: '合作院校機構' },
