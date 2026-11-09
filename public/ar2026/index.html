@@ -36,7 +36,7 @@
 
   /* ── Hero ── */
   .hero {
-    text-align: center; padding: 64px 24px 56px;
+    position: relative; text-align: center; padding: 64px 24px 56px;
     background:
       radial-gradient(circle at 85% 0%, rgba(180,112,63,.12) 0%, rgba(180,112,63,0) 45%),
       radial-gradient(circle at 8% 100%, rgba(180,112,63,.10) 0%, rgba(180,112,63,0) 40%),
@@ -55,6 +55,15 @@
   .hero .en { margin-top: 12px; font-size: 13px; letter-spacing: 3px; color: var(--ink-dim); }
   .hero .tag { margin-top: 18px; font-size: clamp(16px, 2.4vw, 20px); color: #46536B; }
   .hero .tag b { color: var(--orange-lt); }
+  .registration-qr {
+    display: grid; justify-items: center; gap: 4px; width: fit-content; margin: 22px auto 0;
+    color: var(--orange-lt); font-size: 15px; font-weight: 700;
+  }
+  .registration-qr img { display: block; width: 160px; height: auto; }
+  .registration-qr:hover { text-decoration: underline; }
+  @media screen and (min-width: 1160px) {
+    .registration-qr { position: absolute; top: 16px; left: clamp(24px, 4vw, 64px); margin: 0; }
+  }
   .cta-row { margin-top: 34px; display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
   .btn {
     display: inline-block; padding: 14px 34px; border-radius: 999px;
@@ -183,6 +192,10 @@
   <h1>青少年 <span class="hl">AR</span> 創作大賽<span style="color:var(--orange)">·</span>澳門</h1>
   <div class="en">THE 1ST YOUTH AR CREATION CHALLENGE, MACAO</div>
   <div class="tag"><b>所創即所見</b>——零代碼創作，戴上 Rokid AR 眼鏡，親眼看見自己的作品立於眼前</div>
+  <a class="registration-qr" href="https://f.wps.cn/g/ZBqC6AZu">
+    <img src="assets/registration-qr.png" width="396" height="396" alt="">
+    <span>比賽報名二維碼</span>
+  </a>
   <!-- 素材：Rokid AR 眼鏡（帶顯示目鏡）產品透切圖，來源見上線檢查清單 H 節 -->
   <img class="hero-img" src="assets/rokid-ar-glasses.webp" alt="Rokid AR 眼鏡" loading="lazy">
   <div class="cta-row">
@@ -320,9 +333,10 @@
       <div class="period">報名期 2026年11月9日 — 11月29日 ｜ 免費參賽</div>
     </div>
     <div class="cta-row">
+      <a class="btn btn-main" href="https://f.wps.cn/g/ZBqC6AZu">立即報名</a>
       <a class="btn btn-ghost" href="#contact">聯絡賽事組委會</a>
     </div>
-    <p class="period">報名連結及官方交流群待公布。</p>
+    <p class="period">官方交流群待公布。</p>
     <div class="steps">報名開通帳號 → 參加培訓 → 平台創作 → 12月13日前線上提交 → 12月14日–15日線上評審（全部獎項由線上評委評出）→ 12月16日公布入圍 → 12月18日頒獎典禮及作品展示 → 12月23日起作品展覽</div>
   </div>
 </section>
