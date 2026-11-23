@@ -7,6 +7,7 @@
  * 佈局：全寬Hero → Zigzag功能 → 橫滑場景 → 非對稱新聞
  */
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { Box, CircleCheck, Connection, Opportunity } from '@element-plus/icons-vue'
 import { useBrand } from '@/composables/useBrand'
 // import { useNews } from '@/composables/useNews' // 暫時隱藏平台資訊
 import LoginModal from '@/components/common/LoginModal.vue'
@@ -136,6 +137,25 @@ const cases = [
     person: '澳門科學館', role: '課程+師資培訓', stat: { value: '採購', label: '課程+培訓' },
     image: '/images/ar-platform/science-museum.webp' }
 ]
+
+const curriculumAreas = [
+  {
+    id: 'A', title: '概念與認知', codes: 'A-2 · A-8', icon: Opportunity,
+    description: '演算法思維與人工智能三大技術基礎，透過節點邏輯與 AI 建模，變成可操作、可觀察的對象。',
+  },
+  {
+    id: 'B', title: '應用與創作', codes: 'B-1 · B-8', icon: Box,
+    description: '學生在實訓室親手完成互動多媒體作品：建模、腳本、交互、發佈，全流程自己做。',
+  },
+  {
+    id: 'C', title: '溝通與合作', codes: 'C-3 · C-4', icon: Connection,
+    description: '多台設備接入同一場景協作，作品可發佈共享；過程中處理素材授權與知識產權。',
+  },
+  {
+    id: 'D', title: '道德與責任', codes: 'D-2 · D-6', icon: CircleCheck,
+    description: '以澳門文化與國家科技成就為主題素材；AI 生成內容一律標註，練習倫理邊界。',
+  },
+]
 </script>
 
 <template>
@@ -172,42 +192,24 @@ const cases = [
       </div>
     </section>
 
-    <!-- 實踐基地 -->
-    <section class="xd-section xd-section--alt">
+    <section class="xd-section xd-section--alt xd-curriculum" aria-labelledby="xiading-curriculum-title">
       <div class="xd-section__header reveal">
-        <span class="xd-tag">實踐基地</span>
-        <h2 class="xd-section__title">真實場景，項目實踐</h2>
-        <p class="xd-section__sub">荔枝碗船廠片區、大賽車博物館、海事博物館等文旅場景為學生的項目實踐提供真實土壤</p>
+        <span class="xd-tag">課程定位</span>
+        <h2 id="xiading-curriculum-title" class="xd-section__title">不替代課程，只深化實訓</h2>
+        <div class="xd-curriculum__intro">
+          <p>對標《高中教育階段資訊科技基本學力要求》（2024）四範疇，在資訊科技實訓室內承擔協作與實操支撐。</p>
+          <p>原有課時、教材、評核不變，平台只補上<strong>「動手做」</strong>的那一層。</p>
+        </div>
       </div>
-      <div class="xd-bases reveal">
-        <div class="xd-base">
-          <div class="xd-base__icon-wrap">
-            <svg class="xd-base__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-2-2.2-3.3C13 5.6 12 5 11 5H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 10v6c0 .6.4 1 1 1h2"/><circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/></svg>
+      <div class="xd-curriculum__cards reveal">
+        <article v-for="area in curriculumAreas" :key="area.id" class="xd-curriculum-card">
+          <div class="xd-curriculum-card__icon" aria-hidden="true">
+            <component :is="area.icon" />
           </div>
-          <h4>大賽車博物館</h4>
-          <p>AR還原賽車歷史，沉浸式體驗澳門格蘭披治大賽車文化</p>
-        </div>
-        <div class="xd-base">
-          <div class="xd-base__icon-wrap">
-            <svg class="xd-base__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M17 18h1"/><path d="M12 18h1"/><path d="M7 18h1"/></svg>
-          </div>
-          <h4>海事博物館</h4>
-          <p>AR重現航海歷史，探索澳門海洋文化與貿易故事</p>
-        </div>
-        <div class="xd-base">
-          <div class="xd-base__icon-wrap">
-            <svg class="xd-base__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-          </div>
-          <h4>荔枝碗船廠片區</h4>
-          <p>AR活化工業遺址，在真實場景中開展項目式學習</p>
-        </div>
-        <div class="xd-base">
-          <div class="xd-base__icon-wrap">
-            <svg class="xd-base__svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.527a2 2 0 0 1-.211.896L4.72 20.55a1 1 0 0 0 .9 1.45h12.76a1 1 0 0 0 .9-1.45l-5.069-10.127A2 2 0 0 1 14 9.527V2"/><path d="M8.5 2h7"/><path d="M7 16.5h10"/></svg>
-          </div>
-          <h4>澳門科學館</h4>
-          <p>2026年教師培訓計畫支持，科學教育與AR技術深度融合</p>
-        </div>
+          <h3>{{ area.id }} | {{ area.title }}</h3>
+          <p class="xd-curriculum-card__codes">{{ area.codes }}</p>
+          <p class="xd-curriculum-card__description">{{ area.description }}</p>
+        </article>
       </div>
     </section>
 
@@ -333,12 +335,16 @@ const cases = [
             </div>
           </div>
           <div class="xd-trust__item">
-            <div class="xd-trust__img">
-              <img src="/images/ar-platform/trust-advisor.webp" alt="杜文麗委員" loading="lazy" />
+            <div class="xd-trust__img xd-trust__img--utm">
+              <img src="/images/ar-platform/trust-utm.webp" alt="澳門旅遊大學氹仔校區展望樓" loading="lazy" />
             </div>
             <div class="xd-trust__text">
-              <span class="xd-trust__name">杜文麗委員</span>
-              <span class="xd-trust__role">廣東省基礎教育課程專委會顧問</span>
+              <span class="xd-trust__name">澳門旅遊大學</span>
+              <span class="xd-trust__role">產學院共創</span>
+              <p class="xd-trust__credit">
+                <a href="https://commons.wikimedia.org/wiki/File:20250812_Campus_da_Taipa,_Universidade_de_Turismo_de_Macau.jpg">攝影：Yumeto</a>
+                · <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>（縮圖）
+              </p>
             </div>
           </div>
         </div>
@@ -860,6 +866,7 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
   &__img {
     height: 130px; overflow: hidden;
     img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s $ease; }
+    &--utm img { object-position: center top; }
   }
 
   &__text { padding: 14px 16px; }
@@ -870,6 +877,11 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
 
   &__role {
     display: block; font-size: 12px; color: $text-muted; font-weight: 300; margin-top: 3px;
+  }
+
+  &__credit {
+    margin-top: 4px; font-size: 11px; color: $text-body;
+    a { color: inherit; text-decoration: underline; }
   }
 }
 
@@ -933,46 +945,75 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 // ═══════════════════════════════════════
-// 實踐基地
+// 課程定位
 // ═══════════════════════════════════════
-.xd-bases {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
-  @media (max-width: 768px) { grid-template-columns: repeat(2, 1fr); }
-  @media (max-width: 480px) { grid-template-columns: 1fr; }
+.xd-curriculum {
+  background: #f3f7f9;
+  padding: 72px 24px 104px;
+
+  .xd-tag::before { content: none; }
+  .xd-section__title { font-size: clamp(26px, 3.1vw, 36px); margin-top: 24px; }
+  .xd-section__header { margin-bottom: 44px; }
+
+  &__intro {
+    font-size: 15px;
+    line-height: 1.8;
+    margin: 22px auto 0;
+    max-width: 780px;
+    p + p { margin-top: 4px; }
+    strong { color: $steel; }
+  }
+
+  &__cards {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+    max-width: 1120px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 56px 16px;
+    &__cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 480px) {
+    .xd-section__header { margin-bottom: 28px; }
+    &__cards { grid-template-columns: 1fr; gap: 14px; }
+  }
 }
 
-.xd-base {
-  background: $card; border: 1px solid $border; border-radius: $r;
-  padding: 28px 24px; text-align: center; transition: all 0.35s $ease;
-  position: relative; overflow: hidden;
+.xd-curriculum-card {
+  min-height: 252px;
+  padding: 30px 18px 26px;
+  text-align: center;
+  background: $card;
+  border: 1px solid $border;
+  border-radius: $r-sm;
+  box-shadow: $shadow-s;
 
-  &::before {
-    content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
-    width: 60px; height: 3px; background: linear-gradient(90deg, transparent, $steel-pale, transparent);
-    border-radius: 0 0 4px 4px; opacity: 0; transition: opacity 0.3s $ease;
+  &__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba($steel, 0.08);
+    color: $steel;
+    svg { width: 22px; height: 22px; }
   }
 
-  &:hover {
-    transform: translateY(-5px); box-shadow: $shadow-l; border-color: $border-hover;
-    &::before { opacity: 1; }
-    .xd-base__icon-wrap { background: $steel; .xd-base__svg { stroke: white; } }
-  }
-
-  &__icon-wrap {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 52px; height: 52px; border-radius: 14px;
-    background: rgba($steel, 0.08); margin-bottom: 16px;
-    transition: all 0.35s $ease;
-  }
-
-  &__svg { width: 24px; height: 24px; stroke: $steel; transition: stroke 0.35s $ease; }
-
-  h4 {
+  h3 {
     font-family: 'Zen Kaku Gothic New', sans-serif;
-    font-size: 16px; font-weight: 700; color: $text-dark; margin-bottom: 8px;
+    font-size: 17px;
+    font-weight: 700;
+    color: $text-dark;
+    margin-top: 14px;
   }
 
-  p { font-size: 13px; color: $text-muted; line-height: 1.7; font-weight: 300; }
+  &__codes { margin-top: 4px; font-size: 12px; color: $text-body; }
+  &__description { margin-top: 12px; font-size: 14px; color: $text-body; line-height: 1.75; }
+
+  @media (max-width: 480px) { min-height: auto; }
 }
 
 // ═══════════════════════════════════════
