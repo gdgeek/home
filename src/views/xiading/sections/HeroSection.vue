@@ -79,7 +79,7 @@ onUnmounted(() => {
 
   <section id="top" class="xd-hero" aria-labelledby="xiading-hero-title">
     <div class="xd-hero__bg" aria-hidden="true">
-      <img src="/images/ar-platform/澳门AR.webp" alt="" fetchpriority="high" />
+      <img src="/images/ar-platform/澳门AR.webp?v=8869c81d017e" alt="" fetchpriority="high" />
     </div>
     <div class="xd-hero__inner">
       <div class="xd-hero__content">

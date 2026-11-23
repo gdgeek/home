@@ -264,7 +264,7 @@ const cases = computed(() => [
         </div>
       </div>
       <div class="mu-hero__visual reveal">
-        <img src="/images/ar-platform/澳门AR.webp" alt="XR UGC Platform" />
+        <img src="/images/ar-platform/澳门AR.webp?v=8869c81d017e" alt="XR UGC Platform" />
         <div class="mu-hero__visual-glow"></div>
       </div>
     </section>
