@@ -24,6 +24,14 @@ defineProps<{ footer: BrandFooterConfig; buildTime: string }>()
         >{{ link.text }}</a>
       </nav>
     </div>
+    <section class="xd-footer__credits" aria-labelledby="xiading-image-credits">
+      <h2 id="xiading-image-credits">圖片來源與授權</h2>
+      <p>
+        澳門旅遊大學氹仔校區展望樓 ·
+        <a href="https://commons.wikimedia.org/wiki/File:20250812_Campus_da_Taipa,_Universidade_de_Turismo_de_Macau.jpg">攝影：Yumeto</a>
+        · <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>（縮圖）
+      </p>
+    </section>
     <div class="xd-footer__bottom">
       <span>{{ footer.copyright }}</span>
       <span class="xd-footer__ver">{{ buildTime }}</span>
@@ -52,6 +60,13 @@ defineProps<{ footer: BrandFooterConfig; buildTime: string }>()
     h2 { margin: 0 0 4px; color: xd.$xiading-text-primary; font-size: 14px; font-weight: 700; }
     a { padding: 3px 0; }
   }
+  &__credits {
+    max-width: xd.$xiading-container-max-width; margin: 0 auto; padding: 0 24px 24px;
+    color: #757575; font-size: 12px; line-height: 1.7;
+    h2 { margin: 0 0 4px; font-size: 13px; font-weight: 600; }
+    p { margin: 0; }
+    a { color: inherit; font-size: inherit; text-decoration: underline; }
+  }
   &__bottom {
     max-width: xd.$xiading-container-max-width; margin: 0 auto; padding: 20px 24px;
     border-top: 1px solid xd.$xiading-border-color; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
@@ -61,6 +76,7 @@ defineProps<{ footer: BrandFooterConfig; buildTime: string }>()
   @media (max-width: 768px) {
     &__inner { padding: 36px 20px; grid-template-columns: 1fr 1fr; gap: 32px; }
     &__brand { grid-column: 1 / -1; }
+    &__credits { padding: 0 20px 20px; }
     &__bottom { padding: 20px; }
   }
 }
