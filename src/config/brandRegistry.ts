@@ -74,59 +74,6 @@ const brandRegistry: BrandRegistry = {
       ]
     }
   },
-  
-  // 夏鼎配置 - 蓝色科技感主题
-  xiading: {
-    id: 'xiading',
-    name: '夏鼎科技AI/AR創作平台',
-    locale: 'zh-TW',
-    loginUrl: 'https://xiading.com/login',
-    theme: {
-      primaryColor: '#0EA5E9',
-      secondaryColor: '#06B6D4',
-      ctaColor: '#10B981',
-      backgroundColor: '#F0F9FF',
-      textColor: '#0C4A6E',
-      logoPath: '/images/xiading-logo.svg',
-      logoAlt: '夏鼎',
-      faviconPath: '/logo/xiading/logo.webp'
-    },
-    hero: {
-      title: '夏鼎 — 数字科技，赋能未来',
-      subtitle: '专注于前沿数字技术应用，为企业提供智能化解决方案，引领数字化转型新时代。',
-      primaryButtonText: '开始探索',
-      secondaryButtonText: '了解更多',
-      highlights: ['智能分析', '数据驱动', '技术领先', '创新赋能']
-    },
-    footer: {
-      copyright: '© 2024 夏鼎科技 版权所有',
-      contactInfo: {
-        phone: '400-xxx-xxxx',
-        email: 'contact@xiading.com',
-        wechat: 'xiading_tech'
-      },
-      navigation: [
-        {
-          title: '产品服务',
-          links: [
-            { text: '智能平台', url: '#' },
-            { text: '数据分析', url: '#' },
-            { text: '技术咨询', url: '#' },
-            { text: '帮助中心', url: '#' }
-          ]
-        },
-        {
-          title: '关于我们',
-          links: [
-            { text: '公司介绍', url: '#' },
-            { text: '联系我们', url: '#' },
-            { text: '加入我们', url: '#' },
-            { text: '合作伙伴', url: '#' }
-          ]
-        }
-      ]
-    }
-  },
 
   // 夏鼎 × Rokid - 澳門 AI/AR 教育聯合品牌
   'xiading-rokid': {
@@ -343,7 +290,7 @@ export function isValidBrandId(brandId: string): brandId is BrandId {
  * 
  * @example
  * const brandIds = getAllBrandIds()
- * console.log(brandIds) // ['xingkou', 'xiading']
+ * console.log(brandIds) // ['xingkou', 'xiading-rokid', 'mrpp', 'xrugc']
  * 
  * @requirements 2.1
  */

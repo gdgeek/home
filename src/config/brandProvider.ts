@@ -8,12 +8,11 @@
  * 4. 默认：xrugc
  */
 
-import { getBrandConfig } from './brandRegistry'
+import { getBrandConfig, isValidBrandId } from './brandRegistry'
 export { getBrandConfig } from './brandRegistry'
 import type { BrandConfig, BrandId } from '@/types/brand'
 
 const DEFAULT_BRAND_ID: BrandId = 'xrugc'
-const VALID_BRAND_IDS: readonly BrandId[] = ['xingkou', 'xiading', 'xiading-rokid', 'xrugc', 'mrpp']
 
 const DOMAIN_BRAND_RULES: readonly {
   hostname: string
@@ -24,7 +23,7 @@ const DOMAIN_BRAND_RULES: readonly {
   { hostname: 'xrugc.com', brandId: 'xrugc', includeSubdomains: true },
   { hostname: 'ar-creator.cn', brandId: 'xingkou', includeSubdomains: true },
   { hostname: 'xiading.cc', brandId: 'xiading-rokid', includeSubdomains: true },
-  { hostname: 'xiading.hxgxonline.com', brandId: 'xiading', includeSubdomains: true }
+  { hostname: 'xiading.hxgxonline.com', brandId: 'xiading-rokid', includeSubdomains: true }
 ]
 
 type BrandSourceValue = string | null | undefined
@@ -38,10 +37,9 @@ function normalizeHostname(hostname: string): string {
 }
 
 function getValidBrandId(brandId: BrandSourceValue): BrandId | null {
-  if (brandId && VALID_BRAND_IDS.includes(brandId as BrandId)) {
-    return brandId as BrandId
-  }
-  return null
+  // 兼容旧容器和预览链接中的夏鼎品牌 ID。
+  if (brandId === 'xiading') return 'xiading-rokid'
+  return brandId && isValidBrandId(brandId) ? brandId : null
 }
 
 export function getBrandFromHostname(hostname: string): BrandId | null {
