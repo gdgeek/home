@@ -118,7 +118,7 @@ const features = [
 ]
 
 const scenes = [
-  { title: '戶外探索', desc: '走出教室，在真實環境中體驗AR互動學習。學生可以在校園、公園、博物館等場所，透過AR眼鏡觀察疊加在真實世界上的虛擬內容，將課本知識與實地場景結合，激發好奇心與探究欲望。', image: '/images/ar-platform/两个小朋友在外面玩AR游戏.webp', tag: '探索' },
+  { title: '戶外探索', desc: '走出教室，在真實環境中體驗AR互動學習。學生可以在校園、公園、博物館等場所，透過AR眼鏡觀察疊加在真實世界上的虛擬內容，將課本知識與實地場景結合，激發好奇心與探究欲望。', image: '/images/ar-platform/澳门AR.webp?v=8869c81d017e', tag: '探索' },
   { title: '醫療護理', desc: '透過AR技術模擬嬰幼兒護理、外傷處理等臨床場景，學生可在零風險環境中反覆練習標準操作流程，提升實操信心與技能熟練度。', image: '/images/ar-platform/婴幼儿护理 外伤处理.webp', tag: '醫療' },
   { title: '口腔教學', desc: '將窩溝封閉、根管治療等精細口腔操作以3D可視化方式呈現，學生可自由旋轉、放大觀察每一個步驟細節，理解傳統教材難以展示的內部結構。', image: '/images/ar-platform/AR医疗 窝沟封闭.webp', tag: '教學' },
   { title: '工業培訓', desc: '掘進機、發動機等大型工業設備1:1還原至AR空間，學員無需進入危險現場即可熟悉設備結構、拆裝流程與維護要點，大幅降低培訓成本與安全風險。', image: '/images/ar-platform/AR掘进机展示.webp', tag: '工業' },
@@ -341,10 +341,6 @@ const curriculumAreas = [
             <div class="xd-trust__text">
               <span class="xd-trust__name">澳門旅遊大學</span>
               <span class="xd-trust__role">產學院共創</span>
-              <p class="xd-trust__credit">
-                <a href="https://commons.wikimedia.org/wiki/File:20250812_Campus_da_Taipa,_Universidade_de_Turismo_de_Macau.jpg">攝影：Yumeto</a>
-                · <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>（縮圖）
-              </p>
             </div>
           </div>
         </div>
@@ -877,11 +873,6 @@ $ease: cubic-bezier(0.22, 1, 0.36, 1);
 
   &__role {
     display: block; font-size: 12px; color: $text-muted; font-weight: 300; margin-top: 3px;
-  }
-
-  &__credit {
-    margin-top: 4px; font-size: 11px; color: $text-body;
-    a { color: inherit; text-decoration: underline; }
   }
 }
 
