@@ -10,7 +10,7 @@ import * as fc from 'fast-check'
  * window.__BRAND_ID__ > URL ?brand 参数 > 域名映射 > 默认值
  */
 
-const VALID_BRANDS = ['xingkou', 'xiading', 'xiading-rokid', 'xrugc', 'mrpp'] as const
+const VALID_BRANDS = ['xingkou', 'xiading-rokid', 'xrugc', 'mrpp'] as const
 
 async function loadBrandProvider() {
   vi.resetModules()
@@ -28,7 +28,7 @@ describe('brandProvider - brand resolution priority', () => {
     ;(window as unknown as Record<string, unknown>).__BRAND_ID__ = 'xiading'
     window.history.replaceState({}, '', '/?brand=xrugc')
     const { getCurrentBrandId } = await loadBrandProvider()
-    expect(getCurrentBrandId()).toBe('xiading')
+    expect(getCurrentBrandId()).toBe('xiading-rokid')
   })
 
   it('URL brand parameter is used when window.__BRAND_ID__ is absent', async () => {
@@ -48,21 +48,21 @@ describe('brandProvider - brand resolution priority', () => {
     expect(resolveBrandIdFromSources({ urlBrandId: 'xrugc', hostname: 'mrpp.com' })).toBe('xrugc')
   })
 
-  it.each(['xiading', 'xiading-rokid'] as const)('explicit %s deployment remains locked across Xiading domains', async (brandId) => {
+  it.each(['xiading', 'xiading-rokid'])('deployment value %s locks both Xiading domains to the joint brand', async (brandId) => {
     const { resolveBrandIdFromSources } = await loadBrandProvider()
     for (const hostname of ['xiading.cc', 'xiading.hxgxonline.com']) {
       expect(resolveBrandIdFromSources({
         injectedBrandId: brandId,
-        urlBrandId: brandId === 'xiading' ? 'xiading-rokid' : 'xiading',
+        urlBrandId: 'xrugc',
         hostname,
-      })).toBe(brandId)
+      })).toBe('xiading-rokid')
     }
   })
 
-  it('empty deployment brand lets each Xiading domain select its own design', async () => {
+  it('both Xiading domains select the joint brand without a deployment override', async () => {
     const { resolveBrandIdFromSources } = await loadBrandProvider()
     expect(resolveBrandIdFromSources({ injectedBrandId: '', hostname: 'xiading.cc' })).toBe('xiading-rokid')
-    expect(resolveBrandIdFromSources({ injectedBrandId: '', hostname: 'xiading.hxgxonline.com' })).toBe('xiading')
+    expect(resolveBrandIdFromSources({ injectedBrandId: '', hostname: 'xiading.hxgxonline.com' })).toBe('xiading-rokid')
   })
 
   it('defaults to xrugc when neither is set', async () => {
@@ -76,7 +76,7 @@ describe('brandProvider - brand resolution priority', () => {
     ;(window as unknown as Record<string, unknown>).__BRAND_ID__ = 'invalid-brand'
     window.history.replaceState({}, '', '/?brand=xiading')
     const { getCurrentBrandId } = await loadBrandProvider()
-    expect(getCurrentBrandId()).toBe('xiading')
+    expect(getCurrentBrandId()).toBe('xiading-rokid')
   })
 
   it('invalid window.__BRAND_ID__ and invalid URL brand parameter fall through to domain mapping', async () => {
@@ -129,9 +129,10 @@ describe('brandProvider - brand resolution priority', () => {
       ['www.xiading.cc', 'xiading-rokid'],
       ['studio.xiading.cc:5173', 'xiading-rokid'],
       ['XIADING.CC.', 'xiading-rokid'],
-      ['xiading.hxgxonline.com', 'xiading'],
-      ['www.xiading.hxgxonline.com', 'xiading'],
-      ['studio.xiading.hxgxonline.com:5173', 'xiading']
+      ['xiading.hxgxonline.com', 'xiading-rokid'],
+      ['www.xiading.hxgxonline.com', 'xiading-rokid'],
+      ['dev.xiading.hxgxonline.com', 'xiading-rokid'],
+      ['studio.xiading.hxgxonline.com:5173', 'xiading-rokid']
     ])('maps %s to %s', async (hostname, brandId) => {
       const { getBrandFromHostname } = await loadBrandProvider()
       expect(getBrandFromHostname(hostname)).toBe(brandId)

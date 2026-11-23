@@ -1,6 +1,6 @@
 <script setup lang="ts">
 /**
- * 夏鼎品牌首頁與夏鼎 × Rokid 聯合品牌首頁（澳門版）
+ * 夏鼎 × Rokid 聯合品牌首頁（澳門版）
  * 設計方向：日系淺色清爽 + 科技感點綴 + 非對稱佈局
  * 字體：Zen Kaku Gothic New（標題）+ Noto Sans TC（正文）
  * 配色：淺藍冰白底 #F6F9FD，Logo鋼藍 #4A6FA5 科技強調
@@ -12,14 +12,11 @@ import { useBrand } from '@/composables/useBrand'
 import LoginModal from '@/components/common/LoginModal.vue'
 import { competitionLink } from './competition'
 import HeroSection from './sections/HeroSection.vue'
-import LegacyHeroSection from './sections/LegacyHeroSection.vue'
 import PartnershipSection from './sections/PartnershipSection.vue'
 import FooterSection from './sections/FooterSection.vue'
-import LegacyFooterSection from './sections/LegacyFooterSection.vue'
 import { loadExternalStylesheet } from '@/utils/externalAssets'
 
-const { footer, brandId } = useBrand()
-const isCoBranded = computed(() => brandId.value === 'xiading-rokid')
+const { footer } = useBrand()
 const buildTime = computed(() => {
   const timestamp = window.__BUILD_TIME__ || __BUILD_TIME__ || new Date().toISOString()
   const date = new Date(timestamp)
@@ -150,9 +147,8 @@ const cases = [
       <div class="xd-bg__glow xd-bg__glow--2"></div>
     </div>
 
-    <HeroSection v-if="isCoBranded" :nav-scrolled="navScrolled" @open-login="handleOpenLogin" />
-    <LegacyHeroSection v-else :nav-scrolled="navScrolled" @open-login="handleOpenLogin" />
-    <PartnershipSection v-if="isCoBranded" />
+    <HeroSection :nav-scrolled="navScrolled" @open-login="handleOpenLogin" />
+    <PartnershipSection />
 
     <!-- 功能：Bento Grid 便當盒佈局 -->
     <section id="features" class="xd-section">
@@ -353,7 +349,7 @@ const cases = [
     <section class="xd-cta reveal">
       <img class="xd-cta__bg" src="/images/ar-platform/macau-cityscape.webp" alt="" aria-hidden="true" />
       <div class="xd-cta__inner">
-        <h2>{{ isCoBranded ? '與夏鼎 × Rokid，開啟AI/AR教育之旅' : '開啟AI/AR教育之旅' }}</h2>
+        <h2>與夏鼎 × Rokid，開啟AI/AR教育之旅</h2>
         <p>2026 首屆青少年 AR 創作大賽 · 澳門</p>
         <div class="xd-cta__tags">
           <span class="xd-cta__tag">入校示範課</span>
@@ -368,8 +364,7 @@ const cases = [
       </div>
     </section>
 
-    <FooterSection v-if="isCoBranded" :footer="footer" :build-time="buildTime" />
-    <LegacyFooterSection v-else :copyright="footer.copyright" :build-time="buildTime" />
+    <FooterSection :footer="footer" :build-time="buildTime" />
 
     <!-- Modals -->
     <Teleport to="body">
